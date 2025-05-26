@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 16, 2025 lúc 03:51 PM
+-- Thời gian đã tạo: Th5 26, 2025 lúc 01:55 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -72,7 +72,9 @@ INSERT INTO `hoa_don` (`id`, `ngay_tt`, `trang_thai`, `thanh_tien`) VALUES
 (9, '2025-04-23 13:26:51', 0, 859000),
 (10, '2025-04-23 13:31:10', 0, 399000),
 (11, '2025-04-25 17:57:38', 0, 425000),
-(12, '2025-05-04 13:06:49', 0, 100000);
+(12, '2025-05-04 13:06:49', 0, 100000),
+(13, '2025-05-25 21:31:39', 0, 459000),
+(14, '2025-05-26 18:33:03', 0, 459000);
 
 -- --------------------------------------------------------
 
@@ -92,54 +94,96 @@ CREATE TABLE `khung_gio_chieu` (
 --
 
 INSERT INTO `khung_gio_chieu` (`id`, `id_lich_chieu`, `id_phong`, `thoi_gian_chieu`) VALUES
-(6, 10, 1, '08:00:00'),
-(7, 11, 1, '08:30:00'),
-(8, 10, 2, '09:00:00'),
-(9, 11, 2, '09:30:00'),
-(10, 14, 1, '10:00:00'),
-(11, 14, 1, '10:30:00'),
-(12, 13, 1, '11:00:00'),
-(13, 11, 1, '11:30:00'),
-(14, 15, 1, '12:00:00'),
-(15, 17, 1, '12:30:00'),
-(16, 17, 2, '13:00:00'),
-(17, 16, 1, '13:30:00'),
-(18, 16, 2, '14:00:00'),
-(19, 21, 2, '14:30:00'),
-(20, 21, 1, '15:00:00'),
-(21, 22, 1, '15:30:00'),
-(22, 22, 2, '16:00:00'),
-(23, 23, 2, '16:30:00'),
-(24, 23, 2, '17:00:00'),
-(25, 24, 1, '17:30:00'),
-(26, 24, 1, '18:00:00'),
-(29, 27, 2, '19:30:00'),
-(30, 26, 2, '20:00:00'),
-(31, 26, 2, '20:30:00'),
-(32, 26, 2, '22:50:00'),
-(33, 26, 1, '22:30:00'),
-(34, 26, 2, '04:00:00'),
-(36, 25, 1, '22:00:00'),
-(39, 29, 10, '06:00:00'),
-(40, 15, 10, '15:00:00'),
-(41, 30, 10, '03:00:00'),
-(42, 30, 1, '16:34:00'),
-(44, 31, 2, '16:09:00'),
-(45, 31, 10, '19:12:00'),
-(46, 31, 1, '16:12:00'),
-(47, 31, 1, '22:12:00'),
-(48, 32, 2, '17:08:00'),
-(49, 32, 2, '17:12:00'),
-(50, 33, 1, '17:08:00'),
-(51, 34, 1, '15:09:00'),
-(52, 35, 1, '18:39:00'),
-(53, 36, 1, '19:46:00'),
-(54, 37, 2, '23:11:00'),
-(55, 38, 1, '21:11:00'),
-(56, 39, 2, '20:11:00'),
-(57, 40, 1, '19:18:00'),
-(58, 40, 1, '12:38:00'),
-(59, 40, 2, '20:00:00');
+(1, 1, 1, '14:00:00'),
+(2, 1, 1, '17:00:00'),
+(3, 1, 1, '20:00:00'),
+(4, 2, 1, '14:00:00'),
+(5, 2, 1, '17:00:00'),
+(6, 2, 1, '20:00:00'),
+(7, 3, 1, '14:00:00'),
+(8, 3, 1, '17:00:00'),
+(9, 3, 1, '20:00:00'),
+(10, 4, 1, '14:00:00'),
+(11, 4, 1, '17:00:00'),
+(12, 4, 1, '20:00:00'),
+(13, 5, 1, '14:00:00'),
+(14, 5, 1, '17:00:00'),
+(15, 5, 1, '20:00:00'),
+(16, 6, 1, '14:00:00'),
+(17, 6, 1, '17:00:00'),
+(18, 6, 1, '20:00:00'),
+(19, 7, 1, '14:00:00'),
+(20, 7, 1, '17:00:00'),
+(21, 7, 1, '20:00:00'),
+(22, 8, 1, '14:00:00'),
+(23, 8, 1, '17:00:00'),
+(24, 8, 1, '20:00:00'),
+(25, 9, 1, '14:00:00'),
+(26, 9, 1, '17:00:00'),
+(27, 9, 1, '20:00:00'),
+(28, 10, 1, '14:00:00'),
+(29, 10, 1, '17:00:00'),
+(30, 10, 1, '20:00:00'),
+(31, 11, 1, '14:00:00'),
+(32, 11, 1, '17:00:00'),
+(33, 11, 1, '20:00:00'),
+(34, 12, 1, '14:00:00'),
+(35, 12, 1, '17:00:00'),
+(36, 12, 1, '20:00:00'),
+(37, 13, 1, '14:00:00'),
+(38, 13, 1, '17:00:00'),
+(39, 13, 1, '20:00:00'),
+(40, 14, 1, '14:00:00'),
+(41, 14, 1, '17:00:00'),
+(42, 14, 1, '20:00:00'),
+(43, 15, 1, '14:00:00'),
+(44, 15, 1, '17:00:00'),
+(45, 15, 1, '20:00:00'),
+(46, 16, 1, '14:00:00'),
+(47, 16, 1, '17:00:00'),
+(48, 16, 1, '20:00:00'),
+(49, 17, 1, '14:00:00'),
+(50, 17, 1, '17:00:00'),
+(51, 17, 1, '20:00:00'),
+(52, 18, 1, '14:00:00'),
+(53, 18, 1, '17:00:00'),
+(54, 18, 1, '20:00:00'),
+(55, 19, 1, '14:00:00'),
+(56, 19, 1, '17:00:00'),
+(57, 19, 1, '20:00:00'),
+(58, 20, 1, '14:00:00'),
+(59, 20, 1, '17:00:00'),
+(60, 20, 1, '20:00:00'),
+(61, 21, 1, '14:00:00'),
+(62, 21, 1, '17:00:00'),
+(63, 21, 1, '20:00:00'),
+(64, 22, 1, '14:00:00'),
+(65, 22, 1, '17:00:00'),
+(66, 22, 1, '20:00:00'),
+(67, 23, 1, '14:00:00'),
+(68, 23, 1, '17:00:00'),
+(69, 23, 1, '20:00:00'),
+(70, 24, 1, '14:00:00'),
+(71, 24, 1, '17:00:00'),
+(72, 24, 1, '20:00:00'),
+(73, 25, 1, '14:00:00'),
+(74, 25, 1, '17:00:00'),
+(75, 25, 1, '20:00:00'),
+(76, 26, 1, '14:00:00'),
+(77, 26, 1, '17:00:00'),
+(78, 26, 1, '20:00:00'),
+(79, 27, 1, '14:00:00'),
+(80, 27, 1, '17:00:00'),
+(81, 27, 1, '20:00:00'),
+(82, 28, 1, '14:00:00'),
+(83, 28, 1, '17:00:00'),
+(84, 28, 1, '20:00:00'),
+(85, 29, 1, '14:00:00'),
+(86, 29, 1, '17:00:00'),
+(87, 29, 1, '20:00:00'),
+(88, 30, 1, '14:00:00'),
+(89, 30, 1, '17:00:00'),
+(90, 30, 1, '20:00:00');
 
 -- --------------------------------------------------------
 
@@ -158,40 +202,36 @@ CREATE TABLE `lichchieu` (
 --
 
 INSERT INTO `lichchieu` (`id`, `id_phim`, `ngay_chieu`) VALUES
-(10, 6, '2025-05-20'),
-(11, 7, '2025-05-20'),
-(12, 8, '2025-05-20'),
-(13, 8, '2025-05-20'),
-(14, 5, '2025-05-20'),
-(15, 6, '2025-05-20'),
-(16, 7, '2025-05-20'),
-(17, 7, '2025-05-20'),
-(18, 27, '2025-05-20'),
-(19, 27, '2025-05-20'),
-(20, 27, '2025-05-20'),
-(21, 24, '2025-05-20'),
-(22, 24, '2025-05-20'),
-(23, 24, '2025-05-20'),
-(24, 27, '2025-05-20'),
-(25, 26, '2025-05-20'),
-(27, 29, '2025-05-20'),
-(30, 33, '2025-05-20'),
-(31, 33, '2025-05-20'),
-(32, 30, '2025-05-20'),
-(33, 25, '2025-05-20'),
-(34, 24, '2025-05-20'),
-(35, 25, '2025-05-20'),
-(36, 26, '2025-05-20'),
-(37, 5, '2025-05-20'),
-(38, 7, '2025-05-20'),
-(39, 22, '2025-05-20'),
-(40, 28, '2025-05-20'),
-(41, 28, '2025-05-20'),
-(42, 28, '2025-05-20'),
-(43, 28, '2025-05-20'),
-(44, 28, '2025-05-20'),
-(45, 28, '2025-05-20'),
-(48, 26, '2025-05-20');
+(1, 5, '2025-05-29'),
+(2, 5, '2025-05-31'),
+(3, 6, '2025-05-29'),
+(4, 6, '2025-05-31'),
+(5, 7, '2025-05-29'),
+(6, 7, '2025-05-31'),
+(7, 8, '2025-05-29'),
+(8, 8, '2025-05-31'),
+(9, 22, '2025-05-29'),
+(10, 22, '2025-05-31'),
+(11, 24, '2025-05-29'),
+(12, 24, '2025-05-31'),
+(13, 25, '2025-05-29'),
+(14, 25, '2025-05-31'),
+(15, 26, '2025-05-29'),
+(16, 26, '2025-05-31'),
+(17, 27, '2025-05-29'),
+(18, 27, '2025-05-31'),
+(19, 28, '2025-05-29'),
+(20, 28, '2025-05-31'),
+(21, 29, '2025-05-29'),
+(22, 29, '2025-05-31'),
+(23, 30, '2025-05-29'),
+(24, 30, '2025-05-31'),
+(25, 31, '2025-05-29'),
+(26, 31, '2025-05-31'),
+(27, 33, '2025-05-29'),
+(28, 33, '2025-05-31'),
+(29, 36, '2025-05-29'),
+(30, 36, '2025-05-31');
 
 -- --------------------------------------------------------
 
@@ -255,7 +295,8 @@ INSERT INTO `phim` (`id`, `tieu_de`, `daodien`, `dienvien`, `img`, `mo_ta`, `dat
 (29, 'Bảy Viên Ngọc Rồng Siêu Cấp: Siêu Anh Hùng', 'Tokuda', 'Masako Nozawa,Toshio Furukawa,Yuko Minaguchi,...', 'poster.jpg', 'Đội quân Ruy Băng Đỏ đã bị Son Goku tiêu diệt. Thế nhưng, những kẻ kế nghiệp của chúng đã tạo ra hai chiến binh Android mới là Gamma 1 và Gamma 2. Hai Android này tự nhận mình là “Siêu anh hùng”. Chúng bắt đầu tấn công Piccolo và Gohan… Mục tiêu của Đội quân Ruy Băng Đỏ mới này là gì? Trước nguy cơ cận kề, đã đến lúc các siêu anh hùng thực thụ phải thức tỉnh!', '2024-05-20', 128, 8, 'Nhật Bản', 12, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cQoNi0BVkj8?si=noUmGcjm6CJn8Rm0\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>'),
 (30, 'NHỮNG KỶ NGUYÊN CỦA TAYLOR SWIFT', 'Sam Wrench', 'Taylor Swift', '700x1000_18_.jpg', 'Hiện tượng văn hóa tiếp tục trên màn ảnh lớn! Đắm chìm trong trải nghiệm xem phim hòa nhạc độc nhất vô nhị với góc nhìn ngoạn mục, đậm chất điện ảnh về chuyến lưu diễn mang tính lịch sử. Khuyến khích khán giả đeo vòng tay tình bạn và mặc trang phục Taylor Swift Eras Tour!', '2024-05-20', 168, 9, 'Mỹ', 12, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/cwLAor_smGw?si=2xnYd5m-iCFpB-Yn\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>'),
 (31, 'WONKA', 'Paul King', 'Timothée Chalamet, Hugh Grant, Rowan Atkinson, Matt Lucas, Mathew Baynton.', '700x1000_22_.jpg', 'Dựa trên nhân vật từ quyến sách gối đầu giường của các em nhỏ trên toàn thế giới \"Charlie và Nhà Máy Sôcôla\" và phiên bản phim điện ảnh cùng tên vào năm 2005, WONKA kể câu chuyện kỳ diệu về hành trình của nhà phát minh, ảo thuật gia và nhà sản xuất sôcôla vĩ đại nhất thế giới trở thành WILLY WONKA đáng yêu mà chúng ta biết ngày nay. Từ đạo diễn loạt phim Paddington và nhà sản xuất loạt phim chuyển thể đình đám Harry Potter, WONKA hứa hẹn sẽ là một bộ phim đầy vui nhộn và màu sắc cho khán giả dịp Lễ Giáng Sinh năm nay.', '2024-05-20', 116, 9, 'Anh', 13, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/1JHj4hc5MEI?si=buPaabXX7WVAd61P\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>'),
-(33, 'NGƯỜI MẶT TRỜI', 'vfdv', 'df', '406x600-nmt.jpg', '400 năm qua, loài Ma Cà Rồng đã bí mật sống giữa loài người trong hòa bình, nhưng hiểm họa bỗng ập đến khi một cô gái loài người phát hiện được thân phận của hai anh em Ma Cà Rồng. Người anh khát máu quyết săn lùng cô để bảo vệ bí mật giống loài, trong khi người còn lại chạy đua với thời gian để bảo vệ cô bằng mọi giá.', '2024-05-20', 145, 9, 'dfb', 32, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/L3t9jW4eRAs?si=OwjViaUsQ2yMosxw\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>');
+(33, 'NGƯỜI MẶT TRỜI', 'vfdv', 'df', '406x600-nmt.jpg', '400 năm qua, loài Ma Cà Rồng đã bí mật sống giữa loài người trong hòa bình, nhưng hiểm họa bỗng ập đến khi một cô gái loài người phát hiện được thân phận của hai anh em Ma Cà Rồng. Người anh khát máu quyết săn lùng cô để bảo vệ bí mật giống loài, trong khi người còn lại chạy đua với thời gian để bảo vệ cô bằng mọi giá.', '2024-05-20', 145, 9, 'dfb', 32, '<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/L3t9jW4eRAs?si=OwjViaUsQ2yMosxw\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>'),
+(36, 'Địa đạo', 'Bùi Thạc Chuyên', 'Thái Hòa; Quang Tuấn; Diễm Hằng Lamoon; Anh Tú Wilson; Hồ Thu Anh', '350x495-diadao_1.jpg', 'Nhân dịp kỷ niệm 50 năm đất nước hoà bình này còn phim nào thoả được nỗi niềm thưởng thức thước phim thời chiến đầy hào hùng như Địa Đạo: Mặt Trời Trong Bóng Tối. Nay còn có thêm định dạng 4DX cho khán giả trải nghiệm chui hầm dưới lòng Củ Chi đất thép.\r\n', '2025-04-04', 128, 8, 'Việt ', 18, 'https://www.youtube.com/watch?v=7BTwfVoP4YY');
 
 -- --------------------------------------------------------
 
@@ -276,7 +317,7 @@ CREATE TABLE `phongchieu` (
 INSERT INTO `phongchieu` (`id`, `id_rap`, `name`) VALUES
 (1, 1, 'P101'),
 (2, 2, 'P102'),
-(10, 0, 'P109');
+(15, 0, 'P103');
 
 -- --------------------------------------------------------
 
@@ -343,7 +384,9 @@ INSERT INTO `ve` (`id`, `id_phim`, `id_thoi_gian_chieu`, `id_ngay_chieu`, `id_tk
 (320, 5, 54, 37, 18, 'H5,H4', 'Combo-Halo ', '859000', 9, 1, '2025-04-23 13:26:51'),
 (321, 26, 36, 25, 18, 'A6,A5', 'Combo-Hủy-Diệt ', '399000', 10, 1, '2025-04-23 13:31:10'),
 (322, 26, 36, 25, 17, 'A2,A3,A4', 'Combo-Wish-C1 ', '425000', 11, 1, '2025-04-25 17:57:38'),
-(323, 26, 36, 25, 17, 'A7', '', '100000', 12, 0, '2025-05-04 13:06:49');
+(323, 26, 36, 25, 17, 'A7', '', '100000', 12, 0, '2025-05-04 13:06:49'),
+(324, 26, 53, 36, 17, 'A5,A4', 'Combo-Halo ', '459000', 13, 1, '2025-05-25 21:31:39'),
+(325, 7, 7, 11, 17, 'A4,A3', 'Combo-Halo ', '459000', 14, 0, '2025-05-26 18:33:03');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -427,49 +470,49 @@ ALTER TABLE `binhluan`
 -- AUTO_INCREMENT cho bảng `hoa_don`
 --
 ALTER TABLE `hoa_don`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `khung_gio_chieu`
 --
 ALTER TABLE `khung_gio_chieu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT cho bảng `lichchieu`
 --
 ALTER TABLE `lichchieu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT cho bảng `loaiphim`
 --
 ALTER TABLE `loaiphim`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `phim`
 --
 ALTER TABLE `phim`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT cho bảng `phongchieu`
 --
 ALTER TABLE `phongchieu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT cho bảng `taikhoan`
 --
 ALTER TABLE `taikhoan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT cho bảng `ve`
 --
 ALTER TABLE `ve`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=324;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=326;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

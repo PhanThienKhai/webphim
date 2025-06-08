@@ -1,7 +1,6 @@
 <?php
 session_start();
 if(isset($_SESSION['user1'])) {
-
     include "./model/pdo.php";
     include "./model/loai_phim.php";
     include "./model/phim.php";
@@ -20,7 +19,7 @@ if(isset($_SESSION['user1'])) {
     if (isset($_GET['act']) && ($_GET['act'] != "")) {
         $act = $_GET['act'];
         switch ($act) {
-            case "QLloaiphim": //QL loại phim
+            case "QLloaiphim": //Qản lý loại phim
                 include "./view/loaiphim/QLloaiphim.php";
                 break;
                 case "themloai":

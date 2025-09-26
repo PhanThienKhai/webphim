@@ -37,3 +37,19 @@ function pr_assign_to_raps($ids_rap, $ids_phim, $replace = false){
 function pr_remove_film_all($id_phim){
     pdo_execute("DELETE FROM phim_rap WHERE id_phim = ?", $id_phim);
 }
+
+// 🎬 HÀM MỚI CHO KẾ HOẠCH CHIẾU PHIM
+function phim_assigned_to_rap($ma_rap) {
+    $sql = "SELECT p.id, p.tieu_de, p.thoi_luong_phim, p.img
+            FROM phim p
+            INNER JOIN phim_rap pr ON p.id = pr.id_phim  
+            WHERE pr.id_rap = ?
+            ORDER BY p.tieu_de ASC";
+    
+    try {
+        return pdo_query($sql, $ma_rap);
+    } catch (Exception $e) {
+        error_log("Lỗi lấy danh sách phim theo rạp: " . $e->getMessage());
+        return [];
+    }
+}

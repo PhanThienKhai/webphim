@@ -56,6 +56,10 @@ function permission_map()
         'sualichchieu' => [ROLE_QUAN_LY_RAP],
         'themlichchieu'=> [ROLE_QUAN_LY_RAP],
         'updatelichchieu'=>[ROLE_QUAN_LY_RAP],
+        'kehoach'       => [ROLE_QUAN_LY_RAP], // Hiển thị form kế hoạch chiếu
+        'kehoach_chieu' => [ROLE_QUAN_LY_RAP], // Kế hoạch chiếu phim
+        'luu_kehoach'   => [ROLE_QUAN_LY_RAP], // Lưu kế hoạch chiếu
+        'export_word_kehoach' => [ROLE_QUAN_LY_RAP], // Export Word kế hoạch chiếu
         'thoigian'     => [ROLE_QUAN_LY_RAP],
         'themthoigian' => [ROLE_QUAN_LY_RAP],
         'suathoigian'  => [ROLE_QUAN_LY_RAP],

@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Bắt đầu output buffering
 session_start();
 if(isset($_SESSION['user1'])) {
     include "./model/pdo.php";
@@ -23,6 +24,7 @@ if(isset($_SESSION['user1'])) {
     include "./model/doihoan.php";
     include "./model/chamcong.php";
     include "./helpers/quyen.php";
+    include "./helpers/export_word.php";
     $loadphim = loadall_phim();
     $loadloai = loadall_loaiphim();
     $loadtk = loadall_taikhoan();
@@ -1115,6 +1117,162 @@ if(isset($_SESSION['user1'])) {
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
                 $loadlich = $id_rap ? loadall_lichchieu_by_rap($id_rap) : loadall_lichchieu();
                 include "./view/suatchieu/QLsuatchieu.php";
+                break;
+
+            // 🎬 KẾ HOẠCH CHIẾU PHIM - Tính năng tích hợp tạo lịch và khung giờ
+            case "kehoach":
+                include "./view/kehoachphim/kehoach.php";
+                break;
+                
+            case "luu_kehoach":
+                if (isset($_POST['ma_phim'])) {
+                    $ma_phim = (int)$_POST['ma_phim'];
+                    $ghi_chu = trim($_POST['ghi_chu'] ?? '');
+                    $ma_rap = (int)$_SESSION['user1']['id_rap'];
+                    
+                    $success_total = 0;
+                    $gio_bat_dau = $_POST['gio_bat_dau'] ?? [];
+                    $ma_phong = $_POST['ma_phong'] ?? [];
+                    
+                    // Debug data
+                    error_log("DEBUG - ma_phim: $ma_phim, ma_rap: $ma_rap");
+                    error_log("DEBUG - gio_bat_dau: " . print_r($gio_bat_dau, true));
+                    error_log("DEBUG - ma_phong: " . print_r($ma_phong, true));
+                    
+                    // Validation
+                    if (empty($ma_phim) || empty($ma_rap)) {
+                        header("Location: index.php?act=kehoach&msg=error&error=" . urlencode("Thiếu thông tin phim hoặc rạp"));
+                        exit;
+                    }
+                    
+                    if (empty($gio_bat_dau) || empty($ma_phong)) {
+                        header("Location: index.php?act=kehoach&msg=error&error=" . urlencode("Thiếu thông tin khung giờ hoặc phòng"));
+                        exit;
+                    }
+                    
+                    // Lấy ngày từ form mới
+                    $tu_ngay = $_POST['tu_ngay'];
+                    $den_ngay = $_POST['den_ngay'];
+                    
+                    if (empty($tu_ngay) || empty($den_ngay)) {
+                        header("Location: index.php?act=kehoach&msg=error&error=" . urlencode("Thiếu thông tin ngày chiếu"));
+                        exit;
+                    }
+                    
+                    error_log("DEBUG - tu_ngay: $tu_ngay, den_ngay: $den_ngay");
+                    
+                    // Tạo lịch từ ngày bắt đầu đến ngày kết thúc
+                    $current_date = new DateTime($tu_ngay);
+                    $end_date = new DateTime($den_ngay);
+                    $total_days = 0;
+                    
+                    while ($current_date <= $end_date) {
+                        $ngay_chieu = $current_date->format('Y-m-d');
+                        error_log("DEBUG - Tạo lịch cho ngày: $ngay_chieu");
+                        
+                        $id_lich = them_lichchieu_kehoach($ma_phim, $ma_rap, $ngay_chieu, $ghi_chu);
+                        error_log("DEBUG - ID lịch chiếu tạo: $id_lich");
+                        
+                        if ($id_lich) {
+                            for ($i = 0; $i < count($gio_bat_dau); $i++) {
+                                if (!empty($gio_bat_dau[$i]) && !empty($ma_phong[$i])) {
+                                    error_log("DEBUG - Thêm khung giờ: " . $gio_bat_dau[$i] . " phòng: " . $ma_phong[$i]);
+                                    $result = them_khunggiochieu($id_lich, $ma_phong[$i], $gio_bat_dau[$i]);
+                                    if ($result) {
+                                        $success_total++;
+                                        error_log("DEBUG - Thành công thêm khung giờ");
+                                    } else {
+                                        error_log("DEBUG - Lỗi thêm khung giờ");
+                                    }
+                                }
+                            }
+                            $total_days++;
+                        } else {
+                            error_log("DEBUG - Lỗi tạo lịch chiếu cho ngày: $ngay_chieu");
+                        }
+                        
+                        $current_date->add(new DateInterval('P1D'));
+                    }
+                    
+                    error_log("DEBUG - Tổng days: $total_days, success: $success_total");
+                    
+                    // Redirect với thông báo
+                    if ($total_days > 0 && $success_total > 0) {
+                        header("Location: index.php?act=kehoach&msg=success");
+                        exit;
+                    } else {
+                        $error_msg = "Không thể tạo kế hoạch chiếu. Days: $total_days, Success: $success_total";
+                        header("Location: index.php?act=kehoach&msg=error&error=" . urlencode($error_msg));
+                        exit;
+                    }
+                } else {
+                    header("Location: index.php?act=kehoach&msg=error&error=" . urlencode("Dữ liệu form không hợp lệ"));
+                    exit;
+                }
+                break;
+                
+            case "export_word_kehoach":
+                if (isset($_POST['kehoach_id'])) {
+                    $kehoach_id = (int)$_POST['kehoach_id'];
+                    
+                    // Load thông tin kế hoạch chiếu
+                    $sql = "SELECT lc.*, p.tieu_de, p.thoi_luong_phim, r.name as ten_rap, pc.name as ten_phong
+                            FROM lichchieu lc
+                            INNER JOIN phim p ON p.id = lc.id_phim
+                            INNER JOIN rap r ON r.id = lc.id_rap  
+                            INNER JOIN phongchieu pc ON pc.id = (
+                                SELECT id_phong FROM khung_gio_chieu WHERE id_lich_chieu = lc.id LIMIT 1
+                            )
+                            WHERE lc.id = ? AND lc.id_rap = ?";
+                    
+                    $ma_rap = (int)$_SESSION['user1']['id_rap'];
+                    $kehoach = pdo_query_one($sql, $kehoach_id, $ma_rap);
+                    
+                    if ($kehoach) {
+                        // Load khung giờ
+                        $sql_khung = "SELECT thoi_gian_chieu FROM khung_gio_chieu WHERE id_lich_chieu = ? ORDER BY thoi_gian_chieu";
+                        $khung_gio = pdo_query($sql_khung, $kehoach_id);
+                        
+                        // Tạo file Word
+                        export_kehoach_word($kehoach, $khung_gio);
+                    } else {
+                        echo "<script>alert('Không tìm thấy kế hoạch chiếu!'); history.back();</script>";
+                    }
+                } else {
+                    echo "<script>alert('Thiếu thông tin kế hoạch chiếu!'); history.back();</script>";
+                }
+                break;
+                
+            case "preview_kehoach":
+                // AJAX endpoint để preview kế hoạch
+                if (isset($_POST['ma_phim'])) {
+                    $ma_phim = (int)$_POST['ma_phim'];
+                    $ma_phong = (int)$_POST['ma_phong'];
+                    $ngay_chieu = $_POST['ngay_chieu'];
+                    $gia_ve = (int)$_POST['gia_ve'];
+                    $gio_bat_dau = $_POST['gio_bat_dau'] ?? [];
+                    
+                    // Lấy thông tin chi tiết
+                    $phim_info = pdo_query_one("SELECT ten_phim, thoi_luong FROM phim WHERE ma_phim = ?", $ma_phim);
+                    $phong_info = pdo_query_one("SELECT ten_phong, so_ghe_ngoi FROM phong WHERE ma_phong = ?", $ma_phong);
+                    
+                    echo '<div class="preview-summary">';
+                    echo '<h6><i class="zmdi zmdi-movie"></i> ' . $phim_info['ten_phim'] . '</h6>';
+                    echo '<p><strong>Phòng:</strong> ' . $phong_info['ten_phong'] . ' (' . $phong_info['so_ghe_ngoi'] . ' ghế)</p>';
+                    echo '<p><strong>Ngày chiếu:</strong> ' . date('d/m/Y', strtotime($ngay_chieu)) . '</p>';
+                    echo '<p><strong>Giá vé:</strong> ' . number_format($gia_ve) . ' VNĐ</p>';
+                    echo '<p><strong>Khung giờ:</strong></p>';
+                    echo '<ul class="list-unstyled">';
+                    foreach ($gio_bat_dau as $index => $gio) {
+                        if (!empty($gio)) {
+                            $gio_kt = $_POST['gio_ket_thuc'][$index] ?? '';
+                            echo '<li>• ' . $gio . ' - ' . $gio_kt . '</li>';
+                        }
+                    }
+                    echo '</ul>';
+                    echo '</div>';
+                }
+                exit; // Đây là AJAX response
                 break;
             
              //////////QL Phòng

@@ -39,6 +39,7 @@
 <!-- Custom Style CSS Only For Demo Purpose -->
 <link id="cus-style" rel="stylesheet" href="assets/css/style-primary.css">
 <link rel="stylesheet" href="assets/css/admin-custom.css">
+<link rel="stylesheet" href="assets/css/admin-override.css">
 
 </head>
 

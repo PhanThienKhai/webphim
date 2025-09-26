@@ -71,3 +71,39 @@ function lc_list_by_rap_and_date_range($id_rap, $from_date, $to_date){
             ORDER BY lc.ngay_chieu ASC";
     return pdo_query($sql, $id_rap, $from_date, $to_date);
 }
+
+// 🎬 HÀM MỚI CHO KẾ HOẠCH CHIẾU PHIM TÍCH HỢP
+function them_lichchieu_kehoach($ma_phim, $ma_rap, $ngay_chieu, $ghi_chu = '') {
+    $sql = "INSERT INTO lichchieu (id_phim, id_rap, ngay_chieu, trang_thai_duyet, ghi_chu) 
+            VALUES (?, ?, ?, 'Chờ duyệt', ?)";
+    
+    try {
+        // Sử dụng cùng một connection cho cả INSERT và LAST_INSERT_ID
+        $conn = pdo_get_connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$ma_phim, $ma_rap, $ngay_chieu, $ghi_chu]);
+        
+        // Lấy ID vừa được chèn
+        $lastId = $conn->lastInsertId();
+        
+        return $lastId ? intval($lastId) : false;
+    } catch (Exception $e) {
+        error_log("Lỗi thêm lịch chiếu: " . $e->getMessage());
+        return false;
+    }
+}
+
+function them_khunggiochieu($id_lich_chieu, $id_phong, $gio_chieu) {
+    $sql = "INSERT INTO khung_gio_chieu (id_lich_chieu, id_phong, thoi_gian_chieu)
+            VALUES (?, ?, ?)";
+    
+    try {
+        $conn = pdo_get_connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id_lich_chieu, $id_phong, $gio_chieu]);
+        return true;
+    } catch (Exception $e) {
+        error_log("Lỗi thêm khung giờ chiếu: " . $e->getMessage());
+        return false;
+    }
+}

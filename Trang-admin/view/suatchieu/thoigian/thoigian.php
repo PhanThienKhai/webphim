@@ -11,6 +11,12 @@
                 <div class="col-12 col-lg-auto mb-20">
                     <div class="page-heading">
                         <h3 class="title">Quản Lý Khung Giờ Chiếu<span>/ Khung Giờ Chiếu</span></h3>
+                        <?php 
+                        $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                        if ($id_rap) {
+                            echo '<small class="text-muted">Đang hiển thị khung giờ chiếu của rạp ID: ' . $id_rap . '</small>';
+                        }
+                        ?>
                     </div>
                 </div><!-- Page Heading End -->
 

@@ -48,6 +48,9 @@ try {
                 <?php if ($_GET['msg'] === 'success'): ?>
                     <div class="alert alert-success alert-dismissible fade show">
                         <strong>🎉 Tạo kế hoạch chiếu thành công!</strong>
+                        <?php if (isset($_GET['ke_hoach'])): ?>
+                            <br><small>Mã kế hoạch: <code><?= htmlspecialchars($_GET['ke_hoach']) ?></code></small>
+                        <?php endif; ?>
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php elseif ($_GET['msg'] === 'error'): ?>

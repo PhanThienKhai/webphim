@@ -2,54 +2,57 @@
    ===============================================
    - High specificity CSS to override all existing styles
    - Immediate visual impact for admin interface
+   - UPDATED: Black headings, white background, Inter font
    =============================================== */
 
-/* 🌟 FORCE BACKGROUND GRADIENT */
+/* 🔤 GLOBAL FONT FAMILY - INTER */
+* {
+    font-family: 'Inter', 'Open Sans', sans-serif !important;
+}
+
+body, html {
+    font-family: 'Inter', 'Open Sans', sans-serif !important;
+}
+
+.main-wrapper,
+.main-wrapper * {
+    font-family: 'Inter', 'Open Sans', sans-serif !important;
+}
+
+/* 🌟 FORCE BACKGROUND WHITE */
 body .main-wrapper .content-body,
 .main-wrapper .content-body,
 div.content-body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    background: #ffffff !important;
     background-attachment: fixed !important;
     min-height: 100vh !important;
     position: relative !important;
 }
 
-/* ✨ OVERLAY EFFECTS */
+/* ✨ NO OVERLAY EFFECTS FOR CLEAN WHITE BACKGROUND */
 body .main-wrapper .content-body::before,
 .main-wrapper .content-body::before,
 div.content-body::before {
-    content: '' !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    background: 
-        radial-gradient(600px circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(800px circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%) !important;
-    pointer-events: none !important;
-    z-index: 0 !important;
+    display: none !important;
 }
 
-/* 🎯 WHITE TEXT HEADINGS */
+/* 🎯 BLACK TEXT HEADINGS FOR WHITE BACKGROUND */
 body .content-body .page-heading h3,
 .content-body .page-heading h3,
 div.content-body div.page-heading h3 {
-    color: #ffffff !important;
+    color: #000000 !important;
     font-weight: 800 !important;
     font-size: 2rem !important;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+    text-shadow: none !important;
     margin-bottom: 1.5rem !important;
-    animation: textGlow 2s ease-in-out infinite alternate !important;
 }
 
-@keyframes textGlow {
-    from {
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.2);
-    }
-    to {
-        text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 255, 255, 0.4);
-    }
+/* 🚫 REMOVE ALL TEXT SHADOWS IN CONTENT AREA */
+.content-body h1, .content-body h2, .content-body h3, 
+.content-body h4, .content-body h5, .content-body h6,
+.content-body .h1, .content-body .h2, .content-body .h3,
+.content-body .h4, .content-body .h5, .content-body .h6 {
+    text-shadow: none !important;
 }
 
 /* 💎 GLASS CARDS */

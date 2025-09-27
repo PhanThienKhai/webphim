@@ -12,7 +12,7 @@
                 <!-- Page Heading Start -->
                 <div class="col-12 col-lg-auto mb-20">
                     <div class="page-heading">
-                        <h3>quản lý phòng  <span>/ phòng chiếu</span></h3>
+                        <h3>Quản Lý Phòng  <span>/ phòng chiếu</span></h3>
                     </div>
                 </div><!-- Page Heading End -->
 

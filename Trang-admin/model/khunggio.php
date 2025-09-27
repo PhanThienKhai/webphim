@@ -1,19 +1,31 @@
 <?php
-function loadall_khunggiochieu() {
-    // Truy vấn SQL join 3 bảng
-    $sql = "SELECT khung_gio_chieu.id, khung_gio_chieu.thoi_gian_chieu, phim.tieu_de, phongchieu.name,lichchieu.ngay_chieu
+function loadall_khunggiochieu($id_rap = null) {
+    // Truy vấn SQL join 3 bảng với tùy chọn lọc theo rạp
+    $where_clause = $id_rap ? "AND lichchieu.id_rap = ?" : "";
+    $sql = "SELECT khung_gio_chieu.id, khung_gio_chieu.thoi_gian_chieu, phim.tieu_de, phongchieu.name,lichchieu.ngay_chieu, lichchieu.id_rap
             FROM lichchieu
             LEFT JOIN khung_gio_chieu ON lichchieu.id = khung_gio_chieu.id_lich_chieu
             LEFT JOIN phim ON phim.id = lichchieu.id_phim
             LEFT JOIN phongchieu ON phongchieu.id = khung_gio_chieu.id_phong
-            WHERE 1
+            WHERE khung_gio_chieu.id IS NOT NULL $where_clause
             ORDER BY khung_gio_chieu.id DESC";
 
-    $re = pdo_query($sql);
-    return $re;
+    return $id_rap ? pdo_query($sql, $id_rap) : pdo_query($sql);
 }
 function khunggio_by_lich($id_lich){
     return pdo_query("SELECT * FROM khung_gio_chieu WHERE id_lich_chieu = ? ORDER BY thoi_gian_chieu", $id_lich);
+}
+
+// 🎬 Hàm mới: Lấy khung giờ chiếu theo rạp
+function khunggio_by_rap($id_rap) {
+    $sql = "SELECT kgc.*, lc.ngay_chieu, lc.id_phim, p.tieu_de as ten_phim, pc.name as ten_phong
+            FROM khung_gio_chieu kgc
+            JOIN lichchieu lc ON lc.id = kgc.id_lich_chieu
+            JOIN phim p ON p.id = lc.id_phim  
+            JOIN phongchieu pc ON pc.id = kgc.id_phong
+            WHERE lc.id_rap = ?
+            ORDER BY lc.ngay_chieu DESC, kgc.thoi_gian_chieu ASC";
+    return pdo_query($sql, $id_rap);
 }
 function loadone_khung_gio_chieu($id)
 {

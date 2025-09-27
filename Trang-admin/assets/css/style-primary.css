@@ -722,10 +722,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   -webkit-align-items: baseline;
       -ms-flex-align: baseline;
           align-items: baseline;
+  color: #000000;
 }
 
 .page-heading h3 span {
-  color: #666666;
+  color: #000000;
   font-size: 14px;
   font-weight: 400;
   margin-left: 5px;
@@ -9070,6 +9071,7 @@ body.header-top-green .header-notification-area > li > a .user .name {
 
 .side-header.show + .content-body, .side-header.show ~ .footer-section {
   margin-left: 270px;
+  margin-top: 87px;
 }
 
 .side-header .side-header-close {

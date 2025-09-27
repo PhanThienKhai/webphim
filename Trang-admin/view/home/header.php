@@ -12,7 +12,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
      <!-- Favicon -->
     <script src="https://www.gstatic.com/charts/loader.js"></script>
-     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/charts/loader.js"></script>
 <!-- CSS
 ============================================ -->
@@ -39,7 +43,6 @@
 <!-- Custom Style CSS Only For Demo Purpose -->
 <link id="cus-style" rel="stylesheet" href="assets/css/style-primary.css">
 <link rel="stylesheet" href="assets/css/admin-custom.css">
-<link rel="stylesheet" href="assets/css/admin-override.css">
 
 </head>
 

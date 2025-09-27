@@ -51,7 +51,10 @@ function permission_map()
         'xoarp'  => [ROLE_ADMIN_HE_THONG, ROLE_QUAN_LY_CUM],
 
         // Phòng, suất chiếu: chỉ Quản lí rạp (nhân viên thao tác vé)
+        'xoaphong'    => [ROLE_QUAN_LY_RAP],
+        'suaphong'    => [ROLE_QUAN_LY_RAP],
         'phong'        => [ROLE_QUAN_LY_RAP],
+        'themphong'   => [ROLE_QUAN_LY_RAP],
         'QLsuatchieu'  => [ROLE_QUAN_LY_RAP],
         'sualichchieu' => [ROLE_QUAN_LY_RAP],
         'themlichchieu'=> [ROLE_QUAN_LY_RAP],
@@ -124,6 +127,10 @@ function permission_map()
 
         // Quản lý cụm rạp: duyệt kế hoạch chiếu
         'duyet_lichchieu' => [ROLE_QUAN_LY_CUM, ROLE_ADMIN_HE_THONG],
+        'chi_tiet_kehoach' => [ROLE_QUAN_LY_CUM, ROLE_ADMIN_HE_THONG],
+        'ajax_chi_tiet_kehoach' => [ROLE_QUAN_LY_CUM, ROLE_ADMIN_HE_THONG],
+        'ajax_chi_tiet_kehoach_new' => [ROLE_QUAN_LY_CUM, ROLE_ADMIN_HE_THONG],
+        'duyet_kehoach'   => [ROLE_QUAN_LY_CUM, ROLE_ADMIN_HE_THONG],
         'lich_rap'        => [ROLE_QUAN_LY_CUM, ROLE_QUAN_LY_RAP],
         'phanphim'        => [ROLE_QUAN_LY_CUM],
         'hieusuat_rap'    => [ROLE_ADMIN_HE_THONG, ROLE_QUAN_LY_CUM],

@@ -47,6 +47,36 @@
   transform: none !important; /* Tắt TẤT CẢ transform khi hover */
 }
 
+/* 📏 GLOBAL SCALE - Làm tổng thể trang web nhỏ lại */
+html {
+  font-size: 14px !important; /* Giảm từ 16px xuống 14px */
+  zoom: 0.95; /* Thu nhỏ tổng thể 95% */
+}
+
+body {
+  font-size: 0.9rem !important; /* Giảm font size body */
+  line-height: 1.5;
+}
+
+/* Thu nhỏ các thành phần chính */
+.sidebar {
+  transform: scale(0.95);
+  transform-origin: top left;
+}
+
+.main-content {
+  font-size: 0.9em;
+}
+
+/* Thu nhỏ table và card */
+.table {
+  font-size: 0.85rem;
+}
+
+.card {
+  font-size: 0.9rem;
+}
+
 /* Cho phép transform cần thiết cho animations và modals (không phải hover) */
 .modal.fade .modal-dialog,
 .alert.fade,
@@ -1086,5 +1116,36 @@
     
     .film-strip {
         display: none;
+    }
+}
+
+/* 🎭 Modal Body Override - Thêm margin-top */
+.modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1rem;
+    margin-top: 22px;
+}
+
+/* 📏 Modal Size Override - Làm modal nhỏ lại */
+.modal-dialog {
+    max-width: 800px !important; /* Giảm từ 900px xuống 800px */
+    margin: 1.75rem auto;
+}
+
+.modal-lg {
+    max-width: 900px !important; /* Large modal nhỏ lại từ 1140px */
+}
+
+.modal-xl {
+    max-width: 1000px !important; /* Extra large modal nhỏ lại từ 1140px */
+}
+
+/* 📱 Responsive Modal */
+@media (max-width: 576px) {
+    .modal-dialog {
+        max-width: 95% !important;
+        margin: 1rem;
     }
 }

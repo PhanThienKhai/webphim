@@ -141,7 +141,17 @@ if(isset($_SESSION['user1'])) {
                     // Tạo các khung giờ chiếu
                     for ($i = 0; $i < count($gio_bat_dau); $i++) {
                         if (!empty($gio_bat_dau[$i]) && !empty($ma_phong[$i])) {
-                            them_kgc($id_lich_chieu, (int)$ma_phong[$i], $gio_bat_dau[$i]);
+                            $id_phong = (int)$ma_phong[$i];
+                            
+                            // Kiểm tra phòng có thuộc rạp hiện tại không
+                            $phong_check = pdo_query_one("SELECT id FROM phongchieu WHERE id = ? AND id_rap = ?", 
+                                                        $id_phong, $ma_rap);
+                            
+                            if ($phong_check) {
+                                // Chỉ tạo khung giờ nếu phòng thuộc rạp hiện tại
+                                them_kgc($id_lich_chieu, $id_phong, $gio_bat_dau[$i]);
+                            }
+                            // Nếu phòng không thuộc rạp, bỏ qua (có thể log warning)
                         }
                     }
                 }
@@ -1232,7 +1242,8 @@ if(isset($_SESSION['user1'])) {
                          include "./view/feedblack/QLfeed.php";
                           break;
             case "thoigian":
-                $loadkgc = loadall_khunggiochieu();
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                $loadkgc = loadall_khunggiochieu($id_rap);
                 include "./view/suatchieu/thoigian/thoigian.php";
                 break;
             case "themthoigian":
@@ -1267,7 +1278,8 @@ if(isset($_SESSION['user1'])) {
                 break;
             case "xoathoigian":
                 if (isset($_GET['idxoa'])) { xoa_kgc((int)$_GET['idxoa']); }
-                $loadkgc = loadall_khunggiochieu();
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                $loadkgc = loadall_khunggiochieu($id_rap);
                 include "./view/suatchieu/thoigian/thoigian.php";
                 break;
             case "QLsuatchieu":
@@ -1385,7 +1397,8 @@ if(isset($_SESSION['user1'])) {
                     $thoi_gian_chieu = $_POST['tgc'];
                     sua_kgc($id, $id_lc, $id_phong, $thoi_gian_chieu);
                 }
-                $loadkgc = loadall_khunggiochieu();
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                $loadkgc = loadall_khunggiochieu($id_rap);
                 include "./view/suatchieu/thoigian/thoigian.php";
                 break;
             case "themthoigian":
@@ -1397,21 +1410,24 @@ if(isset($_SESSION['user1'])) {
                     $thoi_gian_chieu = trim($_POST['tgc'] ?? '');
                     if($id_lc<=0 || $id_phong<=0 || $thoi_gian_chieu==='') {
                         $error = "Vui lòng chọn lịch chiếu, phòng và giờ";
-                        $loadkgc = loadall_khunggiochieu();
+                        $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                        $loadkgc = loadall_khunggiochieu($id_rap);
                         include "./view/suatchieu/thoigian/them.php";
                         break;
                     }
                     // Chặn trùng khung giờ cùng phòng trong ngày của lịch chiếu
                     if (kgc_conflict_exists($id_lc, $id_phong, $thoi_gian_chieu)) {
                         $error = "Khung giờ này đã tồn tại cho phòng trong ngày đã chọn";
-                        $loadkgc = loadall_khunggiochieu();
+                        $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                        $loadkgc = loadall_khunggiochieu($id_rap);
                         include "./view/suatchieu/thoigian/them.php";
                         break;
                     }
                     them_kgc($id_lc, $id_phong, $thoi_gian_chieu);
                     $suatc = "Thêm thành công";
                 }
-                $loadkgc = loadall_khunggiochieu();
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                $loadkgc = loadall_khunggiochieu($id_rap);
                 include "./view/suatchieu/thoigian/them.php";
                 break;
             case "suathoigian":
@@ -1426,7 +1442,8 @@ if(isset($_SESSION['user1'])) {
                 if (isset($_GET['idxoa']) && ($_GET['idxoa'] > 0)){
                     xoa_kgc($_GET['idxoa']);
                 }
-                $loadkgc = loadall_khunggiochieu();
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                $loadkgc = loadall_khunggiochieu($id_rap);
                 include "./view/suatchieu/thoigian/thoigian.php";
                 break;
             case "xoalichchieu":
@@ -1519,7 +1536,7 @@ if(isset($_SESSION['user1'])) {
                            $dia_chi =$_POST['dia_chi'];
                            if($id==''||$name ==''||$email==''|| $pass==''|| $user==''||$phone==''||$dia_chi=='') {
                              $error = "vui lòng không để trống";
-                             $loadkgc = loadall_khunggiochieu();
+                             // Không cần load khung giờ chiếu trong user management
                              include "./view/user/sua.php";
                              break;
                            }else {

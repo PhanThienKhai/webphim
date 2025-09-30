@@ -6672,6 +6672,7 @@ table.data-table.collapsed tbody tr.child td.child ul li .dtr-title {
 
 .table thead tr th, .table thead tr td, .table tbody tr th, .table tbody tr td {
   border-color: #f1f1f1;
+  font-size: 14px;
 }
 
 .table.table-vertical-middle thead tr th, .table.table-vertical-middle thead tr td, .table.table-vertical-middle tbody tr th, .table.table-vertical-middle tbody tr td {
@@ -9071,7 +9072,6 @@ body.header-top-green .header-notification-area > li > a .user .name {
 
 .side-header.show + .content-body, .side-header.show ~ .footer-section {
   margin-left: 270px;
-  margin-top: 87px;
 }
 
 .side-header .side-header-close {
@@ -9097,7 +9097,7 @@ body.header-top-green .header-notification-area > li > a .user .name {
 
 .side-header .side-header-inner {
   height: 100%;
-  padding: 0 25px 0 0;
+  padding: 0px 7px 0 0;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (max-width: 767px) {

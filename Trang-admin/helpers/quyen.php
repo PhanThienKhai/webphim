@@ -95,6 +95,7 @@ function permission_map()
         'sodoghe'        => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
         'chamcong'       => [ROLE_QUAN_LY_RAP],
         'bangluong'      => [ROLE_QUAN_LY_RAP],
+        'QLfeed'        => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
         // Combo / Khuyến mãi
         'QLcombo'        => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
         'combo_them'     => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],

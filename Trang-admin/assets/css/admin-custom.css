@@ -7,8 +7,8 @@
 
 :root {
   /* 🌈 Primary Colors - Gradient Magic */
-  --adm-primary: #667eea;
-  --adm-primary-600: #764ba2;
+  --adm-primary: #999aa1;
+  --adm-primary-600: #999aa1;
   --adm-primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --adm-primary-glow: linear-gradient(135deg, #667eea 0%, #f093fb 50%, #f5576c 100%);
   
@@ -188,7 +188,7 @@ body {
   font-size: 2rem !important;
   letter-spacing: -0.5px !important;
   margin: 0 0 1.5rem 0 !important;
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%) !important;
+  background: linear-gradient(135deg, #000000 0%, #e2e8f0 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
@@ -529,6 +529,7 @@ body {
   background: linear-gradient(180deg, var(--adm-sidebar) 0%, var(--adm-sidebar-2) 100%);
   box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
+      height: 1500px;
 }
 
 .side-header-menu ul li a {
@@ -544,10 +545,10 @@ body {
 
 .side-header-menu ul li a:hover,
 .side-header-menu ul li a.is-active {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+  background: linear-gradient(135deg, rgba(176, 176, 186, 0.2) 0%, rgba(198, 156, 240, 0.2) 100%);
   color: white;
   /* transform: translateX(2px); - TẮT LUÔN ĐỂ KHÔNG NHẢY */
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(179, 184, 209, 0.3);
 }
 
 .side-header-menu ul li a i {
@@ -563,7 +564,7 @@ body {
 
 /* 🏠 MAIN LAYOUT - Content Body với background gradient đẹp mắt */
 .content-body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  background: linear-gradient(135deg, #c8cad5 0%, #bf9de0 100%) !important;
   background-attachment: fixed !important;
   min-height: 100vh !important;
   padding: 24px !important;

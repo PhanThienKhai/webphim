@@ -58,6 +58,98 @@ body {
   line-height: 1.5;
 }
 
+/* 🎨 HEADER STYLING - Làm đẹp header */
+.header-area,
+.main-header {
+  background: var(--adm-primary-gradient) !important;
+  box-shadow: var(--adm-shadow-lg) !important;
+  border: none !important;
+  padding: 0.8rem 1.5rem !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.header-area .header-wrapper {
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo/Brand styling */
+.header-area .brand-logo,
+.header-area .logo {
+  font-weight: 700 !important;
+  font-size: 1.4rem !important;
+  color: white !important;
+  text-decoration: none !important;
+  letter-spacing: -0.02em;
+}
+
+.header-area .brand-logo:hover,
+.header-area .logo:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Header buttons và icons */
+.header-area .header-right,
+.header-area .user-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-area .btn,
+.header-area .button {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: var(--adm-radius-sm) !important;
+  font-weight: 500 !important;
+  transition: var(--adm-transition) !important;
+  backdrop-filter: blur(10px);
+}
+
+.header-area .btn:hover,
+.header-area .button:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* User dropdown */
+.header-area .dropdown-toggle {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border-radius: 50px !important;
+  padding: 0.4rem 1rem !important;
+}
+
+.header-area .dropdown-toggle:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Header icons */
+.header-area i,
+.header-area .zmdi {
+  color: white !important;
+  font-size: 1.1rem;
+}
+
+/* Mobile header adjustments */
+@media (max-width: 768px) {
+  .header-area,
+  .main-header {
+    padding: 0.6rem 1rem !important;
+  }
+  
+  .header-area .brand-logo,
+  .header-area .logo {
+    font-size: 1.2rem !important;
+  }
+}
+
 /* Thu nhỏ các thành phần chính */
 .sidebar {
   transform: scale(0.95);

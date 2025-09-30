@@ -1,5 +1,126 @@
 <?php
 session_start();
+
+// Handle Enhanced Calendar POST requests FIRST (before any includes or output)
+if (isset($_GET['act']) && $_GET['act'] === 'ql_lichlamviec_calendar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Clear any output buffer
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    header('Content-Type: application/json; charset=utf-8');
+    
+    // Debug log - write to file to see if this code runs
+    file_put_contents('debug_post.log', "POST handler started at " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
+    
+    // Check session first
+    if (!isset($_SESSION['user1'])) {
+        echo json_encode(['success' => false, 'message' => 'Not logged in']);
+        exit;
+    }
+    
+    // Include required files for this API
+    include "./model/pdo.php";
+    include "./model/lichlamviec.php";
+    include "./helpers/quyen.php";
+    
+    // Check permissions
+    $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+    if (!allowed_act('ql_lichlamviec_calendar', $currentRole)) {
+        echo json_encode(['success' => false, 'message' => 'Access denied']);
+        exit;
+    }
+    
+    $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+    if (!$id_rap) {
+        echo json_encode(['success' => false, 'message' => 'No cinema ID']);
+        exit;
+    }
+    
+    // Debug log
+    error_log('Enhanced Calendar POST request received');
+    
+    $input = json_decode(file_get_contents('php://input'), true);
+    
+    // Debug input
+    error_log('Input data: ' . print_r($input, true));
+    
+    if (!$input) {
+        echo json_encode(['success' => false, 'message' => 'Invalid JSON input']);
+        exit;
+    }
+    
+    if ($input['action'] === 'create_assignments') {
+        $assignments = $input['assignments'] ?? [];
+        $success_count = 0;
+        $error_count = 0;
+        $errors = [];
+        
+        // Debug log
+        file_put_contents('debug_post.log', "Assignments received: " . print_r($assignments, true) . "\n", FILE_APPEND);
+        
+        if (empty($assignments)) {
+            echo json_encode(['success' => false, 'message' => 'Không có ca làm việc nào để tạo']);
+            exit;
+        }
+        
+        foreach ($assignments as $assignment) {
+            $id_nv = (int)($assignment['nhanvien_id'] ?? 0);
+            $ngay = trim($assignment['ngay'] ?? '');
+            $gio_bat_dau = trim($assignment['gio_bat_dau'] ?? '');
+            $gio_ket_thuc = trim($assignment['gio_ket_thuc'] ?? '');
+            $ca_lam = trim($assignment['ca_lam'] ?? '');
+            $ghi_chu = trim($assignment['ghi_chu'] ?? '');
+            
+            file_put_contents('debug_post.log', "Processing assignment: ID=$id_nv, Date=$ngay, Start=$gio_bat_dau, End=$gio_ket_thuc\n", FILE_APPEND);
+            
+            if ($id_nv && $ngay && $gio_bat_dau && $gio_ket_thuc) {
+                // Kiểm tra nhân viên có thuộc rạp này không
+                $nv_check = pdo_query_one("SELECT id FROM taikhoan WHERE id = ? AND id_rap = ?", $id_nv, $id_rap);
+                if (!$nv_check) {
+                    $errors[] = "Nhân viên ID $id_nv không thuộc rạp này";
+                    $error_count++;
+                    file_put_contents('debug_post.log', "Employee check failed for ID=$id_nv\n", FILE_APPEND);
+                    continue;
+                }
+                
+                // Kiểm tra trùng lặp
+                if (!llv_exists($id_nv, $id_rap, $ngay, $gio_bat_dau, $gio_ket_thuc)) {
+                    llv_insert($id_nv, $id_rap, $ngay, $gio_bat_dau, $gio_ket_thuc, 
+                              $ca_lam ? $ca_lam : null, $ghi_chu ? $ghi_chu : null);
+                    $success_count++;
+                    file_put_contents('debug_post.log', "Successfully inserted assignment for ID=$id_nv\n", FILE_APPEND);
+                } else {
+                    $errors[] = "Ca làm việc đã tồn tại cho nhân viên ID $id_nv vào $ngay";
+                    $error_count++;
+                    file_put_contents('debug_post.log', "Duplicate assignment for ID=$id_nv\n", FILE_APPEND);
+                }
+            } else {
+                $errors[] = "Thiếu thông tin bắt buộc cho một ca làm việc (ID=$id_nv, ngay=$ngay, start=$gio_bat_dau, end=$gio_ket_thuc)";
+                $error_count++;
+                file_put_contents('debug_post.log', "Missing required data for assignment\n", FILE_APPEND);
+            }
+        }
+        
+        $response = [
+            'success' => $success_count > 0,
+            'success_count' => $success_count,
+            'error_count' => $error_count,
+            'message' => "Tạo thành công $success_count ca làm việc" . 
+                       ($error_count > 0 ? ", $error_count ca bị lỗi" : ""),
+            'errors' => $errors
+        ];
+        
+        file_put_contents('debug_post.log', "Final response: " . print_r($response, true) . "\n", FILE_APPEND);
+        
+        echo json_encode($response);
+        exit;
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Invalid action: ' . ($input['action'] ?? 'none')]);
+        exit;
+    }
+}
+
 if(isset($_SESSION['user1'])) {
     include "./model/pdo.php";
     include "./model/loai_phim.php";
@@ -392,7 +513,41 @@ if(isset($_SESSION['user1'])) {
                     echo json_encode([]); exit;
                 }
 
-            // Quản lý rạp: lịch làm, duyệt nghỉ, thiết bị
+            // Enhanced calendar với tính năng phân công nhân viên
+            case "ql_lichlamviec_calendar":
+                // Kiểm tra quyền truy cập (chỉ cho GET request - POST đã xử lý ở đầu file)
+                $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                if (!allowed_act('ql_lichlamviec_calendar', $currentRole)) {
+                    include "./view/home/403.php"; 
+                    break;
+                }
+                
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                if (!$id_rap) { 
+                    include "./view/home/403.php"; 
+                    break; 
+                }
+                
+                // Load dữ liệu để hiển thị (chỉ GET request)
+                $ym = $_GET['ym'] ?? date('Y-m');
+                
+                // Lấy danh sách lịch làm việc của tháng
+                $first = $ym.'-01';
+                $last = date('Y-m-t', strtotime($first));
+                $llv = llv_list_by_rap($id_rap, $first, $last);
+                
+                // Tạo màu cho mỗi nhân viên
+                $ds_nv = pdo_query("SELECT id, name FROM taikhoan WHERE vai_tro = 1 AND id_rap = ? ORDER BY name", $id_rap);
+                $employee_colors = [];
+                $colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#84cc16', '#f97316'];
+                foreach ($ds_nv as $index => $nv) {
+                    $employee_colors[$nv['id']] = $colors[$index % count($colors)];
+                }
+                
+                $rap = rap_one($id_rap);
+                include "./view/quanly/lichlamviec_calendar.php";
+                break;
+                
             case "ql_lichlamviec":
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
                 if (!$id_rap) { include "./view/home/403.php"; break; }

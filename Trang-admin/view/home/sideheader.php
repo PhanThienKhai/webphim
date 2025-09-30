@@ -69,7 +69,12 @@
                                 </ul>
                             </li>
                         <?php elseif ($role == ROLE_QUAN_LY_RAP): ?>
-                            <li><a href="index.php?act=ql_lichlamviec"><i class="zmdi zmdi-calendar"></i> <span>Lịch làm việc</span></a></li>
+                            <li class="has-sub-menu"><a href="#"><i class="zmdi zmdi-calendar"></i> <span>Lịch làm việc</span></a>
+                                <ul class="side-header-sub-menu">
+                                    <li><a href="index.php?act=ql_lichlamviec"><i class="zmdi zmdi-format-list-bulleted"></i><span>Dạng bảng</span></a></li>
+                                    <li><a href="index.php?act=ql_lichlamviec_calendar"><i class="zmdi zmdi-calendar-note"></i><span>📅 Calendar phân công</span></a></li>
+                                </ul>
+                            </li>
                             <li><a href="index.php?act=ql_duyetnghi"><i class="zmdi zmdi-time-restore"></i> <span>Duyệt nghỉ phép</span></a></li>
                             <li><a href="index.php?act=kehoach" class="<?= $currentAct==='kehoach'?'is-active':''; ?>"><i class="zmdi zmdi-movie-alt"></i> <span>Lập kế hoạch chiếu phim</span></a></li>
                             <li><a href="index.php?act=phong"><i class="zmdi zmdi-local-movies zmdi-hc-fw"></i> <span>Quản Lý Phòng</span></a></li>

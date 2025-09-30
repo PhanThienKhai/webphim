@@ -5,6 +5,9 @@
         <div class="col-12 col-lg-auto">
             <div class="page-heading"><h3>Phân công lịch làm việc</h3></div>
             <?php if (!empty($rap['ten_rap'])): ?><div style="color:#6b7280;">Rạp: <strong><?= htmlspecialchars($rap['ten_rap']) ?></strong></div><?php endif; ?>
+            <div class="mt-10">
+                <a href="index.php?act=ql_lichlamviec_calendar" class="btn btn-outline-primary btn-sm">📅 Xem dạng Calendar</a>
+            </div>
         </div>
     </div>
 

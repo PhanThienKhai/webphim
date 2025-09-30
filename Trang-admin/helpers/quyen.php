@@ -88,6 +88,8 @@ function permission_map()
 
         // Quản lý rạp: phân công lịch, duyệt nghỉ, thiết bị
         'ql_lichlamviec' => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
+        // 'ql_lichlamviec_calendar_enhanced' => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG], // Enhanced calendar với phân công nhân viên
+        'ql_lichlamviec_calendar' => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG], // Enhanced calendar với phân công nhân viên
         'ql_duyetnghi'   => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
         'thietbiphong'   => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
         'sodoghe'        => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],

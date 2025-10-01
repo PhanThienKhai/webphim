@@ -4,7 +4,7 @@
     <div class="row justify-content-between align-items-center mb-20">
         <div class="col-12 col-lg-auto">
             <div class="page-heading"><h3>📅 Phân công lịch làm việc - Calendar View</h3></div>
-            <?php if (!empty($rap['ten_rap'])): ?><div style="color:#6b7280;">Rạp: <strong><?= htmlspecialchars($rap['ten_rap']) ?></strong></div><?php endif; ?>
+            <?php if (!empty($rap['ten_rap'])): ?><div style="color:#6b7280; font-size: 14px;">Rạp: <strong><?= htmlspecialchars($rap['ten_rap']) ?></strong></div><?php endif; ?>
             <!-- <div class="mt-10">
                 <a href="index.php?act=ql_lichlamviec" class="btn btn-outline-secondary btn-sm">← Xem dạng bảng</a>
             </div> -->
@@ -14,7 +14,6 @@
     <?php if (!empty($error)): ?><div class="alert alert-danger"><?= htmlspecialchars($error) ?></div><?php endif; ?>
     <?php if (!empty($success)): ?><div class="alert alert-success"><?= htmlspecialchars($success) ?></div><?php endif; ?>
 
-    
 
     <div class="calendar-management-container">
         <!-- Employee Selection Panel -->
@@ -388,7 +387,7 @@
 
 .template-name {
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 4px;
 }
 
@@ -485,7 +484,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 12px;
+    font-size: 14px;
     color: #666;
 }
 
@@ -616,6 +615,8 @@
     left: 0;
     width: 100vw;
     height: 100vh;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;

@@ -9056,6 +9056,8 @@ body.header-top-green .header-notification-area > li > a .user .name {
   padding: 30px 0;
   -webkit-box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.1);
           box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.1);
+  bottom: 0;        /* <-- thêm dòng này */
+  height: auto;     /* để top/bottom quyết định chiều cao */
 }
 
 .side-header.hide {
@@ -9098,6 +9100,8 @@ body.header-top-green .header-notification-area > li > a .user .name {
 .side-header .side-header-inner {
   height: 100%;
   padding: 0px 7px 0 0;
+  overflow-y: auto;            /* cuộn khi menu dài */
+
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), only screen and (max-width: 767px) {

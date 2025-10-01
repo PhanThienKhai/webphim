@@ -88,6 +88,7 @@ body {
   font-family: "Open Sans", sans-serif;
   color: #666666;
   position: relative;
+   zoom: 0.9;
 }
 
 body[dir="rtl"] {
@@ -14501,7 +14502,8 @@ body.skin-dark .cus-radio.light .icon::before {
     padding-right: 0 !important;
   }
   [dir="rtl"] .header-notification-area > li:last-child {
-    padding-left: 0 !important;
+    padding-left: 0
+ !important;
     padding-right: 10px !important;
   }
 }

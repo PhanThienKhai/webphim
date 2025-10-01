@@ -1,0 +1,442 @@
+/* =============================================================================
+   ADMIN HEADER IMPROVEMENTS - Galaxy Studio
+   Cải thiện header cho trang quản trị
+   ============================================================================= */
+
+/* =============================================================================
+   HEADER SECTION IMPROVEMENTS
+   ============================================================================= */
+
+.header-section {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    border-bottom: 3px solid #3498db !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 9999 !important;
+    padding: 15px 0 !important;
+    transition: all 0.3s ease !important;
+}
+
+.header-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #e74c3c, #f39c12, #27ae60, #9b59b6);
+    background-size: 400% 100%;
+    animation: headerGradient 8s ease infinite;
+}
+
+@keyframes headerGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.header-section .container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* =============================================================================
+   HEADER LOGO IMPROVEMENTS
+   ============================================================================= */
+
+.header-logo {
+    position: relative;
+    z-index: 2;
+}
+
+.header-logo a {
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-logo h3 {
+    background: linear-gradient(135deg, #3498db, #e74c3c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 !important;
+    font-weight: 700 !important;
+    font-size: 24px !important;
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.header-logo h3::after {
+    content: '⭐';
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+    0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
+    50% { transform: translateY(-50%) scale(1.2); opacity: 0.8; }
+}
+
+/* =============================================================================
+   SIDE HEADER TOGGLE IMPROVEMENTS
+   ============================================================================= */
+
+.side-header-toggle {
+    background: linear-gradient(135deg, #3498db, #2980b9) !important;
+    border: none !important;
+    color: white !important;
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.side-header-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.side-header-toggle:hover::before {
+    left: 100%;
+}
+
+.side-header-toggle:hover {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4) !important;
+}
+
+.side-header-toggle i {
+    font-size: 20px !important;
+    transition: transform 0.3s ease !important;
+}
+
+.side-header-toggle:hover i {
+    transform: rotate(90deg) !important;
+}
+
+/* =============================================================================
+   HEADER NOTIFICATIONS IMPROVEMENTS
+   ============================================================================= */
+
+.header-notification-area {
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.header-notification-area li {
+    position: relative;
+}
+
+/* Language Flag */
+.header-notification-area .lang-flag {
+    width: 40px !important;
+    height: 30px !important;
+    border-radius: 8px !important;
+    border: 2px solid #3498db !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.header-notification-area .lang-flag:hover {
+    transform: scale(1.1) !important;
+    border-color: #e74c3c !important;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3) !important;
+}
+
+/* =============================================================================
+   USER DROPDOWN IMPROVEMENTS
+   ============================================================================= */
+
+.header-notification-area .user {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 8px 15px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 25px !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+.header-notification-area .user:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+}
+
+.header-notification-area .avatar {
+    position: relative;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    border: 2px solid #3498db !important;
+    transition: all 0.3s ease !important;
+}
+
+.header-notification-area .avatar:hover {
+    border-color: #e74c3c !important;
+    transform: scale(1.05) !important;
+}
+
+.header-notification-area .avatar img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    transition: transform 0.3s ease !important;
+}
+
+.header-notification-area .avatar:hover img {
+    transform: scale(1.1) !important;
+}
+
+.header-notification-area .status {
+    position: absolute !important;
+    bottom: 2px !important;
+    right: 2px !important;
+    width: 12px !important;
+    height: 12px !important;
+    background: #27ae60 !important;
+    border-radius: 50% !important;
+    border: 2px solid white !important;
+    animation: statusPulse 2s ease-in-out infinite !important;
+}
+
+@keyframes statusPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7); }
+    50% { box-shadow: 0 0 0 8px rgba(39, 174, 96, 0); }
+}
+
+/* =============================================================================
+   USER DROPDOWN MENU IMPROVEMENTS
+   ============================================================================= */
+
+.adomx-dropdown-menu.dropdown-menu-user {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 15px !important;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2) !important;
+    padding: 0 !important;
+    margin-top: 15px !important;
+    min-width: 280px !important;
+    overflow: hidden !important;
+    animation: dropdownSlide 0.3s ease !important;
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-menu-user .head {
+    background: linear-gradient(135deg, #3498db, #2980b9) !important;
+    padding: 20px !important;
+    color: white !important;
+    text-align: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.dropdown-menu-user .head::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.dropdown-menu-user .head h5 {
+    margin: 0 0 8px 0 !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.dropdown-menu-user .head h5 a {
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.dropdown-menu-user .head .mail {
+    color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 14px !important;
+    text-decoration: none !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.dropdown-menu-user .body {
+    padding: 15px 0 !important;
+}
+
+.dropdown-menu-user .body ul {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.dropdown-menu-user .body ul li a {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 12px 20px !important;
+    color: #2c3e50 !important;
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    font-weight: 500 !important;
+}
+
+.dropdown-menu-user .body ul li a:hover {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+    color: white !important;
+    transform: translateX(5px) !important;
+}
+
+.dropdown-menu-user .body ul li a i {
+    font-size: 18px !important;
+    width: 20px !important;
+    text-align: center !important;
+}
+
+/* =============================================================================
+   RESPONSIVE IMPROVEMENTS
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    .header-section {
+        padding: 10px 0 !important;
+    }
+    
+    .header-section .container-fluid {
+        padding: 0 15px !important;
+    }
+    
+    .header-logo h3 {
+        font-size: 18px !important;
+    }
+    
+    .header-logo h3::after {
+        right: -20px !important;
+        font-size: 14px !important;
+    }
+    
+    .header-notification-area {
+        gap: 15px !important;
+    }
+    
+    .side-header-toggle {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .header-notification-area .avatar {
+        width: 35px !important;
+        height: 35px !important;
+    }
+    
+    .adomx-dropdown-menu.dropdown-menu-user {
+        min-width: 250px !important;
+        margin-top: 10px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-logo h3 {
+        font-size: 16px !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    .header-notification-area {
+        gap: 10px !important;
+    }
+    
+    .header-notification-area .user {
+        padding: 6px 12px !important;
+    }
+    
+    .adomx-dropdown-menu.dropdown-menu-user {
+        min-width: 220px !important;
+    }
+}
+
+/* =============================================================================
+   ACCESSIBILITY IMPROVEMENTS
+   ============================================================================= */
+
+.side-header-toggle:focus,
+.header-notification-area a:focus {
+    outline: 2px solid #3498db !important;
+    outline-offset: 2px !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .header-section {
+        background: #000 !important;
+        border-bottom: 3px solid #fff !important;
+    }
+    
+    .header-logo h3 {
+        color: #fff !important;
+        -webkit-text-fill-color: #fff !important;
+    }
+    
+    .side-header-toggle {
+        background: #fff !important;
+        color: #000 !important;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .header-section,
+    .side-header-toggle,
+    .header-notification-area .avatar,
+    .adomx-dropdown-menu {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .side-header-toggle:hover,
+    .header-notification-area .avatar:hover,
+    .header-notification-area .user:hover {
+        transform: none !important;
+    }
+}

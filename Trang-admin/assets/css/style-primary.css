@@ -852,6 +852,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .add-edit-product-wrap {
   background-color: #fafafa;
   padding: 0px;
+  margin-top: -44px;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {

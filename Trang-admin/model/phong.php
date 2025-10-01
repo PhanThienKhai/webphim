@@ -17,13 +17,13 @@ function xoa_phong($id)
     pdo_execute($sql);
 }
 
-function update_phong($id,$name,$so_ghe=null,$dien_tich=null){
-    if ($so_ghe === null && $dien_tich === null){
+function update_phong($id,$name,$so_ghe=null,$dien_tich=null,$gia_thuong=null,$gia_trung=null,$gia_vip=null){
+    if ($so_ghe === null && $dien_tich === null && $gia_thuong === null && $gia_trung === null && $gia_vip === null){
         $sql = "update phongchieu set `name`=? where `id`=?";
         pdo_execute($sql, $name, $id);
     } else {
-        $sql = "update phongchieu set `name`=?, `so_ghe`=?, `dien_tich`=? where `id`=?";
-        pdo_execute($sql, $name, $so_ghe, $dien_tich, $id);
+        $sql = "update phongchieu set `name`=?, `so_ghe`=?, `dien_tich`=?, `gia_thuong`=?, `gia_trung`=?, `gia_vip`=? where `id`=?";
+        pdo_execute($sql, $name, $so_ghe, $dien_tich, $gia_thuong, $gia_trung, $gia_vip, $id);
     }
 }
 function them_phong($name,$id_rap,$so_ghe=0,$dien_tich=0){

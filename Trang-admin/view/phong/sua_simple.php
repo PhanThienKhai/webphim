@@ -164,18 +164,18 @@ if (is_array($loadphong1)) {
                             .seat-off{opacity:.35;filter:grayscale(1);}
                             
                             /* Khung bao ngoài - co giãn theo nội dung */
-                            .sits-area{
-                                display:inline-block; /* Co giãn theo nội dung */
-                                margin:-24px auto;
-                                background:#fff;
-                                border:1px solid #e5e7eb;
-                                border-radius:12px;
-                                padding:26px 132px 49px; /* Giảm padding để vừa khít hơn */
-                                box-shadow:0 8px 24px rgba(0,0,0,.06);
-                                position:relative;
-                                min-width:250px; /* Giảm min-width */
-                                max-width:100%; /* Responsive */
-                            }
+                            .sits-area {
+                                    display: inline-block;
+                                    margin: 0 auto;
+                                    background: #fff;
+                                    border: 1px solid #e5e7eb;
+                                    border-radius: 27px;
+                                    padding: 29px 152px 50px;
+                                    box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+                                    position: relative;
+                                    min-width: 253px;
+                                    max-width: 100%;
+                                }
                             .sits-anchor{color:#6b7280;font-weight:600;margin-bottom:35px;text-align:center;}
                             
                             /* Container chính căn giữa */

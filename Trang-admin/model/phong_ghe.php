@@ -25,8 +25,15 @@ function pg_replace_map($id_phong, $seats){
     pg_ensure_schema();
     // Replace all seats for room
     pdo_execute("DELETE FROM phong_ghe WHERE id_phong = ?", $id_phong);
-    if (!$seats) return;
+    if (!$seats) {
+        // Cập nhật số ghế = 0 nếu không có ghế nào
+        pdo_execute("UPDATE phongchieu SET so_ghe = 0 WHERE id = ?", $id_phong);
+        return; 
+    }
+    
     $sql = "INSERT INTO phong_ghe(id_phong,row_label,seat_number,code,tier,active) VALUES (?,?,?,?,?,?)";
+    $active_seats_count = 0;
+    
     foreach ($seats as $s){
         $row = $s['row_label'] ?? $s['row'] ?? '';
         $num = (int)($s['seat_number'] ?? $s['col'] ?? 0);
@@ -34,7 +41,13 @@ function pg_replace_map($id_phong, $seats){
         $tier = in_array(($s['tier'] ?? ''), ['cheap','middle','expensive'], true) ? $s['tier'] : 'cheap';
         $active = isset($s['active']) ? (int)$s['active'] : 1;
         pdo_execute($sql, $id_phong, $row, $num, $code, $tier, $active);
+        
+        // Đếm ghế hoạt động
+        if ($active) $active_seats_count++;
     }
+    
+    // Cập nhật số ghế hoạt động vào bảng phongchieu
+    pdo_execute("UPDATE phongchieu SET so_ghe = ? WHERE id = ?", $active_seats_count, $id_phong);
 }
 
 function pg_generate_default($id_phong, $rows_count = 12, $cols_count = 18){

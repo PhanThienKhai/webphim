@@ -128,6 +128,103 @@ if (isset($_GET['act']) && $_GET['act'] === 'ql_lichlamviec_calendar' && $_SERVE
     }
 }
 
+// Handle suaphong POST requests BEFORE any output
+if (isset($_GET['act']) && $_GET['act'] === 'suaphong' && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['ids'])) {
+    // Clear any output buffer
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    // Check session first
+    if (!isset($_SESSION['user1'])) {
+        header("Location: login.php");
+        exit;
+    }
+    
+    // Include required files
+    include "./model/pdo.php";
+    include "./model/phong_ghe.php";
+    include "./model/phong.php";
+    include "./helpers/quyen.php";
+    
+    // Check permissions
+    $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+    if (!allowed_act('suaphong', $currentRole)) {
+        header("HTTP/1.0 403 Forbidden");
+        exit;
+    }
+    
+    $id_phong_edit = (int)$_GET['ids'];
+    
+    // Xử lý tạo sơ đồ theo template (form đơn giản)
+    if (isset($_POST['tao_map_template'])) {
+        $template = $_POST['template_type'] ?? 'medium';
+        $custom_rows = isset($_POST['custom_rows']) ? (int)$_POST['custom_rows'] : null;
+        $custom_cols = isset($_POST['custom_cols']) ? (int)$_POST['custom_cols'] : null;
+        pg_generate_by_template($id_phong_edit, $template, $custom_rows, $custom_cols);
+        header("Location: index.php?act=suaphong&ids=$id_phong_edit&success=created");
+        exit;
+    }
+    
+    // Xử lý xóa sơ đồ
+    if (isset($_POST['xoa_map'])) {
+        pdo_execute("DELETE FROM phong_ghe WHERE id_phong = ?", $id_phong_edit);
+        pdo_execute("UPDATE phongchieu SET so_ghe = 0 WHERE id = ?", $id_phong_edit);
+        header("Location: index.php?act=suaphong&ids=$id_phong_edit&success=deleted");
+        exit;
+    }
+    
+    // Xử lý form tạo sơ đồ mặc định (preset layout)
+    if (isset($_POST['tao_map'])) {
+        $rows = max(1, (int)($_POST['rows'] ?? 12));
+        $cols = max(1, (int)($_POST['cols'] ?? 18));
+        pg_generate_default($id_phong_edit, $rows, $cols);
+        header("Location: index.php?act=suaphong&ids=$id_phong_edit&success=default");
+        exit;
+    }
+    
+    if (isset($_POST['luu_map']) && isset($_POST['map_json'])) {
+        $list = json_decode($_POST['map_json'], true);
+        if (is_array($list)) { 
+            pg_replace_map($id_phong_edit, $list); 
+            header("Location: index.php?act=suaphong&ids=$id_phong_edit&success=saved");
+            exit;
+        } else { 
+            header("Location: index.php?act=suaphong&ids=$id_phong_edit&error=invalid_data");
+            exit;
+        }
+    }
+    
+    // Xử lý cập nhật đầy đủ (thông tin phòng + sơ đồ ghế)
+    if (isset($_POST['cap_nhat_full'])) {
+        // Cập nhật thông tin phòng
+        $id = (int)($_POST['id'] ?? 0);
+        $name = trim($_POST['name'] ?? '');
+        $so_ghe = isset($_POST['so_ghe']) ? (int)$_POST['so_ghe'] : 0;
+        $dien_tich = isset($_POST['dien_tich']) ? (float)$_POST['dien_tich'] : 0;
+        
+        // Lấy giá vé từ form
+        $gia_thuong = isset($_POST['gia_thuong']) ? (float)$_POST['gia_thuong'] : 50000;
+        $gia_trung = isset($_POST['gia_trung']) ? (float)$_POST['gia_trung'] : 70000;
+        $gia_vip = isset($_POST['gia_vip']) ? (float)$_POST['gia_vip'] : 100000;
+        
+        if ($id && $name) {
+            update_phong($id, $name, $so_ghe, $dien_tich, $gia_thuong, $gia_trung, $gia_vip);
+        }
+        
+        // Cập nhật sơ đồ ghế (nếu có)
+        if (isset($_POST['map_json']) && $_POST['map_json']) {
+            $list = json_decode($_POST['map_json'], true);
+            if (is_array($list)) { 
+                pg_replace_map($id_phong_edit, $list); 
+            }
+        }
+        
+        header("Location: index.php?act=suaphong&ids=$id_phong_edit&success=updated");
+        exit;
+    }
+}
+
 if(isset($_SESSION['user1'])) {
     include "./model/pdo.php";
     include "./model/loai_phim.php";
@@ -1490,42 +1587,26 @@ if(isset($_SESSION['user1'])) {
                     $id_phong_edit = (int)$_GET['ids'];
                     $loadphong1 = loadone_phong($id_phong_edit);
                     
-                    // Xử lý tạo sơ đồ theo template (form đơn giản)
-                    if (isset($_POST['tao_map_template'])) {
-                        $template = $_POST['template_type'] ?? 'medium';
-                        $custom_rows = isset($_POST['custom_rows']) ? (int)$_POST['custom_rows'] : null;
-                        $custom_cols = isset($_POST['custom_cols']) ? (int)$_POST['custom_cols'] : null;
-                        pg_generate_by_template($id_phong_edit, $template, $custom_rows, $custom_cols);
-                        $suatc = "✅ Đã tạo sơ đồ ghế thành công!";
+                    // Hiển thị thông báo từ URL parameter
+                    if (isset($_GET['success'])) {
+                        switch ($_GET['success']) {
+                            case 'created': $suatc = "Đã tạo sơ đồ ghế thành công!"; break;
+                            case 'deleted': $suatc = "Đã xóa sơ đồ ghế"; break;
+                            case 'default': $suatc = "Đã tạo sơ đồ mặc định"; break;
+                            case 'saved': $suatc = "Đã lưu sơ đồ ghế"; break;
+                            case 'updated': $suatc = "Đã cập nhật thông tin phòng và sơ đồ ghế"; break;
+                        }
                     }
-                    
-                    // Xử lý xóa sơ đồ
-                    if (isset($_POST['xoa_map'])) {
-                        pdo_execute("DELETE FROM phong_ghe WHERE id_phong = ?", $id_phong_edit);
-                        $suatc = "Đã xóa sơ đồ ghế";
-                    }
-                    
-                    // Xử lý form cũ (cho chế độ edit advanced)
-                    if (isset($_POST['tao_map'])) {
-                        $rows = max(1, (int)($_POST['rows'] ?? 12));
-                        $cols = max(1, (int)($_POST['cols'] ?? 18));
-                        pg_generate_default($id_phong_edit, $rows, $cols);
-                        $suatc = "Đã tạo sơ đồ mặc định";
-                    }
-                    if (isset($_POST['luu_map']) && isset($_POST['map_json'])) {
-                        $list = json_decode($_POST['map_json'], true);
-                        if (is_array($list)) { pg_replace_map($id_phong_edit, $list); $suatc = "Đã lưu sơ đồ ghế"; }
-                        else { $error = "Dữ liệu sơ đồ không hợp lệ"; }
+                    if (isset($_GET['error'])) {
+                        switch ($_GET['error']) {
+                            case 'invalid_data': $error = "Dữ liệu sơ đồ không hợp lệ"; break;
+                        }
                     }
                     $map = pg_list($id_phong_edit);
                 }
                 
-                // Nếu có tham số edit_advanced, dùng giao diện chi tiết
-                if (isset($_GET['edit_advanced'])) {
-                    include "./view/phong/sua.php";
-                } else {
-                    include "./view/phong/sua_simple.php";
-                }
+                // Luôn dùng giao diện advanced (đầy đủ tính năng)
+                include "./view/phong/sua.php";
                 break;
 
                 case "updatephong":

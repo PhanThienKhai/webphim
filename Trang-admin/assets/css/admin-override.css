@@ -5,18 +5,24 @@
    - UPDATED: Black headings, white background, Inter font
    =============================================== */
 
-/* 🔤 GLOBAL FONT FAMILY - INTER */
+/* � IMPORT GOOGLE FONTS - INTER */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* �🔤 GLOBAL FONT FAMILY - INTER */
 * {
-    font-family: 'Inter', 'Open Sans', sans-serif !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
 body, html {
-    font-family: 'Inter', 'Open Sans', sans-serif !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .main-wrapper,
 .main-wrapper * {
-    font-family: 'Inter', 'Open Sans', sans-serif !important;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
 /* 🌟 FORCE BACKGROUND WHITE */
@@ -460,4 +466,64 @@ input.form-control:focus {
     body .content-body .card:hover {
         transform: translateY(-4px) scale(1.01) !important;
     }
+}
+/* ========================================
+    INTER FONT OPTIMIZATION
+   ======================================== */
+
+/* Smooth font rendering cho Inter */
+body, 
+.main-wrapper,
+.content-body,
+.card,
+.btn,
+h1, h2, h3, h4, h5, h6 {
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-rendering: optimizeLegibility !important;
+}
+
+/* Font weights cho Inter - Tối ưu độ rõ nét */
+h1, h2, h3, .page-heading {
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+}
+
+h4, h5, h6, .card-title {
+    font-weight: 600 !important;
+}
+
+.btn, .badge, .nav-link {
+    font-weight: 500 !important;
+}
+
+body, p, span, div, td, th {
+    font-weight: 400 !important;
+}
+
+small, .small, .text-muted {
+    font-weight: 400 !important;
+    font-size: 13px !important;
+}
+
+/* Line height tối ưu cho Inter */
+body {
+    line-height: 1.6 !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.3 !important;
+}
+
+.btn {
+    line-height: 1.5 !important;
+}
+
+/* Letter spacing cho Inter - Cải thiện khả năng đọc */
+.btn, .badge {
+    letter-spacing: 0.01em !important;
+}
+
+table {
+    letter-spacing: 0.005em !important;
 }

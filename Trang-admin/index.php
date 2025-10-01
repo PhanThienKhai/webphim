@@ -102,13 +102,20 @@ if (isset($_GET['act']) && $_GET['act'] === 'ql_lichlamviec_calendar' && $_SERVE
             }
         }
         
+        // Determine overall success - chỉ success nếu KHÔNG có lỗi
+        $overall_success = ($success_count > 0 && $error_count === 0);
+        
         $response = [
-            'success' => $success_count > 0,
+            'success' => $overall_success,
             'success_count' => $success_count,
             'error_count' => $error_count,
-            'message' => "Tạo thành công $success_count ca làm việc" . 
-                       ($error_count > 0 ? ", $error_count ca bị lỗi" : ""),
-            'errors' => $errors
+            'message' => $overall_success 
+                ? "✅ Tạo thành công $success_count ca làm việc" 
+                : ($success_count > 0 
+                    ? "⚠️ Tạo được $success_count ca, nhưng có $error_count ca bị lỗi" 
+                    : "❌ Không thể tạo ca làm việc nào"),
+            'errors' => $errors,
+            'partial_success' => ($success_count > 0 && $error_count > 0) // Thêm flag này
         ];
         
         file_put_contents('debug_post.log', "Final response: " . print_r($response, true) . "\n", FILE_APPEND);

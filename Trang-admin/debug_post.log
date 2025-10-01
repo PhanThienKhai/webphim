@@ -1,0 +1,1017 @@
+POST handler started at 2025-10-01 06:16:44
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-03
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => Làm tốt nhé, trừ lương đó
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-10-03, Start=12:00, End=17:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+)
+
+POST handler started at 2025-10-01 06:16:44
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-03
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => Làm tốt nhé, trừ lương đó
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-03, Start=12:00, End=17:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+)
+
+POST handler started at 2025-10-01 06:16:44
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-03
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => Làm tốt nhé, trừ lương đó
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-03, Start=12:00, End=17:00
+Duplicate assignment for ID=30
+Final response: Array
+(
+    [success] => 
+    [success_count] => 0
+    [error_count] => 1
+    [message] => Tạo thành công 0 ca làm việc, 1 ca bị lỗi
+    [errors] => Array
+        (
+            [0] => Ca làm việc đã tồn tại cho nhân viên ID 30 vào 2025-10-03
+        )
+
+)
+
+POST handler started at 2025-10-01 06:17:19
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-04
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-04, Start=08:00, End=17:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+)
+
+POST handler started at 2025-10-01 06:17:19
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-04
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-04, Start=08:00, End=17:00
+Duplicate assignment for ID=30
+Final response: Array
+(
+    [success] => 
+    [success_count] => 0
+    [error_count] => 1
+    [message] => Tạo thành công 0 ca làm việc, 1 ca bị lỗi
+    [errors] => Array
+        (
+            [0] => Ca làm việc đã tồn tại cho nhân viên ID 30 vào 2025-10-04
+        )
+
+)
+
+POST handler started at 2025-10-01 06:17:57
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-05
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => Ok
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-10-05, Start=12:00, End=17:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+)
+
+POST handler started at 2025-10-01 06:17:57
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-05
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => Ok
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-10-05, Start=12:00, End=17:00
+Duplicate assignment for ID=34
+Final response: Array
+(
+    [success] => 
+    [success_count] => 0
+    [error_count] => 1
+    [message] => Tạo thành công 0 ca làm việc, 1 ca bị lỗi
+    [errors] => Array
+        (
+            [0] => Ca làm việc đã tồn tại cho nhân viên ID 34 vào 2025-10-05
+        )
+
+)
+
+POST handler started at 2025-10-01 06:19:33
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-06
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => Ok đó em zai
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-06, Start=08:00, End=17:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:19:33
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-06
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => Ok đó em zai
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-06, Start=08:00, End=17:00
+Duplicate assignment for ID=30
+Final response: Array
+(
+    [success] => 
+    [success_count] => 0
+    [error_count] => 1
+    [message] => ❌ Không thể tạo ca làm việc nào
+    [errors] => Array
+        (
+            [0] => Ca làm việc đã tồn tại cho nhân viên ID 30 vào 2025-10-06
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:20:34
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-07
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => Chúc em làm tốt
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-07, Start=17:00, End=22:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:20:34
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-07
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => Chúc em làm tốt
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-07, Start=17:00, End=22:00
+Duplicate assignment for ID=30
+Final response: Array
+(
+    [success] => 
+    [success_count] => 0
+    [error_count] => 1
+    [message] => ❌ Không thể tạo ca làm việc nào
+    [errors] => Array
+        (
+            [0] => Ca làm việc đã tồn tại cho nhân viên ID 30 vào 2025-10-07
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:21:28
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-08
+            [gio_bat_dau] => 18:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-08, Start=18:00, End=22:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:21:28
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-08
+            [gio_bat_dau] => 18:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-08, Start=18:00, End=22:00
+Duplicate assignment for ID=30
+Final response: Array
+(
+    [success] => 
+    [success_count] => 0
+    [error_count] => 1
+    [message] => ❌ Không thể tạo ca làm việc nào
+    [errors] => Array
+        (
+            [0] => Ca làm việc đã tồn tại cho nhân viên ID 30 vào 2025-10-08
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:25:17
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-09
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-10-09, Start=12:00, End=18:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:25:17
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-09
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-09, Start=12:00, End=18:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:25:17
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-09
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-09, Start=12:00, End=18:00
+Duplicate assignment for ID=30
+Final response: Array
+(
+    [success] => 
+    [success_count] => 0
+    [error_count] => 1
+    [message] => ❌ Không thể tạo ca làm việc nào
+    [errors] => Array
+        (
+            [0] => Ca làm việc đã tồn tại cho nhân viên ID 30 vào 2025-10-09
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:26:01
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-10
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-10, Start=12:00, End=18:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:26:01
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-10
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-10, Start=12:00, End=18:00
+Duplicate assignment for ID=30
+Final response: Array
+(
+    [success] => 
+    [success_count] => 0
+    [error_count] => 1
+    [message] => ❌ Không thể tạo ca làm việc nào
+    [errors] => Array
+        (
+            [0] => Ca làm việc đã tồn tại cho nhân viên ID 30 vào 2025-10-10
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:27:58
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-11
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-11, Start=12:00, End=18:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:27:58
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-11
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-11, Start=12:00, End=18:00
+Duplicate assignment for ID=30
+Final response: Array
+(
+    [success] => 
+    [success_count] => 0
+    [error_count] => 1
+    [message] => ❌ Không thể tạo ca làm việc nào
+    [errors] => Array
+        (
+            [0] => Ca làm việc đã tồn tại cho nhân viên ID 30 vào 2025-10-11
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:31:11
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-12
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => Oke
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-10-12, Start=12:00, End=18:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:32:08
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-13
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 2 đứa làm tốt nhé
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-13
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 2 đứa làm tốt nhé
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-13, Start=12:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=34, Date=2025-10-13, Start=12:00, End=18:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 2
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 2 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:33:18
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-14
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => 
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-14
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => 
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-14, Start=08:00, End=17:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=34, Date=2025-10-14, Start=08:00, End=17:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 2
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 2 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:36:39
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-15
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-15, Start=12:00, End=17:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:37:04
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-16
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-16
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-16, Start=12:00, End=17:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=34, Date=2025-10-16, Start=12:00, End=17:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 2
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 2 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:38:31
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-17
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 20:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-17
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 20:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-17, Start=17:00, End=20:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=34, Date=2025-10-17, Start=17:00, End=20:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 2
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 2 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:43:49
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-18
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => Ok nhe 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-18
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => Ok nhe 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-18, Start=12:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=34, Date=2025-10-18, Start=12:00, End=18:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 2
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 2 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 06:49:47
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-19
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-19
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-10-19, Start=12:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=34, Date=2025-10-19, Start=12:00, End=18:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 2
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 2 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 07:17:41
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-20
+            [gio_bat_dau] => 19:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => Ok ddos
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-10-20
+            [gio_bat_dau] => 19:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => Ok ddos
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-10-20, Start=19:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=30, Date=2025-10-20, Start=19:00, End=22:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 2
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 2 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 07:40:40
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-10-24
+            [gio_bat_dau] => 12:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Chiều
+            [ghi_chu] => kaaaaaaaaaaaaaaaaaaaa
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-10-24, Start=12:00, End=18:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-10-01 07:42:57
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-10-22
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => Làm đi em
+
+        )
+
+)
+
+Processing assignment: ID=37, Date=2025-10-22, Start=08:00, End=22:00
+Successfully inserted assignment for ID=37
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+

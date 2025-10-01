@@ -37,8 +37,8 @@
             </div>
             
             <div class="employee-actions">
-                <button type="button" class="btn-selection" onclick="selectAllEmployees()">✅ Chọn tất cả</button>
-                <button type="button" class="btn-selection" onclick="clearAllEmployees()">❌ Bỏ chọn</button>
+                <button type="button" class="btn-selection" id="selectAllBtn">Chọn tất cả</button>
+                <button type="button" class="btn-selection" id="clearAllBtn">Bỏ chọn</button>
             </div>
         </div>
 
@@ -243,6 +243,24 @@
 </div>
 
 <style>
+/* Alert Styles - Nền đen chữ trắng */
+.alert {
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background: #2d3748 !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.alert-danger, .alert-success, .alert-warning, .alert-info {
+    background: #2d3748 !important;
+    color: #ffffff !important;
+    border: 1px solid #4a5568 !important;
+}
+
 /* Enhanced Calendar Styles based on employee view */
 .calendar-management-container {
     display: flex;
@@ -282,16 +300,38 @@
     cursor: pointer;
     backdrop-filter: blur(10px);
     user-select: none;
+    position: relative;
 }
 
 .employee-card:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .employee-card.selected {
     background: rgba(255, 255, 255, 0.25);
     border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* Visual checkmark for selected cards */
+.employee-card.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #10b981;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    pointer-events: none;
 }
 
 .employee-checkbox {
@@ -304,6 +344,7 @@
     gap: 12px;
     cursor: pointer;
     margin: 0;
+    pointer-events: none; /* Prevent child elements from blocking clicks */
 }
 
 .employee-avatar {
@@ -316,20 +357,24 @@
     font-weight: bold;
     color: white;
     font-size: 14px;
+    pointer-events: none; /* Prevent blocking clicks */
 }
 
 .employee-info {
     flex: 1;
+    pointer-events: none; /* Prevent blocking clicks */
 }
 
 .employee-name {
     font-weight: 600;
     font-size: 14px;
+    pointer-events: none; /* Prevent blocking clicks */
 }
 
 .employee-role {
     font-size: 12px;
     opacity: 0.8;
+    pointer-events: none; /* Prevent blocking clicks */
 }
 
 .employee-actions {
@@ -824,6 +869,57 @@
 
 <script src="assets/js/calendar-schedule.js"></script>
 <script>
+// Custom notification function to replace alert() and avoid persistent toast
+function showNotification(message, type = 'success', duration = 3000) {
+    // Remove any existing notifications first
+    document.querySelectorAll('.custom-notification').forEach(el => el.remove());
+    
+    const notif = document.createElement('div');
+    notif.className = 'custom-notification';
+    notif.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #2d3748;
+        color: #ffffff;
+        padding: 15px 25px;
+        border-radius: 10px;
+        border: 1px solid #4a5568;
+        z-index: 10000;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        max-width: 400px;
+        word-wrap: break-word;
+        font-size: 15px;
+        font-weight: 500;
+        animation: slideInRight 0.3s ease forwards;
+    `;
+    notif.innerHTML = `${message}`;
+    document.body.appendChild(notif);
+    
+    // Auto remove
+    setTimeout(() => {
+        notif.style.animation = 'slideOutRight 0.3s ease forwards';
+        setTimeout(() => notif.remove(), 300);
+    }, duration);
+}
+
+// Add CSS animations
+if (!document.getElementById('notif-animations')) {
+    const style = document.createElement('style');
+    style.id = 'notif-animations';
+    style.textContent = `
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(400px); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 // Simple employee selection system
 const selectedEmployees = new Set();
 
@@ -842,10 +938,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         console.log(`Setting up card ${index + 1}: ${empName} (ID: ${empId})`);
         
-        // Main card click handler
-        card.addEventListener('click', function(e) {
+        // Main card click handler - Using mousedown for better response
+        card.addEventListener('mousedown', function(e) {
+            // Prevent text selection
             e.preventDefault();
-            e.stopPropagation();
             
             console.log(`🖱️ Card clicked: ${empName} (ID: ${empId})`);
             
@@ -866,9 +962,44 @@ document.addEventListener('DOMContentLoaded', function() {
             
             updateSelectedDisplay();
         });
+        
+        // Also handle regular click as fallback
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
     });
     
     console.log('✅ Employee selection handlers attached');
+    
+    // Attach button event listeners
+    console.log('🔍 Looking for buttons...');
+    const selectAllBtn = document.getElementById('selectAllBtn');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    console.log('selectAllBtn:', selectAllBtn);
+    console.log('clearAllBtn:', clearAllBtn);
+    
+    if (selectAllBtn) {
+        selectAllBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('🔘 Select All button clicked via event listener');
+            selectAllEmployees();
+        });
+        console.log('✅ Select All button listener attached');
+    } else {
+        console.error('❌ Select All button not found!');
+    }
+    
+    if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('🔘 Clear All button clicked via event listener');
+            clearSelection();
+        });
+        console.log('✅ Clear All button listener attached');
+    } else {
+        console.error('❌ Clear All button not found!');
+    }
     
     // Try to initialize CalendarAssignmentManager if available
     if (typeof CalendarAssignmentManager !== 'undefined') {
@@ -910,33 +1041,47 @@ function updateSelectedDisplay() {
 
 // Global helper functions
 function selectAllEmployees() {
-    console.log('Select all employees clicked');
-    const cards = document.querySelectorAll('.employee-card');
-    const checkboxes = document.querySelectorAll('.employee-checkbox');
-    
-    // Check if all are selected
-    const allSelected = Array.from(checkboxes).every(cb => cb.checked);
-    
-    if (allSelected) {
-        // Deselect all
-        selectedEmployees.clear();
-        cards.forEach(card => {
-            card.classList.remove('selected');
-            card.querySelector('.employee-checkbox').checked = false;
-        });
-        console.log('❌ All employees deselected');
-    } else {
-        // Select all
-        cards.forEach(card => {
-            const empId = card.dataset.employeeId;
-            selectedEmployees.add(empId);
-            card.classList.add('selected');
-            card.querySelector('.employee-checkbox').checked = true;
-        });
-        console.log(`✅ All ${cards.length} employees selected`);
+    console.log('🔵 Select all employees clicked');
+    try {
+        const cards = document.querySelectorAll('.employee-card');
+        const checkboxes = document.querySelectorAll('.employee-checkbox');
+        
+        console.log(`Found ${cards.length} cards and ${checkboxes.length} checkboxes`);
+        
+        // Check if all are selected
+        const allSelected = Array.from(checkboxes).every(cb => cb.checked);
+        console.log(`All selected: ${allSelected}`);
+        
+        if (allSelected) {
+            // Deselect all
+            console.log('Deselecting all...');
+            selectedEmployees.clear();
+            cards.forEach(card => {
+                card.classList.remove('selected');
+                const checkbox = card.querySelector('.employee-checkbox');
+                if (checkbox) checkbox.checked = false;
+            });
+            console.log('❌ All employees deselected');
+        } else {
+            // Select all
+            console.log('Selecting all...');
+            cards.forEach((card, index) => {
+                const empId = card.dataset.employeeId;
+                console.log(`  Adding employee ${index + 1}: ID=${empId}`);
+                selectedEmployees.add(empId);
+                card.classList.add('selected');
+                const checkbox = card.querySelector('.employee-checkbox');
+                if (checkbox) checkbox.checked = true;
+            });
+            console.log(`✅ All ${cards.length} employees selected, Set size: ${selectedEmployees.size}`);
+        }
+        
+        console.log('Calling updateSelectedDisplay...');
+        updateSelectedDisplay();
+        console.log('✅ Update complete');
+    } catch (error) {
+        console.error('❌ Error in selectAllEmployees:', error);
     }
-    
-    updateSelectedDisplay();
 }
 
 function clearSelection() {
@@ -956,6 +1101,10 @@ function openAssignModal(date) {
     console.log('Opening modal for date:', date);
     const modal = document.getElementById('assignModal');
     if (modal) {
+        // Clear any page-level alerts/notifications
+        const alerts = document.querySelectorAll('.alert-danger, .alert-success, .alert-warning');
+        alerts.forEach(alert => alert.remove());
+        
         // Set date values
         document.getElementById('assignDate').value = date;
         document.getElementById('displayDate').value = date;
@@ -1004,11 +1153,26 @@ function closeAssignModal() {
 document.addEventListener('DOMContentLoaded', function() {
     const saveBtn = document.getElementById('saveAssignment');
     if (saveBtn) {
-        saveBtn.addEventListener('click', function() {
-            if (selectedEmployees.size === 0) {
-                alert('Vui lòng chọn ít nhất một nhân viên!');
+        console.log('✅ Save button event listener attached');
+        saveBtn.addEventListener('click', function(e) {
+            console.log('🔵 Save button clicked at', new Date().toISOString());
+            
+            // Prevent multiple clicks
+            if (this.disabled) {
+                console.log('⚠️ Button already disabled, ignoring click');
                 return;
             }
+            
+            if (selectedEmployees.size === 0) {
+                showNotification('⚠️ Vui lòng chọn ít nhất một nhân viên!', 'error');
+                return;
+            }
+            
+            // Disable button immediately
+            this.disabled = true;
+            const originalText = this.textContent;
+            this.textContent = 'Đang xử lý...';
+            console.log('🔒 Button disabled, starting submission');
             
             const formData = {
                 ngay: document.getElementById('assignDate').value,
@@ -1021,19 +1185,29 @@ document.addEventListener('DOMContentLoaded', function() {
             
             console.log('Saving assignment:', formData);
             
-            // Call the calendar manager save function if available
-            if (window.calendarManager && window.calendarManager.saveAssignment) {
-                window.calendarManager.saveAssignment();
-            } else {
-                // Fallback: submit form manually
-                submitAssignment(formData);
-            }
+            // Always use submitAssignment (don't call calendarManager to avoid double submission)
+            submitAssignment(formData).finally(() => {
+                // Re-enable button after completion
+                this.disabled = false;
+                this.textContent = originalText;
+                console.log('🔓 Button re-enabled');
+            });
         });
+    } else {
+        console.error('❌ Save button not found!');
     }
 });
 
 // Fallback save function
+let isSubmitting = false; // Prevent double submission
+
 async function submitAssignment(data) {
+    if (isSubmitting) {
+        console.log('⚠️ Already submitting, ignoring duplicate request');
+        return;
+    }
+    
+    isSubmitting = true;
     try {
         // Convert to backend expected format
         const assignments = data.employees.map(empId => ({
@@ -1058,23 +1232,61 @@ async function submitAssignment(data) {
             })
         });
         
+        // Kiểm tra response status
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Kiểm tra content type
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            const text = await response.text();
+            console.error('Non-JSON response:', text.substring(0, 500));
+            throw new Error('Server trả về dữ liệu không hợp lệ (không phải JSON). Vui lòng kiểm tra console.');
+        }
+        
         const result = await response.json();
         console.log('Server response:', result);
+        console.log('Success flag:', result.success, 'Type:', typeof result.success);
+        console.log('Partial success flag:', result.partial_success);
         
         if (result.success) {
-            alert(`✅ Phân công thành công! Tạo được ${result.success_count} ca làm việc`);
-            closeAssignModal();
-            location.reload();
+            // Hoàn toàn thành công
+            showNotification(`✅ Phân công thành công! Tạo được ${result.success_count} ca làm việc`, 'success', 2000);
+            setTimeout(() => {
+                closeAssignModal();
+                location.reload();
+            }, 2000);
+        } else if (result.partial_success) {
+            // Một phần thành công
+            let msg = `⚠️ Tạo được ${result.success_count} ca làm việc, nhưng có ${result.error_count} ca bị lỗi.\n\n`;
+            msg += 'Bạn có muốn tải lại trang để xem kết quả không?\n\n';
+            if (result.errors && result.errors.length > 0) {
+                msg += 'Chi tiết lỗi:\n' + result.errors.slice(0, 5).join('\n');
+                if (result.errors.length > 5) {
+                    msg += `\n... và ${result.errors.length - 5} lỗi khác`;
+                }
+            }
+            
+            if (confirm(msg)) {
+                closeAssignModal();
+                location.reload();
+            }
         } else {
+            // Hoàn toàn thất bại
             let errorMsg = result.message || 'Không thể phân công';
             if (result.errors && result.errors.length > 0) {
-                errorMsg += '\n\nChi tiết lỗi:\n' + result.errors.join('\n');
+                errorMsg += '\n\nChi tiết: ' + result.errors.slice(0, 3).join(', ');
+                if (result.errors.length > 3) {
+                    errorMsg += `... (+${result.errors.length - 3} lỗi khác)`;
+                }
             }
-            alert('❌ Lỗi: ' + errorMsg);
+            showNotification('❌ ' + errorMsg, 'error', 5000);
         }
     } catch (error) {
         console.error('Save error:', error);
-        alert('❌ Lỗi khi lưu phân công: ' + error.message);
+        showNotification('❌ Lỗi khi lưu: ' + error.message, 'error', 5000);
+    } finally {
+        isSubmitting = false; // Reset flag after completion
     }
 }
-</script>

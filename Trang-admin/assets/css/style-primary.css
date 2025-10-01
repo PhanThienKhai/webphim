@@ -67,7 +67,7 @@
 /*  01. Template default CSS
 /*----------------------------------------*/
 /*-- Google Font --*/
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i");
+@import url("https://fonts.googleapis.com/css?family=Inter:wght@300;400;500;600;700;800&display=swap");
 /*-- Common Style --*/
 *, *::after, *::before {
   -webkit-box-sizing: border-box;
@@ -85,7 +85,7 @@ body {
   font-style: normal;
   font-weight: normal;
   visibility: visible;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #666666;
   position: relative;
 }
@@ -95,7 +95,7 @@ body[dir="rtl"] {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #343434;
   font-weight: 600;
   margin-top: 0;
@@ -4586,7 +4586,7 @@ label.inline:last-child {
   background-color: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 4px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   line-height: 24px;
   padding: 10px 20px;
@@ -5402,7 +5402,7 @@ input[type="checkbox"], input[type="radio"] {
   background-color: transparent;
   border: 1px solid #dddddd;
   border-radius: 4px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   line-height: 24px;
   padding: 10px 20px;

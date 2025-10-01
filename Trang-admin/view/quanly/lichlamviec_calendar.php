@@ -3,7 +3,7 @@
 <div class="content-body">
     <div class="row justify-content-between align-items-center mb-20">
         <div class="col-12 col-lg-auto">
-            <div class="page-heading"><h3>📅 Phân công lịch làm việc - Calendar View</h3></div>
+            <div class="page-heading"><h3>Phân công lịch làm việc - Calendar View</h3></div>
             <?php if (!empty($rap['ten_rap'])): ?><div style="color:#6b7280; font-size: 14px;">Rạp: <strong><?= htmlspecialchars($rap['ten_rap']) ?></strong></div><?php endif; ?>
             <!-- <div class="mt-10">
                 <a href="index.php?act=ql_lichlamviec" class="btn btn-outline-secondary btn-sm">← Xem dạng bảng</a>
@@ -18,13 +18,13 @@
     <div class="calendar-management-container">
         <!-- Employee Selection Panel -->
         <div class="employee-selection-panel">
-            <h4>👥 Chọn nhân viên để phân công</h4>
+            <h4>Chọn nhân viên để phân công</h4>
             <div class="employee-grid">
                 <?php foreach (($ds_nv ?? []) as $nv): ?>
                     <div class="employee-card" data-employee-id="<?= (int)$nv['id'] ?>">
                         <input type="checkbox" class="employee-checkbox" value="<?= (int)$nv['id'] ?>">
                         <div class="employee-content">
-                            <div class="employee-avatar" style="background-color: <?= $employee_colors[(int)$nv['id']] ?? '#3b82f6' ?>">
+                            <div class="employee-avatar" style="background-color: <?= $employee_colors[(int)$nv['id']] ?? '#dde3edff' ?>">
                                 <?= strtoupper(substr($nv['name'], 0, 2)) ?>
                             </div>
                             <div class="employee-info">
@@ -44,7 +44,7 @@
 
         <!-- Shift Templates -->
         <div class="shift-templates-panel">
-            <h4>⏰ Mẫu ca làm việc</h4>
+            <h4>Khung giờ làm việc</h4>
             <div class="templates-grid">
                 <button type="button" class="template-card" data-shift="Sáng" data-start="08:00" data-end="12:00">
                     <div class="template-icon">🌅</div>
@@ -185,9 +185,9 @@
 
 <!-- Assignment Modal -->
 <div id="assignModal" class="modal-overlay" style="display: none;">
-    <div class="modal-container">
+    <div class="modal-container modal-large">
         <div class="modal-header">
-            <h3>📝 Phân công ca làm việc</h3>
+            <h3>📝 Phân công ca làm việc hàng loạt</h3>
             <button type="button" class="modal-close" onclick="closeAssignModal()">&times;</button>
         </div>
         
@@ -196,48 +196,174 @@
                 <input type="hidden" id="assignDate" name="ngay">
                 <input type="hidden" id="assignEmployees" name="employees">
                 
-                <div class="form-group">
-                    <label class="form-label">📅 Ngày</label>
-                    <input type="date" class="form-control" id="displayDate" readonly>
+                <!-- Date Range Selection -->
+                <div class="form-section">
+                    <h4 class="section-title">📅 Chọn khoảng thời gian</h4>
+                    <div class="date-range-options">
+                        <label class="radio-option">
+                            <input type="radio" name="dateMode" value="single" checked>
+                            <span>Ngày đơn</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="dateMode" value="range">
+                            <span>Khoảng thời gian</span>
+                        </label>
+                    </div>
+                    
+                    <div id="singleDateSection" class="date-section">
+                        <div class="form-group">
+                            <label class="form-label">Chọn ngày</label>
+                            <input type="date" class="form-control" id="displayDate" readonly>
+                        </div>
+                    </div>
+                    
+                    <div id="rangeDateSection" class="date-section" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <label class="form-label">Từ ngày</label>
+                                <input type="date" class="form-control" id="startDate">
+                            </div>
+                            <div class="form-col">
+                                <label class="form-label">Đến ngày</label>
+                                <input type="date" class="form-control" id="endDate">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Áp dụng cho các ngày trong tuần</label>
+                            <div class="weekday-selector">
+                                <label class="weekday-checkbox">
+                                    <input type="checkbox" value="1" checked>
+                                    <span>T2</span>
+                                </label>
+                                <label class="weekday-checkbox">
+                                    <input type="checkbox" value="2" checked>
+                                    <span>T3</span>
+                                </label>
+                                <label class="weekday-checkbox">
+                                    <input type="checkbox" value="3" checked>
+                                    <span>T4</span>
+                                </label>
+                                <label class="weekday-checkbox">
+                                    <input type="checkbox" value="4" checked>
+                                    <span>T5</span>
+                                </label>
+                                <label class="weekday-checkbox">
+                                    <input type="checkbox" value="5" checked>
+                                    <span>T6</span>
+                                </label>
+                                <label class="weekday-checkbox">
+                                    <input type="checkbox" value="6">
+                                    <span>T7</span>
+                                </label>
+                                <label class="weekday-checkbox">
+                                    <input type="checkbox" value="0">
+                                    <span>CN</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">👥 Nhân viên được chọn</label>
+                <!-- Employee Selection -->
+                <div class="form-section">
+                    <h4 class="section-title">👥 Nhân viên được chọn</h4>
                     <div id="selectedEmployees" class="selected-employees"></div>
                 </div>
                 
-                <div class="form-row">
-                    <div class="form-col">
-                        <label class="form-label">🕐 Giờ bắt đầu</label>
-                        <input type="time" class="form-control" id="startTime" name="gio_bat_dau" required>
+                <!-- Shift Templates Selection -->
+                <div class="form-section">
+                    <h4 class="section-title">⏰ Chọn ca làm việc (có thể chọn nhiều ca)</h4>
+                    <div class="shift-selection-grid">
+                        <label class="shift-checkbox-card">
+                            <input type="checkbox" class="shift-template-check" data-shift="Sáng" data-start="08:00" data-end="12:00">
+                            <div class="shift-card-content">
+                                <div class="shift-icon">🌅</div>
+                                <div class="shift-name">Ca Sáng</div>
+                                <div class="shift-time">8:00 - 12:00</div>
+                            </div>
+                        </label>
+                        
+                        <label class="shift-checkbox-card">
+                            <input type="checkbox" class="shift-template-check" data-shift="Chiều" data-start="13:00" data-end="17:00">
+                            <div class="shift-card-content">
+                                <div class="shift-icon">☀️</div>
+                                <div class="shift-name">Ca Chiều</div>
+                                <div class="shift-time">13:00 - 17:00</div>
+                            </div>
+                        </label>
+                        
+                        <label class="shift-checkbox-card">
+                            <input type="checkbox" class="shift-template-check" data-shift="Tối" data-start="17:00" data-end="22:00">
+                            <div class="shift-card-content">
+                                <div class="shift-icon">🌙</div>
+                                <div class="shift-name">Ca Tối</div>
+                                <div class="shift-time">17:00 - 22:00</div>
+                            </div>
+                        </label>
+                        
+                        <label class="shift-checkbox-card">
+                            <input type="checkbox" class="shift-template-check" data-shift="Hành chính" data-start="09:00" data-end="18:00">
+                            <div class="shift-card-content">
+                                <div class="shift-icon">🏢</div>
+                                <div class="shift-name">Hành chính</div>
+                                <div class="shift-time">9:00 - 18:00</div>
+                            </div>
+                        </label>
                     </div>
-                    <div class="form-col">
-                        <label class="form-label">🕐 Giờ kết thúc</label>
-                        <input type="time" class="form-control" id="endTime" name="gio_ket_thuc" required>
+                    
+                    <div class="custom-shift-toggle">
+                        <button type="button" class="btn-link" id="toggleCustomShift">
+                            ➕ Thêm ca tùy chỉnh
+                        </button>
                     </div>
+                    
+                    <div id="customShiftSection" style="display: none;">
+                        <div class="custom-shift-form">
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Tên ca</label>
+                                    <input type="text" class="form-control" id="customShiftName" placeholder="VD: Ca khuya">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Giờ bắt đầu</label>
+                                    <input type="time" class="form-control" id="customStartTime">
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Giờ kết thúc</label>
+                                    <input type="time" class="form-control" id="customEndTime">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-success" id="addCustomShift">
+                                ✅ Thêm ca này
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="customShiftsList" class="custom-shifts-list"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">⏰ Loại ca</label>
-                    <select class="form-control" id="shiftType" name="ca_lam">
-                        <option value="">Chọn loại ca</option>
-                        <option value="Sáng">Ca sáng</option>
-                        <option value="Chiều">Ca chiều</option>
-                        <option value="Tối">Ca tối</option>
-                        <option value="Hành chính">Ca hành chính</option>
-                    </select>
+                <!-- Note -->
+                <div class="form-section">
+                    <h4 class="section-title">📝 Ghi chú chung</h4>
+                    <textarea class="form-control" id="shiftNote" name="ghi_chu" rows="2" placeholder="Ghi chú chung cho tất cả các ca (tùy chọn)..."></textarea>
                 </div>
                 
-                <div class="form-group">
-                    <label class="form-label">📝 Ghi chú</label>
-                    <textarea class="form-control" id="shiftNote" name="ghi_chu" rows="2" placeholder="Ghi chú thêm (tùy chọn)..."></textarea>
+                <!-- Summary -->
+                <div class="assignment-summary" id="assignmentSummary">
+                    <div class="summary-content">
+                        <strong>📊 Tổng quan:</strong>
+                        <span id="summaryText">Chọn nhân viên, ngày và ca làm việc để xem tổng quan</span>
+                    </div>
                 </div>
             </form>
         </div>
         
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" onclick="closeAssignModal()">❌ Hủy</button>
-            <button type="button" class="btn btn-primary" id="saveAssignment">💾 Lưu phân công</button>
+            <button type="button" class="btn btn-primary" id="saveAssignment">💾 Lưu phân công hàng loạt</button>
         </div>
     </div>
 </div>
@@ -272,7 +398,7 @@
 .employee-selection-panel, .shift-templates-panel {
     flex: 1;
     min-width: 300px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #9dabe8ff 0%, #a48dbaff 100%);
     border-radius: 15px;
     padding: 25px;
     color: white;
@@ -378,7 +504,7 @@
 }
 
 .employee-actions {
-    display: flex;
+    /* display: flex; */
     gap: 10px;
     justify-content: center;
 }
@@ -519,10 +645,10 @@
 
 .calendar-legend {
     display: flex;
-    gap: 20px;
+    gap: 27px;
     margin-bottom: 20px;
     flex-wrap: wrap;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 .legend-item {
@@ -675,22 +801,29 @@
     border-radius: 15px;
     max-width: 500px;
     width: 90%;
-    max-height: 90vh;
-    overflow-y: auto;
+    max-height: 95vh;
+    overflow: hidden;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     transform: scale(1);
     transition: transform 0.3s ease;
-    margin: 20px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-large {
+    max-width: 900px;
 }
 
 .modal-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 20px 25px;
+    padding: 15px 20px;
     border-radius: 15px 15px 0 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .modal-header h3 {
@@ -718,19 +851,25 @@
 }
 
 .modal-body {
-    padding: 25px;
+    padding: 20px;
+    max-height: calc(95vh - 160px);
+    overflow-y: auto;
+    flex: 1;
 }
 
 .modal-footer {
-    padding: 15px 25px;
+    padding: 12px 20px;
     border-top: 1px solid #e5e7eb;
     display: flex;
     gap: 10px;
     justify-content: flex-end;
+    flex-shrink: 0;
 }
 
 .form-group {
     margin-bottom: 20px;
+    margin-top: 22px;
+
 }
 
 .form-label {
@@ -864,6 +1003,268 @@
     .btn {
         width: 100%;
     }
+}
+
+/* New styles for bulk assignment features */
+.form-section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.date-range-options {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.radio-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+.radio-option:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.radio-option input[type="radio"] {
+    margin: 0;
+    cursor: pointer;
+}
+
+.radio-option input[type="radio"]:checked + span {
+    font-weight: 600;
+    color: #667eea;
+}
+
+.radio-option:has(input:checked) {
+    background: #ede9fe;
+    border-color: #667eea;
+}
+
+.weekday-selector {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.weekday-checkbox {
+    flex: 1;
+    min-width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+.weekday-checkbox:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+}
+
+.weekday-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.weekday-checkbox span {
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.weekday-checkbox:has(input:checked) {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: white;
+}
+
+.weekday-checkbox:has(input:checked) span {
+    color: white;
+}
+
+.shift-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.shift-checkbox-card {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+.shift-checkbox-card input[type="checkbox"] {
+    display: none;
+}
+
+.shift-card-content {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.shift-checkbox-card:hover .shift-card-content {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    transform: translateY(-2px);
+}
+
+.shift-checkbox-card:has(input:checked) .shift-card-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.shift-checkbox-card:has(input:checked) .shift-card-content::after {
+    content: '✓';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #10b981;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.shift-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.shift-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.shift-time {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.shift-checkbox-card:has(input:checked) .shift-time {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.custom-shift-toggle {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: #667eea;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.btn-link:hover {
+    background: #ede9fe;
+}
+
+.custom-shift-form {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.custom-shifts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.custom-shift-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #ede9fe;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+}
+
+.custom-shift-info {
+    flex: 1;
+}
+
+.custom-shift-remove {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.custom-shift-remove:hover {
+    background: #dc2626;
+}
+
+.assignment-summary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.summary-content {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#summaryText {
+    display: block;
+    margin-top: 8px;
+    font-weight: 400;
 }
 </style>
 
@@ -1109,6 +1510,32 @@ function openAssignModal(date) {
         document.getElementById('assignDate').value = date;
         document.getElementById('displayDate').value = date;
         
+        // Reset date mode to single
+        const singleModeRadio = document.querySelector('input[name="dateMode"][value="single"]');
+        if (singleModeRadio) singleModeRadio.checked = true;
+        
+        const singleSection = document.getElementById('singleDateSection');
+        const rangeSection = document.getElementById('rangeDateSection');
+        if (singleSection) singleSection.style.display = 'block';
+        if (rangeSection) rangeSection.style.display = 'none';
+        
+        // Set start and end dates for range mode
+        const startDateInput = document.getElementById('startDate');
+        const endDateInput = document.getElementById('endDate');
+        if (startDateInput) startDateInput.value = date;
+        if (endDateInput) endDateInput.value = date;
+        
+        // Reset shifts
+        document.querySelectorAll('.shift-template-check').forEach(ch => ch.checked = false);
+        customShifts = [];
+        renderCustomShifts();
+        
+        // Reset custom shift form
+        const customSection = document.getElementById('customShiftSection');
+        const toggleBtn = document.getElementById('toggleCustomShift');
+        if (customSection) customSection.style.display = 'none';
+        if (toggleBtn) toggleBtn.textContent = '➕ Thêm ca tùy chỉnh';
+        
         // Show modal with animation
         modal.style.display = 'flex';
         modal.style.opacity = '0';
@@ -1122,6 +1549,11 @@ function openAssignModal(date) {
         
         // Update selected employees display
         updateSelectedDisplay();
+        
+        // Update summary
+        if (typeof updateSummary === 'function') {
+            updateSummary();
+        }
         
         // Focus on body to prevent scroll issues
         document.body.style.overflow = 'hidden';
@@ -1290,3 +1722,394 @@ async function submitAssignment(data) {
         isSubmitting = false; // Reset flag after completion
     }
 }
+
+// =====================================================
+// BULK ASSIGNMENT FEATURES - NEW CODE
+// =====================================================
+
+// Custom shifts array
+let customShifts = [];
+
+// Date mode toggle
+document.addEventListener('DOMContentLoaded', function() {
+    const dateModeRadios = document.querySelectorAll('input[name="dateMode"]');
+    const singleSection = document.getElementById('singleDateSection');
+    const rangeSection = document.getElementById('rangeDateSection');
+    
+    dateModeRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'single') {
+                singleSection.style.display = 'block';
+                rangeSection.style.display = 'none';
+            } else {
+                singleSection.style.display = 'none';
+                rangeSection.style.display = 'block';
+            }
+            updateSummary();
+        });
+    });
+    
+    // Toggle custom shift form
+    const toggleBtn = document.getElementById('toggleCustomShift');
+    const customSection = document.getElementById('customShiftSection');
+    
+    if (toggleBtn && customSection) {
+        toggleBtn.addEventListener('click', function() {
+            if (customSection.style.display === 'none') {
+                customSection.style.display = 'block';
+                this.textContent = '➖ Ẩn ca tùy chỉnh';
+            } else {
+                customSection.style.display = 'none';
+                this.textContent = '➕ Thêm ca tùy chỉnh';
+            }
+        });
+    }
+    
+    // Add custom shift
+    const addCustomBtn = document.getElementById('addCustomShift');
+    if (addCustomBtn) {
+        addCustomBtn.addEventListener('click', function() {
+            const name = document.getElementById('customShiftName').value.trim();
+            const start = document.getElementById('customStartTime').value;
+            const end = document.getElementById('customEndTime').value;
+            
+            if (!name || !start || !end) {
+                showNotification('⚠️ Vui lòng điền đầy đủ thông tin ca làm việc!', 'error');
+                return;
+            }
+            
+            if (start >= end) {
+                showNotification('⚠️ Giờ kết thúc phải sau giờ bắt đầu!', 'error');
+                return;
+            }
+            
+            // Add to custom shifts array
+            customShifts.push({
+                name: name,
+                start: start,
+                end: end,
+                id: Date.now()
+            });
+            
+            // Clear form
+            document.getElementById('customShiftName').value = '';
+            document.getElementById('customStartTime').value = '';
+            document.getElementById('customEndTime').value = '';
+            
+            // Update display
+            renderCustomShifts();
+            updateSummary();
+            
+            showNotification('✅ Đã thêm ca tùy chỉnh!', 'success', 2000);
+        });
+    }
+    
+    // Listen to all shift checkboxes
+    const shiftChecks = document.querySelectorAll('.shift-template-check');
+    shiftChecks.forEach(check => {
+        check.addEventListener('change', updateSummary);
+    });
+    
+    // Listen to date changes
+    document.getElementById('displayDate')?.addEventListener('change', updateSummary);
+    document.getElementById('startDate')?.addEventListener('change', updateSummary);
+    document.getElementById('endDate')?.addEventListener('change', updateSummary);
+    
+    // Listen to weekday changes
+    const weekdayChecks = document.querySelectorAll('.weekday-checkbox input');
+    weekdayChecks.forEach(check => {
+        check.addEventListener('change', updateSummary);
+    });
+});
+
+function renderCustomShifts() {
+    const container = document.getElementById('customShiftsList');
+    if (!container) return;
+    
+    if (customShifts.length === 0) {
+        container.innerHTML = '';
+        return;
+    }
+    
+    container.innerHTML = customShifts.map(shift => `
+        <div class="custom-shift-item" data-id="${shift.id}">
+            <div class="custom-shift-info">
+                <strong>${shift.name}</strong>: ${shift.start} - ${shift.end}
+            </div>
+            <button type="button" class="custom-shift-remove" onclick="removeCustomShift(${shift.id})">
+                🗑️ Xóa
+            </button>
+        </div>
+    `).join('');
+}
+
+function removeCustomShift(id) {
+    customShifts = customShifts.filter(s => s.id !== id);
+    renderCustomShifts();
+    updateSummary();
+    showNotification('✅ Đã xóa ca tùy chỉnh!', 'success', 2000);
+}
+
+function updateSummary() {
+    const summaryEl = document.getElementById('summaryText');
+    if (!summaryEl) return;
+    
+    const employeeCount = selectedEmployees.size;
+    const dateMode = document.querySelector('input[name="dateMode"]:checked')?.value || 'single';
+    
+    // Count dates
+    let dateCount = 0;
+    let dateInfo = '';
+    
+    if (dateMode === 'single') {
+        dateCount = 1;
+        const date = document.getElementById('displayDate')?.value || '';
+        dateInfo = date ? new Date(date).toLocaleDateString('vi-VN') : 'chưa chọn';
+    } else {
+        const startDate = document.getElementById('startDate')?.value;
+        const endDate = document.getElementById('endDate')?.value;
+        
+        if (startDate && endDate) {
+            const selectedWeekdays = Array.from(document.querySelectorAll('.weekday-checkbox input:checked'))
+                .map(ch => parseInt(ch.value));
+            
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            
+            // Count matching days
+            for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+                const dow = d.getDay(); // 0=Sun, 1=Mon, etc
+                if (selectedWeekdays.includes(dow)) {
+                    dateCount++;
+                }
+            }
+            
+            dateInfo = `${start.toLocaleDateString('vi-VN')} - ${end.toLocaleDateString('vi-VN')}`;
+        } else {
+            dateInfo = 'chưa chọn khoảng thời gian';
+        }
+    }
+    
+    // Count shifts
+    const templateShifts = document.querySelectorAll('.shift-template-check:checked').length;
+    const shiftCount = templateShifts + customShifts.length;
+    
+    // Calculate total assignments
+    const totalAssignments = employeeCount * dateCount * shiftCount;
+    
+    // Build summary
+    let summary = [];
+    
+    if (employeeCount > 0) {
+        summary.push(`<strong>${employeeCount}</strong> nhân viên`);
+    } else {
+        summary.push('<span style="color: #fbbf24;">Chưa chọn nhân viên</span>');
+    }
+    
+    if (dateCount > 0) {
+        summary.push(`<strong>${dateCount}</strong> ngày (${dateInfo})`);
+    } else {
+        summary.push('<span style="color: #fbbf24;">Chưa chọn ngày</span>');
+    }
+    
+    if (shiftCount > 0) {
+        summary.push(`<strong>${shiftCount}</strong> ca`);
+    } else {
+        summary.push('<span style="color: #fbbf24;">Chưa chọn ca</span>');
+    }
+    
+    let finalText = summary.join(' × ');
+    
+    if (totalAssignments > 0) {
+        finalText += ` = <strong style="font-size: 18px; color: #fbbf24;">${totalAssignments}</strong> lượt phân công`;
+    }
+    
+    summaryEl.innerHTML = finalText;
+}
+
+// Override the save button click handler
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit to ensure the original handler is attached
+    setTimeout(() => {
+        const saveBtn = document.getElementById('saveAssignment');
+        if (saveBtn) {
+            // Remove all previous event listeners by cloning
+            const newSaveBtn = saveBtn.cloneNode(true);
+            saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+            
+            // Add new handler
+            newSaveBtn.addEventListener('click', handleBulkAssignment);
+        }
+    }, 100);
+});
+
+async function handleBulkAssignment() {
+    const btn = document.getElementById('saveAssignment');
+    
+    if (btn.disabled) return;
+    
+    // Validate
+    if (selectedEmployees.size === 0) {
+        showNotification('⚠️ Vui lòng chọn ít nhất một nhân viên!', 'error');
+        return;
+    }
+    
+    // Get selected shifts
+    const selectedShifts = [];
+    
+    // Template shifts
+    document.querySelectorAll('.shift-template-check:checked').forEach(check => {
+        selectedShifts.push({
+            name: check.dataset.shift,
+            start: check.dataset.start,
+            end: check.dataset.end
+        });
+    });
+    
+    // Custom shifts
+    customShifts.forEach(shift => {
+        selectedShifts.push({
+            name: shift.name,
+            start: shift.start,
+            end: shift.end
+        });
+    });
+    
+    if (selectedShifts.length === 0) {
+        showNotification('⚠️ Vui lòng chọn ít nhất một ca làm việc!', 'error');
+        return;
+    }
+    
+    // Get dates
+    const dates = [];
+    const dateMode = document.querySelector('input[name="dateMode"]:checked')?.value || 'single';
+    
+    if (dateMode === 'single') {
+        const date = document.getElementById('displayDate')?.value;
+        if (!date) {
+            showNotification('⚠️ Vui lòng chọn ngày!', 'error');
+            return;
+        }
+        dates.push(date);
+    } else {
+        const startDate = document.getElementById('startDate')?.value;
+        const endDate = document.getElementById('endDate')?.value;
+        
+        if (!startDate || !endDate) {
+            showNotification('⚠️ Vui lòng chọn khoảng thời gian!', 'error');
+            return;
+        }
+        
+        const selectedWeekdays = Array.from(document.querySelectorAll('.weekday-checkbox input:checked'))
+            .map(ch => parseInt(ch.value));
+        
+        if (selectedWeekdays.length === 0) {
+            showNotification('⚠️ Vui lòng chọn ít nhất một ngày trong tuần!', 'error');
+            return;
+        }
+        
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+            const dow = d.getDay();
+            if (selectedWeekdays.includes(dow)) {
+                dates.push(d.toISOString().split('T')[0]);
+            }
+        }
+    }
+    
+    if (dates.length === 0) {
+        showNotification('⚠️ Không có ngày nào phù hợp!', 'error');
+        return;
+    }
+    
+    // Build assignments
+    const assignments = [];
+    const ghi_chu = document.getElementById('shiftNote')?.value || '';
+    
+    selectedEmployees.forEach(empId => {
+        dates.forEach(date => {
+            selectedShifts.forEach(shift => {
+                assignments.push({
+                    nhanvien_id: empId,
+                    ngay: date,
+                    gio_bat_dau: shift.start,
+                    gio_ket_thuc: shift.end,
+                    ca_lam: shift.name,
+                    ghi_chu: ghi_chu
+                });
+            });
+        });
+    });
+    
+    console.log('Bulk assignments:', assignments);
+    
+    // Confirm
+    const confirmMsg = `Bạn sắp tạo ${assignments.length} lượt phân công:\n` +
+                      `- ${selectedEmployees.size} nhân viên\n` +
+                      `- ${dates.length} ngày\n` +
+                      `- ${selectedShifts.length} ca/ngày\n\n` +
+                      `Tiếp tục?`;
+    
+    if (!confirm(confirmMsg)) return;
+    
+    // Disable button
+    btn.disabled = true;
+    const originalText = btn.textContent;
+    btn.textContent = 'Đang xử lý...';
+    
+    try {
+        const response = await fetch('index.php?act=ql_lichlamviec_calendar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'create_assignments',
+                assignments: assignments
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            const text = await response.text();
+            console.error('Non-JSON response:', text.substring(0, 500));
+            throw new Error('Server trả về dữ liệu không hợp lệ');
+        }
+        
+        const result = await response.json();
+        console.log('Server response:', result);
+        
+        if (result.success) {
+            showNotification(`✅ Phân công thành công ${result.success_count} ca làm việc!`, 'success', 2000);
+            setTimeout(() => {
+                closeAssignModal();
+                location.reload();
+            }, 2000);
+        } else if (result.partial_success) {
+            let msg = `⚠️ Tạo được ${result.success_count} ca, có ${result.error_count} ca bị lỗi.\n\nTải lại trang?`;
+            if (confirm(msg)) {
+                closeAssignModal();
+                location.reload();
+            }
+        } else {
+            let errorMsg = result.message || 'Không thể phân công';
+            if (result.errors && result.errors.length > 0) {
+                errorMsg += '\n\nChi tiết: ' + result.errors.slice(0, 3).join(', ');
+            }
+            showNotification('❌ ' + errorMsg, 'error', 5000);
+        }
+    } catch (error) {
+        console.error('Save error:', error);
+        showNotification('❌ Lỗi: ' + error.message, 'error', 5000);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+    }
+}
+</script>

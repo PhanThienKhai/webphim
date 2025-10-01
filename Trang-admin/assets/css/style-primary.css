@@ -4567,7 +4567,7 @@ label {
 }
 
 label:last-child {
-  margin-bottom: 0;
+  margin-bottom: 9px;
 }
 
 label.inline {

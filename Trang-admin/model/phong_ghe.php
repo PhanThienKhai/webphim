@@ -60,6 +60,74 @@ function pg_generate_default($id_phong, $rows_count = 12, $cols_count = 18){
     pg_replace_map($id_phong, $out);
 }
 
+// Tạo sơ đồ ghế theo template
+function pg_generate_by_template($id_phong, $template = 'medium', $custom_rows = null, $custom_cols = null){
+    $config = [
+        'small' => ['rows' => 8, 'cols' => 12, 'aisles' => [4, 9]],
+        'medium' => ['rows' => 12, 'cols' => 18, 'aisles' => [5, 14]],
+        'large' => ['rows' => 15, 'cols' => 24, 'aisles' => [7, 18]],
+        'vip' => ['rows' => 10, 'cols' => 14, 'aisles' => [4, 11]],
+        'custom' => ['rows' => $custom_rows ?? 12, 'cols' => $custom_cols ?? 18, 'aisles' => []]
+    ];
+    
+    $cfg = $config[$template] ?? $config['medium'];
+    $rows_count = $cfg['rows'];
+    $cols_count = $cfg['cols'];
+    $aisles = $cfg['aisles'];
+    
+    $rows = [];
+    for ($i = 0; $i < $rows_count; $i++) { 
+        $rows[] = chr(ord('A') + $i); 
+    }
+    
+    $out = [];
+    foreach ($rows as $idx => $r) {
+        for ($c = 1; $c <= $cols_count; $c++) {
+            // Xác định tier dựa trên template
+            $tier = 'cheap';
+            $active = 1;
+            
+            // Tắt ghế ở lối đi
+            if (in_array($c, $aisles)) {
+                $active = 0;
+            }
+            
+            // Phân bổ tier theo template
+            if ($template === 'small') {
+                if ($idx >= 4) $tier = 'middle';
+                if ($idx >= 6 && $c >= 4 && $c <= 9) $tier = 'expensive';
+            } elseif ($template === 'medium') {
+                if ($idx >= 6) $tier = 'middle';
+                if ($idx >= 9 && $c >= 6 && $c <= 13) $tier = 'expensive';
+            } elseif ($template === 'large') {
+                if ($idx >= 8) $tier = 'middle';
+                if ($idx >= 12 && $c >= 8 && $c <= 17) $tier = 'expensive';
+            } elseif ($template === 'vip') {
+                if ($idx >= 3) $tier = 'expensive';
+                if ($idx < 3) $tier = 'middle';
+            } elseif ($template === 'custom') {
+                // Phân bổ tự động: 50% cheap, 30% middle, 20% expensive
+                $third = floor($rows_count / 3);
+                if ($idx >= $rows_count - $third) {
+                    $tier = 'expensive';
+                } elseif ($idx >= $third) {
+                    $tier = 'middle';
+                }
+            }
+            
+            $out[] = [
+                'row_label' => $r,
+                'seat_number' => $c,
+                'code' => $r . $c,
+                'tier' => $tier,
+                'active' => $active
+            ];
+        }
+    }
+    
+    pg_replace_map($id_phong, $out);
+}
+
 function pg_rows_cols_summary($id_phong){
     $rows = pdo_query("SELECT DISTINCT row_label FROM phong_ghe WHERE id_phong = ? ORDER BY row_label", $id_phong);
     $cols = pdo_query("SELECT MAX(seat_number) AS max_col FROM phong_ghe WHERE id_phong = ?", $id_phong);

@@ -1471,11 +1471,13 @@ if(isset($_SESSION['user1'])) {
             
              //////////QL Phòng
             case "phong":
+                enforce_act_or_403('phong'); // Kiểm tra quyền
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
                 $loadphong = $id_rap ? load_phong_by_rap($id_rap) : load_phong();
                 include "./view/phong/phong.php";
                 break;
             case "xoaphong":
+                enforce_act_or_403('xoaphong'); // Kiểm tra quyền
                 if (isset($_GET['idxoa'])) {
                     xoa_phon($_GET['idxoa']);
                     $loadphongg = load_phong();
@@ -1483,10 +1485,27 @@ if(isset($_SESSION['user1'])) {
                 }
                 break;
             case "suaphong":
+                enforce_act_or_403('suaphong'); // Kiểm tra quyền
                 if (isset($_GET['ids'])) {
                     $id_phong_edit = (int)$_GET['ids'];
                     $loadphong1 = loadone_phong($id_phong_edit);
-                    // Inline seat-map actions
+                    
+                    // Xử lý tạo sơ đồ theo template (form đơn giản)
+                    if (isset($_POST['tao_map_template'])) {
+                        $template = $_POST['template_type'] ?? 'medium';
+                        $custom_rows = isset($_POST['custom_rows']) ? (int)$_POST['custom_rows'] : null;
+                        $custom_cols = isset($_POST['custom_cols']) ? (int)$_POST['custom_cols'] : null;
+                        pg_generate_by_template($id_phong_edit, $template, $custom_rows, $custom_cols);
+                        $suatc = "✅ Đã tạo sơ đồ ghế thành công!";
+                    }
+                    
+                    // Xử lý xóa sơ đồ
+                    if (isset($_POST['xoa_map'])) {
+                        pdo_execute("DELETE FROM phong_ghe WHERE id_phong = ?", $id_phong_edit);
+                        $suatc = "Đã xóa sơ đồ ghế";
+                    }
+                    
+                    // Xử lý form cũ (cho chế độ edit advanced)
                     if (isset($_POST['tao_map'])) {
                         $rows = max(1, (int)($_POST['rows'] ?? 12));
                         $cols = max(1, (int)($_POST['cols'] ?? 18));
@@ -1500,10 +1519,17 @@ if(isset($_SESSION['user1'])) {
                     }
                     $map = pg_list($id_phong_edit);
                 }
-                include "./view/phong/sua.php";
+                
+                // Nếu có tham số edit_advanced, dùng giao diện chi tiết
+                if (isset($_GET['edit_advanced'])) {
+                    include "./view/phong/sua.php";
+                } else {
+                    include "./view/phong/sua_simple.php";
+                }
                 break;
 
                 case "updatephong":
+                    enforce_act_or_403('updatephong'); // Kiểm tra quyền
 
                     $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
                     $loadphong = $id_rap ? load_phong_by_rap($id_rap) : load_phong();
@@ -1527,24 +1553,38 @@ if(isset($_SESSION['user1'])) {
                     include "./view/phong/phong.php";
                     break;
                 case "themphong":
+                    enforce_act_or_403('themphong'); // Kiểm tra quyền
                     $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
                     $loadphong = $id_rap ? load_phong_by_rap($id_rap) : load_phong();
                    if (isset($_POST['len'])) {
-                       //  $id = $_POST['id'];
-                       $name = $_POST['name'];
+                       $name = trim($_POST['name'] ?? '');
                        $so_ghe = isset($_POST['so_ghe']) ? (int)$_POST['so_ghe'] : 0;
                        $dien_tich = isset($_POST['dien_tich']) ? (float)$_POST['dien_tich'] : 0;
+                       $loai_phong = $_POST['loai_phong'] ?? 'medium';
+                       $custom_rows = isset($_POST['custom_rows']) ? (int)$_POST['custom_rows'] : null;
+                       $custom_cols = isset($_POST['custom_cols']) ? (int)$_POST['custom_cols'] : null;
+                       
                        if($name =='' || !$id_rap) {
-                         $error = "vui lòng không để trống";
-                         $loadphong1 = load_phong($id);
+                         $error = "Vui lòng nhập tên phòng";
                          include "./view/phong/them.php";
                          break;
-                         }else{
-                       them_phong($name, $id_rap, $so_ghe, $dien_tich);
-                       $suatc = "Thêm thành công";
-
+                       } else {
+                           // Thêm phòng vào database
+                           them_phong($name, $id_rap, $so_ghe, $dien_tich);
+                           
+                           // Lấy ID phòng vừa tạo
+                           $id_phong_moi = pdo_query_one("SELECT id FROM phongchieu WHERE name = ? AND id_rap = ? ORDER BY id DESC LIMIT 1", $name, $id_rap);
+                           
+                           if ($id_phong_moi && isset($id_phong_moi['id'])) {
+                               // Tự động tạo sơ đồ ghế theo template
+                               include_once "./model/phong_ghe.php";
+                               pg_generate_by_template($id_phong_moi['id'], $loai_phong, $custom_rows, $custom_cols);
+                               $suatc = "✅ Thêm phòng và tạo sơ đồ ghế thành công!";
+                           } else {
+                               $suatc = "Thêm phòng thành công";
+                           }
+                       }
                    }
-               }
                     $loadphong = $id_rap ? load_phong_by_rap($id_rap) : load_phong();
                    include "./view/phong/them.php";
                    break;

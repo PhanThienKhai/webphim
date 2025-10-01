@@ -84,20 +84,44 @@ if (is_array($loadphong1)) {
                 .dot.middle{background:var(--seat-middle)}
                 .dot.exp{background:var(--seat-exp)}
                 .dot.off{background:var(--seat-off)}
-                .sits-area{max-width: 900px;margin: 0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:22px 18px 14px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
-                .sits-anchor{color:#6b7280;font-weight:600;margin-bottom:6px}
-                .sits .sits__row{white-space:nowrap}
-                /* đồng bộ với label số: 30 + 10 margin = 40px một cột */
-                .sits .sits__row .sits__place{width:30px;height:30px;margin:5px;display:inline-block;border-radius:6px;transition:transform .06s ease}
+                /* Khung bao ngoài - co giãn theo nội dung */
+                .sits-area{
+                    display:inline-block; /* Co giãn theo nội dung */
+                    margin:0 auto;
+                    background:#fff;
+                    border:1px solid #e5e7eb;
+                    border-radius:12px;
+                    padding:20px 45px 35px; /* Giảm padding để vừa khít hơn */
+                    box-shadow:0 8px 24px rgba(0,0,0,.06);
+                    position:relative;
+                    min-width:250px; /* Giảm min-width */
+                    max-width:95%; /* Responsive */
+                }
+                .sits-anchor{color:#6b7280;font-weight:600;margin-bottom:15px;text-align:center;}
+                /* Container chính căn giữa */
+                .sits-container{text-align:center;width:100%;}
+                .sits{
+                    position:relative;
+                    display:inline-block;
+                    margin:0 auto;
+                    /* Tính toán width chính xác để khung vừa khít */
+                    width:fit-content;
+                }
+                .sits .sits__row{white-space:nowrap;text-align:center;margin:2px 0;}
+                /* Ghế - kích thước cố định đồng bộ */
+                .sits .sits__row .sits__place{width:30px;height:30px;margin:3px;display:inline-block;border-radius:6px;transition:transform .06s ease;font-size:10px;line-height:30px;text-align:center;}
                 .sits .sits__row .sits__place:hover{transform:scale(1.06)}
                 .sits .sits__row .sits__place:before{border-radius:6px}
-                .sits__line--right{right:0;left:auto}
+                /* Chữ cái bên trái và phải - đồng bộ với ghế */
+                .sits__line{position:absolute;left:-35px;top:0;display:flex;flex-direction:column;justify-content:flex-start;width:30px;} /* Giảm khoảng cách */
+                .sits__line--right{right:-35px;left:auto;} /* Giảm khoảng cách */
+                .sits__line .sits__indecator{height:30px;line-height:30px;margin:3px 0;border:1px solid #d1d5db;border-radius:6px;color:#4b5563;background:#f9fafb;text-align:center;font-size:11px;font-weight:600;}
+                /* Số cột phía dưới - đồng bộ với ghế */
+                .sits .sits__number{margin-top:10px;text-align:center;white-space:nowrap;}
+                .sits .sits__number .sits__indecator{width:30px;height:25px;line-height:25px;margin:0 3px;display:inline-block;border:1px solid #d1d5db;border-radius:6px;color:#4b5563;background:#f9fafb;text-align:center;font-size:11px;font-weight:600;}
                 .editor-controls{display:grid;gap:10px}
                 .editor-controls .row{margin:0}
                 .editor-tools{position:sticky;top:16px}
-                /* row/col label cosmetic */
-                .sits .sits__indecator{border:1px solid #d1d5db;border-radius:6px;color:#4b5563;background:#fff}
-                .sits .sits__number{margin-top:18px}
             </style>
             <form method="post" action="index.php?act=suaphong&ids=<?= (int)($id ?? 0) ?>">
                 <div class="row">
@@ -118,9 +142,10 @@ if (is_array($loadphong1)) {
                                 </ul>
                             </div>
                             <div class="col-sm-12 col-lg-10 col-lg-offset-1">
-                                <div class="sits-area hidden-xs">
-                                    <div class="sits-anchor">Màn hình</div>
-                                    <div class="sits" id="grid">
+                                <div class="sits-container">
+                                    <div class="sits-area hidden-xs">
+                                        <div class="sits-anchor">Màn hình</div>
+                                        <div class="sits" id="grid">
                                         <?php if (!empty($map)){
                                             $byRow = [];
                                             foreach ($map as $m){ $byRow[$m['row_label']][]=$m; }
@@ -151,6 +176,7 @@ if (is_array($loadphong1)) {
                                             }
                                         } else { echo '<div style="color:#6b7280">Chưa có sơ đồ. Hãy tạo mặc định bên phải.</div>'; }
                                         ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -266,11 +292,13 @@ if (is_array($loadphong1)) {
         // Set fixed width so labels and numbers align and center nicely
         const unit = (function(){
             const el = grid.querySelector('.sits__place');
-            if(!el) return 40; const cs = getComputedStyle(el);
+            if(!el) return 36; // 30px width + 3px margin left + 3px margin right
+            const cs = getComputedStyle(el);
             return el.offsetWidth + parseFloat(cs.marginLeft) + parseFloat(cs.marginRight);
         })();
-        grid.style.width = Math.round(maxCol * unit) + 'px';
-        grid.style.margin = '0 auto';
+        // Không cần set width cho grid vì đã dùng CSS positioning
+        // grid.style.width = Math.round(maxCol * unit) + 'px';
+        // grid.style.margin = '0 auto';
         bindGridEvents();
     }
 
@@ -344,15 +372,8 @@ if (is_array($loadphong1)) {
                 el.classList.add('sits-price--'+(currentTool==='expensive'?'expensive':currentTool));
             }
         }
-        // Initial width adjustment from existing DOM (PHP-rendered map)
-        const numbers = document.querySelectorAll('#grid .sits__number .sits__indecator');
-        const grid = document.getElementById('grid');
-        if(grid){
-            const el = grid.querySelector('.sits__place');
-            let unit = 40; if(el){ const cs=getComputedStyle(el); unit = el.offsetWidth + parseFloat(cs.marginLeft)+parseFloat(cs.marginRight); }
-            const cols = numbers.length || (grid.querySelector('.sits__row')?.children.length || 0);
-            if(cols){ grid.style.width = Math.round(cols*unit)+'px'; grid.style.margin='0 auto'; }
-        }
+        // Initial adjustment - không cần set width vì đã dùng CSS positioning
+        // Grid sẽ tự căn giữa và labels sẽ đồng bộ với ghế thông qua CSS
     })();
 
     // Row/Col controls

@@ -53,6 +53,7 @@ function permission_map()
         // Phòng, suất chiếu: chỉ Quản lí rạp (nhân viên thao tác vé)
         'xoaphong'    => [ROLE_QUAN_LY_RAP],
         'suaphong'    => [ROLE_QUAN_LY_RAP],
+        'updatephong' => [ROLE_QUAN_LY_RAP], // Quyền cập nhật thông tin phòng
         'phong'        => [ROLE_QUAN_LY_RAP],
         'themphong'   => [ROLE_QUAN_LY_RAP],
         'QLsuatchieu'  => [ROLE_QUAN_LY_RAP],
@@ -164,7 +165,49 @@ function enforce_act_or_403($act)
     if (!allowed_act($act, $vai_tro)) {
         // send 403 and optionally render a friendly page
         header('HTTP/1.1 403 Forbidden');
-        echo '<h1>403 - Forbidden</h1><p>Bạn không có quyền truy cập vào chức năng này.</p>';
+        
+        // Tạo thông báo lỗi đẹp hơn
+        $role_name = role_label($vai_tro);
+        $user_name = $user['ho_ten'] ?? $user['name'] ?? 'Unknown';
+        
+        echo '<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 - Không có quyền truy cập</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f8fafc; margin: 0; padding: 40px 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 40px; text-align: center; }
+        .icon { font-size: 64px; margin-bottom: 20px; }
+        h1 { color: #dc2626; margin: 0 0 10px; font-size: 28px; }
+        .subtitle { color: #6b7280; margin-bottom: 30px; font-size: 16px; }
+        .info { background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .info strong { color: #92400e; }
+        .back-btn { display: inline-block; background: #3b82f6; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; margin-top: 20px; }
+        .back-btn:hover { background: #2563eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🚫</div>
+        <h1>Không có quyền truy cập</h1>
+        <p class="subtitle">Bạn không được phép thực hiện chức năng này</p>
+        
+        <div class="info">
+            <strong>Thông tin tài khoản:</strong><br>
+            Tên: ' . htmlspecialchars($user_name) . '<br>
+            Vai trò: ' . htmlspecialchars($role_name) . '<br>
+            Chức năng yêu cầu: ' . htmlspecialchars($act) . '
+        </div>
+        
+        <p style="color: #6b7280;">Vui lòng liên hệ quản trị viên để được cấp quyền phù hợp.</p>
+        
+        <a href="javascript:history.back()" class="back-btn">← Quay lại</a>
+        <a href="index.php" class="back-btn">🏠 Trang chủ</a>
+    </div>
+</body>
+</html>';
         exit;
     }
 }

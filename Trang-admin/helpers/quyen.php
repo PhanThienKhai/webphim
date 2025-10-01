@@ -203,9 +203,20 @@ function enforce_act_or_403($act)
         
         <p style="color: #6b7280;">Vui lòng liên hệ quản trị viên để được cấp quyền phù hợp.</p>
         
-        <a href="javascript:history.back()" class="back-btn">← Quay lại</a>
+        <a href="#" class="back-btn" id="backButton">← Quay lại</a>
         <a href="index.php" class="back-btn">🏠 Trang chủ</a>
     </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var backBtn = document.getElementById("backButton");
+        if (backBtn) {
+            backBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                history.back();
+            });
+        }
+    });
+    </script>
 </body>
 </html>';
         exit;

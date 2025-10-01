@@ -221,13 +221,18 @@
         minutes = (minutes < 10 ? "0" : "") + minutes;
         seconds = (seconds < 10 ? "0" : "") + seconds;
 
-        // Hiển thị thời gian trong thẻ h1 có id là "real-time-clock"
-        document.getElementById('real-time-clock').innerText = hours + ":" + minutes + ":" + seconds;
+        // Kiểm tra element tồn tại trước khi cập nhật
+        var clockElement = document.getElementById('real-time-clock');
+        if (clockElement) {
+            clockElement.innerText = hours + ":" + minutes + ":" + seconds;
+        }
 
         // Cập nhật thời gian mỗi giây
         setTimeout(updateClock, 1000);
     }
 
-    // Bắt đầu cập nhật thời gian khi trang web được tải
-    updateClock();
+    // Bắt đầu cập nhật thời gian khi DOM đã sẵn sàng
+    document.addEventListener('DOMContentLoaded', function() {
+        updateClock();
+    });
 </script>

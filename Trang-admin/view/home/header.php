@@ -10,6 +10,11 @@
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Content Security Policy - Allow inline scripts for admin panel -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"><?php
+    // Cũng có thể set CSP qua PHP header nếu cần
+    // header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com;");
+    ?>
      <!-- Favicon -->
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico">

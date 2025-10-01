@@ -70,7 +70,18 @@
 </div>
 
 <script>
-    function updateClock(){var d=new Date();function p(n){return (n<10?'0':'')+n}document.getElementById('real-time-clock').innerText=p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds());setTimeout(updateClock,1000);}updateClock();
+    function updateClock(){
+        var d=new Date();
+        function p(n){return (n<10?'0':'')+n}
+        var clockElement = document.getElementById('real-time-clock');
+        if(clockElement) {
+            clockElement.innerText=p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds());
+        }
+        setTimeout(updateClock,1000);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        updateClock();
+    });
 
     // Charts using Google Charts
     google.charts.load('current', {'packages':['corechart']});

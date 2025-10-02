@@ -18,25 +18,32 @@ function combo_all(){
     return pdo_query("SELECT * FROM combo_do_an ORDER BY id DESC");
 }
 
+// Lấy tất cả combo của một rạp cụ thể (cho quản lý rạp)
+function combo_all_by_rap($id_rap){
+    combo_ensure_schema();
+    $sql = "SELECT * FROM combo_do_an WHERE (id_rap = ? OR id_rap IS NULL) ORDER BY id DESC";
+    return pdo_query($sql, $id_rap);
+}
+
 function combo_one($id){
     combo_ensure_schema();
     return pdo_query_one("SELECT * FROM combo_do_an WHERE id = ?", $id);
 }
 
-function combo_insert($ten, $gia, $hinh, $mo_ta, $trang_thai){
+function combo_insert($ten, $gia, $hinh, $mo_ta, $trang_thai, $id_rap = null){
     combo_ensure_schema();
-    pdo_execute("INSERT INTO combo_do_an(ten_combo, gia, hinh_anh, mo_ta, trang_thai) VALUES(?,?,?,?,?)",
-        $ten, $gia, $hinh, $mo_ta, $trang_thai);
+    pdo_execute("INSERT INTO combo_do_an(ten_combo, gia, hinh_anh, mo_ta, trang_thai, id_rap) VALUES(?,?,?,?,?,?)",
+        $ten, $gia, $hinh, $mo_ta, $trang_thai, $id_rap);
 }
 
-function combo_update($id, $ten, $gia, $hinh, $mo_ta, $trang_thai){
+function combo_update($id, $ten, $gia, $hinh, $mo_ta, $trang_thai, $id_rap = null){
     combo_ensure_schema();
     if ($hinh !== null) {
-        pdo_execute("UPDATE combo_do_an SET ten_combo=?, gia=?, hinh_anh=?, mo_ta=?, trang_thai=? WHERE id=?",
-            $ten, $gia, $hinh, $mo_ta, $trang_thai, $id);
+        pdo_execute("UPDATE combo_do_an SET ten_combo=?, gia=?, hinh_anh=?, mo_ta=?, trang_thai=?, id_rap=? WHERE id=?",
+            $ten, $gia, $hinh, $mo_ta, $trang_thai, $id_rap, $id);
     } else {
-        pdo_execute("UPDATE combo_do_an SET ten_combo=?, gia=?, mo_ta=?, trang_thai=? WHERE id=?",
-            $ten, $gia, $mo_ta, $trang_thai, $id);
+        pdo_execute("UPDATE combo_do_an SET ten_combo=?, gia=?, mo_ta=?, trang_thai=?, id_rap=? WHERE id=?",
+            $ten, $gia, $mo_ta, $trang_thai, $id_rap, $id);
     }
 }
 

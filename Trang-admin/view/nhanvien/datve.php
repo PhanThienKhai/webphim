@@ -48,6 +48,7 @@
     padding: 24px;
     margin-bottom: 20px;
     transition: all 0.3s;
+    width: 1700px;;
 }
 .step-card.disabled {
     opacity: 0.5;
@@ -348,7 +349,7 @@
 
 /* Combo Selection */
 .combo-sidebar {
-    width: 320px;
+    width: 391px;
 }
 .combo-list {
     display: flex;
@@ -437,6 +438,22 @@
     color: #667eea;
 }
 
+/* Promo code section */
+#promo-code-input:focus {
+    outline: none;
+    border-color: #10b981;
+}
+
+#btn-apply-promo:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+#btn-apply-promo:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
 /* Buttons */
 .btn-modern {
     padding: 12px 24px;
@@ -471,11 +488,12 @@
 
 /* Payment Confirmation */
 .payment-summary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #8e94abff 0%, #a292b2ff 100%);
     color: #fff;
     padding: 24px;
     border-radius: 12px;
     margin-bottom: 20px;
+    font-size: 14px;
 }
 .payment-summary h4 {
     margin: 0 0 16px;
@@ -625,6 +643,28 @@
                         <p style="color: #6b7280; font-size: 13px;">Đang tải combo...</p>
                     </div>
                     
+                    <!-- Mã khuyến mãi -->
+                    <div style="margin-top: 20px; padding-top: 20px; border-top: 2px dashed #e5e7eb;">
+                        <h5 style="margin: 0 0 12px; font-weight: 600;">🎟️ Mã khuyến mãi</h5>
+                        <div style="display: flex; gap: 8px;">
+                            <select 
+                                id="promo-code-select" 
+                                style="flex: 1; padding: 10px 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 14px; background: #fff; cursor: pointer; width: 10px"
+                            >
+                                <option value="">Chọn mã khuyến mãi</option>
+                            </select>
+                            <button 
+                                type="button" 
+                                id="btn-apply-promo"
+                                style="padding: 10px 20px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; white-space: nowrap;"
+                            >
+                                Áp dụng
+                            </button>
+                        </div>
+                        <div id="promo-message" style="margin-top: 8px; font-size: 13px; min-height: 20px;"></div>
+                        <div id="promo-info" style="display: none; margin-top: 12px; padding: 12px; background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; font-size: 13px;"></div>
+                    </div>
+                    
                     <div class="summary-box">
                         <h5 style="margin: 0 0 12px; font-weight: 600;">Tổng tiền</h5>
                         <div class="summary-row">
@@ -634,6 +674,10 @@
                         <div class="summary-row">
                             <span>Combo:</span>
                             <span id="sum-combo">0 đ</span>
+                        </div>
+                        <div class="summary-row" id="discount-row" style="display: none; color: #10b981;">
+                            <span>Giảm giá:</span>
+                            <span id="sum-discount">0 đ</span>
                         </div>
                         <div class="summary-row total">
                             <span>Tổng cộng:</span>
@@ -692,6 +736,10 @@
                                 <span>Combo:</span>
                                 <strong id="confirm-combo">-</strong>
                             </div>
+                            <div class="payment-detail-row" id="confirm-promo-row" style="display: none; color: #10b981;">
+                                <span>🎟️ Mã KM:</span>
+                                <strong id="confirm-promo">-</strong>
+                            </div>
                         </div>
                         <div class="payment-total" id="confirm-total">0 đ</div>
                     </div>
@@ -738,7 +786,10 @@
         combos: {},
         seatPrices: {},
         comboData: [],
-        reservedSeats: []
+        reservedSeats: [],
+        promoCode: '',
+        promoDiscount: 0,
+        promoValid: false
     };
 
     // DOM elements
@@ -756,6 +807,14 @@
     const btnBackStep1 = document.getElementById('btn-back-step1');
     const btnBackStep2 = document.getElementById('btn-back-step2');
     const btnConfirm = document.getElementById('btn-confirm-booking');
+    
+    // Promo code elements
+    const promoSelect = document.getElementById('promo-code-select');
+    const btnApplyPromo = document.getElementById('btn-apply-promo');
+    const promoMessage = document.getElementById('promo-message');
+    const promoInfo = document.getElementById('promo-info');
+    const discountRow = document.getElementById('discount-row');
+    const sumDiscount = document.getElementById('sum-discount');
 
     // Utility functions
     function clearSelect(sel, placeholder) {
@@ -921,6 +980,7 @@
         updateStepUI(2);
         await loadSeatMap();
         await loadCombos();
+        await loadPromos();
     });
 
     // Load seat map
@@ -1082,6 +1142,37 @@
         }
     }
 
+    // Load available promo codes
+    async function loadPromos() {
+        try {
+            const res = await fetch('index.php?act=api_promos');
+            const data = await res.json();
+            
+            // Clear dropdown
+            promoSelect.innerHTML = '<option value="">-- Chọn mã khuyến mãi --</option>';
+            
+            if (data.promos && data.promos.length > 0) {
+                data.promos.forEach(promo => {
+                    const option = document.createElement('option');
+                    option.value = promo.code;
+                    option.textContent = `${promo.code} - ${promo.name} (${promo.discount_text})`;
+                    option.title = promo.desc || promo.name;
+                    promoSelect.appendChild(option);
+                });
+            } else {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = '-- Không có mã khuyến mãi --';
+                promoSelect.appendChild(option);
+                promoSelect.disabled = true;
+            }
+        } catch (e) {
+            console.error('Error loading promos:', e);
+            promoSelect.innerHTML = '<option value="">-- Lỗi tải mã khuyến mãi --</option>';
+            promoSelect.disabled = true;
+        }
+    }
+
     window.changeComboQty = function(comboId, delta) {
         const newQty = Math.max(0, state.combos[comboId] + delta);
         state.combos[comboId] = newQty;
@@ -1108,14 +1199,96 @@
             comboTotal += combo.price * state.combos[combo.id];
         });
 
-        const total = seatTotal + comboTotal;
+        const subtotal = seatTotal + comboTotal;
+        const discount = state.promoValid ? state.promoDiscount : 0;
+        const total = Math.max(0, subtotal - discount);
 
         document.getElementById('sum-seat').textContent = formatCurrency(seatTotal);
         document.getElementById('sum-combo').textContent = formatCurrency(comboTotal);
+        
+        // Hiển thị dòng giảm giá nếu có
+        if (state.promoValid && discount > 0) {
+            discountRow.style.display = 'flex';
+            sumDiscount.textContent = '- ' + formatCurrency(discount);
+        } else {
+            discountRow.style.display = 'none';
+        }
+        
         document.getElementById('sum-total').textContent = formatCurrency(total);
 
         btnNextStep3.disabled = state.seats.size === 0;
     }
+    
+    // Apply promo code
+    btnApplyPromo.addEventListener('click', async () => {
+        const code = promoSelect.value.trim();
+        if (code === '' || code === '-- Chọn mã khuyến mãi --') {
+            promoMessage.innerHTML = '<span style="color: #ef4444;">⚠️ Vui lòng chọn mã khuyến mãi</span>';
+            return;
+        }
+        
+        const originalTotal = calculateTotal();
+        if (originalTotal === 0) {
+            promoMessage.innerHTML = '<span style="color: #ef4444;">⚠️ Vui lòng chọn ghế trước</span>';
+            return;
+        }
+        
+        btnApplyPromo.disabled = true;
+        btnApplyPromo.textContent = 'Đang kiểm tra...';
+        promoMessage.innerHTML = '<span style="color: #6b7280;">Đang kiểm tra mã...</span>';
+        
+        try {
+            const res = await fetch(`index.php?act=api_check_promo&code=${encodeURIComponent(code)}&price=${originalTotal}`);
+            const data = await res.json();
+            
+            if (data.valid) {
+                state.promoCode = code;
+                state.promoDiscount = data.discount || 0;
+                state.promoValid = true;
+                
+                promoMessage.innerHTML = `<span style="color: #10b981;">✓ ${data.message}</span>`;
+                promoInfo.style.display = 'block';
+                promoInfo.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${data.promo_name}</strong>
+                            <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">${data.promo_desc || ''}</div>
+                        </div>
+                        <button type="button" onclick="removePromo()" style="padding: 4px 12px; background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; cursor: pointer; font-size: 12px;">Xóa</button>
+                    </div>
+                `;
+                promoSelect.disabled = true;
+                btnApplyPromo.disabled = true;
+                
+                updateSummary();
+            } else {
+                state.promoValid = false;
+                state.promoDiscount = 0;
+                promoMessage.innerHTML = `<span style="color: #ef4444;">✗ ${data.message}</span>`;
+                promoInfo.style.display = 'none';
+                updateSummary();
+            }
+        } catch (e) {
+            console.error('Promo check error:', e);
+            promoMessage.innerHTML = '<span style="color: #ef4444;">✗ Lỗi kiểm tra mã</span>';
+        } finally {
+            btnApplyPromo.disabled = false;
+            btnApplyPromo.textContent = 'Áp dụng';
+        }
+    });
+    
+    // Remove promo code (global function)
+    window.removePromo = function() {
+        state.promoCode = '';
+        state.promoDiscount = 0;
+        state.promoValid = false;
+        promoSelect.value = '';
+        promoSelect.disabled = false;
+        btnApplyPromo.disabled = false;
+        promoMessage.innerHTML = '';
+        promoInfo.style.display = 'none';
+        updateSummary();
+    };
 
     // Move to step 3
     btnNextStep3.addEventListener('click', () => {
@@ -1145,8 +1318,28 @@
         } else {
             document.getElementById('confirm-combo-row').style.display = 'none';
         }
+        
+        // Promo info
+        if (state.promoValid && state.promoCode) {
+            document.getElementById('confirm-promo-row').style.display = 'flex';
+            document.getElementById('confirm-promo').textContent = state.promoCode + ' (-' + formatCurrency(state.promoDiscount) + ')';
+        } else {
+            document.getElementById('confirm-promo-row').style.display = 'none';
+        }
 
-        const total = calculateTotal();
+        // Calculate total with discount
+        let total = 0;
+        state.seats.forEach(code => {
+            total += state.seatPrices[code] || 0;
+        });
+        state.comboData.forEach(combo => {
+            total += combo.price * state.combos[combo.id];
+        });
+        
+        if (state.promoValid) {
+            total = Math.max(0, total - state.promoDiscount);
+        }
+        
         document.getElementById('confirm-total').textContent = formatCurrency(total);
     }
 
@@ -1192,6 +1385,7 @@
         formData.append('ghe_csv', Array.from(state.seats).join(','));
         formData.append('combo_text', combos.join('; '));
         formData.append('price', calculateTotal());
+        formData.append('promo_code', state.promoValid ? state.promoCode : ''); // Thêm mã khuyến mãi
         formData.append('datve_confirm', '1');
 
         try {

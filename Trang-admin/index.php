@@ -254,7 +254,7 @@ if(isset($_SESSION['user1'])) {
     // API JSON cho đặt vé (trả JSON thuần trước khi include header)
     if (isset($_GET['act'])) {
         $act_api = $_GET['act'];
-        if (in_array($act_api, ['api_dates','api_times','api_reserved','api_combos','api_seatmap'], true)) {
+        if (in_array($act_api, ['api_dates','api_times','api_reserved','api_combos','api_seatmap','api_check_promo','api_promos'], true)) {
             header('Content-Type: application/json; charset=utf-8');
             if ($act_api === 'api_dates') {
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
@@ -304,6 +304,59 @@ if(isset($_SESSION['user1'])) {
                     $rows = combo_by_rap($id_rap);
                     echo json_encode($rows); exit;
                 } catch (Exception $e) { echo json_encode([]); exit; }
+            }
+            if ($act_api === 'api_check_promo') {
+                $code = trim($_GET['code'] ?? '');
+                $price = (int)($_GET['price'] ?? 0);
+                
+                if ($code === '' || $price <= 0) {
+                    echo json_encode(['valid' => false, 'message' => 'Thông tin không hợp lệ']);
+                    exit;
+                }
+                
+                $km = km_find_by_code($code);
+                if (!$km) {
+                    echo json_encode(['valid' => false, 'message' => 'Mã khuyến mãi không tồn tại hoặc đã hết hạn']);
+                    exit;
+                }
+                
+                $discount = km_calculate_discount($km, $price);
+                $final_price = max(0, $price - $discount);
+                
+                echo json_encode([
+                    'valid' => true,
+                    'message' => 'Áp dụng thành công!',
+                    'discount' => $discount,
+                    'final_price' => $final_price,
+                    'promo_name' => $km['ten_khuyen_mai'],
+                    'promo_desc' => $km['mo_ta'] ?? ''
+                ]);
+                exit;
+            }
+            if ($act_api === 'api_promos') {
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                if (!$id_rap) { echo json_encode(['promos' => []]); exit; }
+                
+                $promos = km_active_list_by_rap($id_rap);
+                $result = [];
+                foreach ($promos as $p) {
+                    $discount_text = '';
+                    if ($p['loai_giam'] === 'phan_tram') {
+                        $discount_text = 'Giảm ' . number_format($p['phan_tram_giam']) . '%';
+                    } else {
+                        $discount_text = 'Giảm ' . number_format($p['gia_tri_giam']) . 'đ';
+                    }
+                    
+                    $result[] = [
+                        'code' => $p['ma_khuyen_mai'],
+                        'name' => $p['ten_khuyen_mai'],
+                        'desc' => $p['mo_ta'] ?? '',
+                        'discount_text' => $discount_text,
+                        'expires' => date('d/m/Y', strtotime($p['ngay_ket_thuc']))
+                    ];
+                }
+                echo json_encode(['promos' => $result]);
+                exit;
             }
             exit;
         }
@@ -378,8 +431,29 @@ if(isset($_SESSION['user1'])) {
             echo json_encode(['success' => false, 'error' => $msgInvalid]);
             exit;
         } else {
-            $ve_id = ve_create_admin($id_phim, $id_rap, $id_tg, $id_lc, (int)$kh['id'], $ghe_csv, $price, (int)$_SESSION['user1']['id'], $combo_text);
-            echo json_encode(['success' => true, 've_id' => $ve_id]);
+            // Xử lý mã khuyến mãi (nếu có)
+            $promo_code = trim($_POST['promo_code'] ?? '');
+            $discount_amount = 0;
+            $final_price = $price;
+            
+            if ($promo_code !== '') {
+                $km = km_find_by_code($promo_code);
+                if ($km) {
+                    $discount_amount = km_calculate_discount($km, $price);
+                    $final_price = max(0, $price - $discount_amount);
+                    // Thêm thông tin khuyến mãi vào combo_text
+                    if ($combo_text !== '') $combo_text .= '; ';
+                    $combo_text .= 'KM: ' . $km['ten_khuyen_mai'] . ' (-' . number_format($discount_amount) . 'đ)';
+                }
+            }
+            
+            $ve_id = ve_create_admin($id_phim, $id_rap, $id_tg, $id_lc, (int)$kh['id'], $ghe_csv, $final_price, (int)$_SESSION['user1']['id'], $combo_text);
+            echo json_encode([
+                'success' => true, 
+                've_id' => $ve_id,
+                'discount' => $discount_amount,
+                'final_price' => $final_price
+            ]);
             exit;
         }
     }
@@ -1423,7 +1497,18 @@ if(isset($_SESSION['user1'])) {
                          break;
             // Combo / Khuyến mãi
             case "QLcombo":
-                $ds_combo = combo_all();
+                // Kiểm tra role: Quản lý rạp chỉ xem combo của rạp mình
+                $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                $id_rap_user = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                
+                if ($currentRole === 3 && $id_rap_user > 0) {
+                    // Quản lý rạp: chỉ xem combo của rạp mình
+                    $ds_combo = combo_all_by_rap($id_rap_user);
+                } else {
+                    // Admin: xem tất cả combo
+                    $ds_combo = combo_all();
+                }
+                
                 include "./view/combo/QLcombo.php";
                 break;
             case "combo_them":
@@ -1437,34 +1522,128 @@ if(isset($_SESSION['user1'])) {
                         $hinh = $_FILES['hinh']['name'];
                         @move_uploaded_file($_FILES['hinh']['tmp_name'], "assets/images/".basename($hinh));
                     }
-                    if ($ten==='') { $error = "Tên không được trống"; }
-                    else { combo_insert($ten, $gia, $hinh, $mo_ta, $trang_thai); $success = "Đã thêm"; }
+                    
+                    // Tự động gán id_rap nếu là quản lý rạp
+                    $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                    $id_rap_insert = null;
+                    if ($currentRole === 3) {
+                        $id_rap_insert = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                    }
+                    
+                    if ($ten==='') { 
+                        $error = "Tên không được trống"; 
+                    } else { 
+                        combo_insert($ten, $gia, $hinh, $mo_ta, $trang_thai, $id_rap_insert); 
+                        $success = "Đã thêm"; 
+                    }
                 }
                 include "./view/combo/them.php";
                 break;
             case "combo_sua":
                 $id = (int)($_GET['id'] ?? 0);
                 $row = combo_one($id);
+                
+                // Kiểm tra quyền: Quản lý rạp chỉ sửa combo của rạp mình
+                $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                $id_rap_user = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                
+                if ($currentRole === 3) {
+                    // Quản lý rạp: chỉ sửa combo của rạp mình hoặc combo chung (id_rap IS NULL)
+                    $combo_id_rap = (int)($row['id_rap'] ?? 0);
+                    if ($combo_id_rap > 0 && $combo_id_rap !== $id_rap_user) {
+                        // Combo thuộc rạp khác
+                        include "./view/home/403.php";
+                        break;
+                    }
+                }
+                
                 if (isset($_POST['capnhat'])) {
                     $ten = trim($_POST['ten'] ?? '');
                     $gia = (int)($_POST['gia'] ?? 0);
                     $mo_ta = trim($_POST['mo_ta'] ?? '');
                     $trang_thai = (int)($_POST['trang_thai'] ?? 1);
                     $hinh = null;
-                    if (!empty($_FILES['hinh']['name'])) { $hinh = $_FILES['hinh']['name']; @move_uploaded_file($_FILES['hinh']['tmp_name'], "assets/images/".basename($hinh)); }
-                    combo_update($id, $ten, $gia, $hinh, $mo_ta, $trang_thai);
-                    $success = "Đã cập nhật"; $row = combo_one($id);
+                    if (!empty($_FILES['hinh']['name'])) { 
+                        $hinh = $_FILES['hinh']['name']; 
+                        @move_uploaded_file($_FILES['hinh']['tmp_name'], "assets/images/".basename($hinh)); 
+                    }
+                    
+                    // Tự động gán id_rap nếu là quản lý rạp
+                    $id_rap_update = null;
+                    if ($currentRole === 3) {
+                        $id_rap_update = $id_rap_user;
+                    }
+                    
+                    combo_update($id, $ten, $gia, $hinh, $mo_ta, $trang_thai, $id_rap_update);
+                    $success = "Đã cập nhật"; 
+                    $row = combo_one($id);
                 }
                 include "./view/combo/sua.php";
                 break;
             case "combo_xoa":
-                if (isset($_GET['id'])) { combo_delete((int)$_GET['id']); }
-                $ds_combo = combo_all();
+                if (isset($_GET['id'])) { 
+                    $combo_id = (int)$_GET['id'];
+                    $combo_row = combo_one($combo_id);
+                    
+                    // Kiểm tra quyền: Quản lý rạp chỉ xóa combo của rạp mình
+                    $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                    $id_rap_user = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                    
+                    $can_delete = true;
+                    if ($currentRole === 3 && $combo_row) {
+                        $combo_id_rap = (int)($combo_row['id_rap'] ?? 0);
+                        if ($combo_id_rap > 0 && $combo_id_rap !== $id_rap_user) {
+                            $can_delete = false;
+                        }
+                    }
+                    
+                    if ($can_delete) {
+                        combo_delete($combo_id);
+                    }
+                }
+                
+                // Reload danh sách theo role
+                $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                $id_rap_user = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                if ($currentRole === 3 && $id_rap_user > 0) {
+                    $ds_combo = combo_all_by_rap($id_rap_user);
+                } else {
+                    $ds_combo = combo_all();
+                }
+                
                 include "./view/combo/QLcombo.php";
                 break;
             case "combo_toggle":
-                if (isset($_GET['id'])) { combo_toggle((int)$_GET['id']); }
-                $ds_combo = combo_all();
+                if (isset($_GET['id'])) { 
+                    $combo_id = (int)$_GET['id'];
+                    $combo_row = combo_one($combo_id);
+                    
+                    // Kiểm tra quyền: Quản lý rạp chỉ toggle combo của rạp mình
+                    $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                    $id_rap_user = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                    
+                    $can_toggle = true;
+                    if ($currentRole === 3 && $combo_row) {
+                        $combo_id_rap = (int)($combo_row['id_rap'] ?? 0);
+                        if ($combo_id_rap > 0 && $combo_id_rap !== $id_rap_user) {
+                            $can_toggle = false;
+                        }
+                    }
+                    
+                    if ($can_toggle) {
+                        combo_toggle($combo_id);
+                    }
+                }
+                
+                // Reload danh sách theo role
+                $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                $id_rap_user = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                if ($currentRole === 3 && $id_rap_user > 0) {
+                    $ds_combo = combo_all_by_rap($id_rap_user);
+                } else {
+                    $ds_combo = combo_all();
+                }
+                
                 include "./view/combo/QLcombo.php";
                 break;
             // Khuyến mãi (mã giảm giá)
@@ -1476,6 +1655,7 @@ if(isset($_SESSION['user1'])) {
             case "km_them":
                 if (isset($_POST['luu'])) {
                     $ten = trim($_POST['ten_khuyen_mai'] ?? '');
+                    $ma_code = trim($_POST['ma_khuyen_mai'] ?? '');
                     $loai_giam = $_POST['loai_giam'] ?? 'phan_tram';
                     $phan_tram_giam = (float)($_POST['phan_tram_giam'] ?? 0);
                     $gia_tri_giam = (int)($_POST['gia_tri_giam'] ?? 0);
@@ -1484,8 +1664,22 @@ if(isset($_SESSION['user1'])) {
                     $trang_thai = (int)($_POST['trang_thai'] ?? 1);
                     $dieu_kien = trim($_POST['dieu_kien_ap_dung'] ?? '');
                     $mo_ta = trim($_POST['mo_ta'] ?? '');
-                    if ($ten==='') { $error = 'Tên khuyến mãi không được trống'; }
-                    else { km_insert($ten, $loai_giam, $phan_tram_giam, $gia_tri_giam, $bat_dau ?: null, $ket_thuc ?: null, $trang_thai, $dieu_kien, $mo_ta); $success='Đã thêm'; }
+                    
+                    // Tự động gán id_rap cho quản lý rạp
+                    $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                    $id_rap_km = null;
+                    if ($currentRole === 3) {
+                        $id_rap_km = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                    }
+                    
+                    if ($ten==='') { 
+                        $error = 'Tên khuyến mãi không được trống'; 
+                    } elseif ($ma_code==='') { 
+                        $error = 'Mã khuyến mãi không được trống'; 
+                    } else { 
+                        km_insert($ten, $ma_code, $loai_giam, $phan_tram_giam, $gia_tri_giam, $bat_dau ?: null, $ket_thuc ?: null, $trang_thai, $dieu_kien, $mo_ta, $id_rap_km); 
+                        $success='Đã thêm'; 
+                    }
                 }
                 include "./view/khuyenmai/them.php";
                 break;
@@ -1494,6 +1688,7 @@ if(isset($_SESSION['user1'])) {
                 $row = km_one($id);
                 if (isset($_POST['capnhat'])) {
                     $ten = trim($_POST['ten_khuyen_mai'] ?? '');
+                    $ma_code = trim($_POST['ma_khuyen_mai'] ?? '');
                     $loai_giam = $_POST['loai_giam'] ?? 'phan_tram';
                     $phan_tram_giam = (float)($_POST['phan_tram_giam'] ?? 0);
                     $gia_tri_giam = (int)($_POST['gia_tri_giam'] ?? 0);
@@ -1502,7 +1697,15 @@ if(isset($_SESSION['user1'])) {
                     $trang_thai = (int)($_POST['trang_thai'] ?? 1);
                     $dieu_kien = trim($_POST['dieu_kien_ap_dung'] ?? '');
                     $mo_ta = trim($_POST['mo_ta'] ?? '');
-                    km_update($id, $ten, $loai_giam, $phan_tram_giam, $gia_tri_giam, $bat_dau ?: null, $ket_thuc ?: null, $trang_thai, $dieu_kien, $mo_ta);
+                    
+                    // Tự động gán id_rap cho quản lý rạp
+                    $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                    $id_rap_km = null;
+                    if ($currentRole === 3) {
+                        $id_rap_km = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                    }
+                    
+                    km_update($id, $ten, $ma_code, $loai_giam, $phan_tram_giam, $gia_tri_giam, $bat_dau ?: null, $ket_thuc ?: null, $trang_thai, $dieu_kien, $mo_ta, $id_rap_km);
                     $success = 'Đã cập nhật'; $row = km_one($id);
                 }
                 include "./view/khuyenmai/sua.php";

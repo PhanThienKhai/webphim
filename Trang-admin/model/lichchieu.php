@@ -218,6 +218,41 @@ function ke_hoach_duyet($ma_ke_hoach, $trang_thai, $nguoi_duyet = null, $ly_do =
     }
 }
 
+// Lấy danh sách kế hoạch chiếu của 1 rạp cụ thể (cho quản lý rạp)
+function ke_hoach_list_by_rap($id_rap) {
+    $sql = "SELECT 
+                lc.ma_ke_hoach,
+                lc.trang_thai_duyet,
+                MIN(lc.ngay_chieu) as tu_ngay,
+                MAX(lc.ngay_chieu) as den_ngay,
+                lc.ghi_chu,
+                lc.nguoi_tao,
+                MIN(lc.ngay_tao) as ngay_tao,
+                p.tieu_de as ten_phim,
+                p.thoi_luong_phim,
+                p.img,
+                lp.name as ten_loai,
+                tk.name as nguoi_tao_ten,
+                COUNT(DISTINCT lc.ngay_chieu) as so_ngay_chieu,
+                COUNT(DISTINCT kgc.id) as so_suat_chieu,
+                CASE 
+                    WHEN lc.trang_thai_duyet = 'Chờ duyệt' THEN 'warning'
+                    WHEN lc.trang_thai_duyet = 'Đã duyệt' THEN 'success'
+                    WHEN lc.trang_thai_duyet = 'Từ chối' THEN 'danger'
+                    ELSE 'secondary'
+                END as badge_class
+            FROM lichchieu lc
+            JOIN phim p ON p.id = lc.id_phim
+            LEFT JOIN loaiphim lp ON lp.id = p.id_loai
+            LEFT JOIN taikhoan tk ON tk.id = lc.nguoi_tao
+            LEFT JOIN khung_gio_chieu kgc ON kgc.id_lich_chieu = lc.id
+            WHERE lc.ma_ke_hoach IS NOT NULL AND lc.id_rap = ?
+            GROUP BY lc.ma_ke_hoach
+            ORDER BY ngay_tao DESC";
+    
+    return pdo_query($sql, $id_rap);
+}
+
 // Hàm mới: Lấy danh sách lịch chiếu nhóm theo mã kế hoạch để duyệt
 function lc_list_grouped_for_approval($filter = 'cho_duyet') {
     $where_clause = "";

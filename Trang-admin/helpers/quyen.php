@@ -63,6 +63,10 @@ function permission_map()
         'kehoach'       => [ROLE_QUAN_LY_RAP], // Hiển thị form kế hoạch chiếu
         'kehoach_chieu' => [ROLE_QUAN_LY_RAP], // Kế hoạch chiếu phim
         'luu_kehoach'   => [ROLE_QUAN_LY_RAP], // Lưu kế hoạch chiếu
+        'xem_kehoach'   => [ROLE_QUAN_LY_RAP], // Xem chi tiết kế hoạch đã gửi
+        'sua_kehoach'   => [ROLE_QUAN_LY_RAP], // Chỉnh sửa kế hoạch chờ duyệt
+        'export_kehoach' => [ROLE_QUAN_LY_RAP], // Export Word kế hoạch chi tiết
+        'thu_hoi_kehoach' => [ROLE_QUAN_LY_RAP], // Thu hồi/xóa kế hoạch đã gửi
         'export_word_kehoach' => [ROLE_QUAN_LY_RAP], // Export Word kế hoạch chiếu
         'thoigian'     => [ROLE_QUAN_LY_RAP],
         'themthoigian' => [ROLE_QUAN_LY_RAP],

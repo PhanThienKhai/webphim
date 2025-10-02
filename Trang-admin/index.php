@@ -1566,6 +1566,88 @@ if(isset($_SESSION['user1'])) {
                 include "./view/kehoachphim/kehoach.php";
                 break;
             
+            case "xem_kehoach":
+                if (isset($_GET['ma'])) {
+                    $ma_ke_hoach = $_GET['ma'];
+                    $id_rap = $_SESSION['user1']['id_rap'] ?? null;
+                    $chi_tiet_ke_hoach = ke_hoach_chi_tiet($ma_ke_hoach, $id_rap);
+                    include "./view/kehoachphim/xem_chi_tiet.php";
+                } else {
+                    header("Location: index.php?act=kehoach&msg=error&error=Không tìm thấy kế hoạch");
+                    exit;
+                }
+                break;
+            
+            case "export_kehoach":
+                if (isset($_GET['ma'])) {
+                    $ma_ke_hoach = $_GET['ma'];
+                    $id_rap = $_SESSION['user1']['id_rap'] ?? null;
+                    $chi_tiet_ke_hoach = ke_hoach_chi_tiet($ma_ke_hoach, $id_rap);
+                    if (!empty($chi_tiet_ke_hoach)) {
+                        include "./helpers/export_word.php";
+                        export_kehoach_chi_tiet_word($chi_tiet_ke_hoach);
+                    } else {
+                        header("Location: index.php?act=kehoach&msg=error&error=Không tìm thấy kế hoạch");
+                        exit;
+                    }
+                } else {
+                    header("Location: index.php?act=kehoach&msg=error&error=Thiếu mã kế hoạch");
+                    exit;
+                }
+                break;
+            
+            case "thu_hoi_kehoach":
+                if (isset($_GET['ma'])) {
+                    $ma_ke_hoach = $_GET['ma'];
+                    $id_rap = $_SESSION['user1']['id_rap'] ?? null;
+                    
+                    // Kiểm tra xem kế hoạch có thuộc rạp này không
+                    $chi_tiet = ke_hoach_chi_tiet($ma_ke_hoach, $id_rap);
+                    if (!empty($chi_tiet)) {
+                        // Lấy tất cả id_lich_chieu thuộc kế hoạch này
+                        $sql = "SELECT id FROM lichchieu WHERE ma_ke_hoach = ?";
+                        $lich_chieu_ids = pdo_query($sql, $ma_ke_hoach);
+                        
+                        // Xóa các khung giờ chiếu liên quan
+                        foreach ($lich_chieu_ids as $lc) {
+                            pdo_execute("DELETE FROM khung_gio_chieu WHERE id_lich_chieu = ?", $lc['id']);
+                        }
+                        
+                        // Xóa các lịch chiếu
+                        pdo_execute("DELETE FROM lichchieu WHERE ma_ke_hoach = ?", $ma_ke_hoach);
+                        
+                        // Dùng JavaScript redirect để tránh lỗi "headers already sent"
+                        echo "<script>window.location.href='index.php?act=kehoach&msg=success&success=" . urlencode("Đã thu hồi kế hoạch thành công!") . "';</script>";
+                        exit;
+                    } else {
+                        echo "<script>window.location.href='index.php?act=kehoach&msg=error&error=" . urlencode("Không tìm thấy kế hoạch hoặc không có quyền thu hồi!") . "';</script>";
+                        exit;
+                    }
+                } else {
+                    echo "<script>window.location.href='index.php?act=kehoach&msg=error&error=" . urlencode("Thiếu mã kế hoạch") . "';</script>";
+                    exit;
+                }
+                break;
+            
+            case "sua_kehoach":
+                if (isset($_GET['ma'])) {
+                    $ma_ke_hoach = $_GET['ma'];
+                    $id_rap = $_SESSION['user1']['id_rap'] ?? null;
+                    $chi_tiet_ke_hoach = ke_hoach_chi_tiet($ma_ke_hoach, $id_rap);
+                    
+                    // Chỉ cho phép sửa kế hoạch đang "Chờ duyệt"
+                    if (!empty($chi_tiet_ke_hoach) && $chi_tiet_ke_hoach['trang_thai_duyet'] == 'Chờ duyệt') {
+                        include "./view/kehoachphim/sua_kehoach.php";
+                    } else {
+                        header("Location: index.php?act=kehoach&msg=error&error=" . urlencode("Không thể sửa kế hoạch này!"));
+                        exit;
+                    }
+                } else {
+                    header("Location: index.php?act=kehoach&msg=error&error=" . urlencode("Thiếu mã kế hoạch"));
+                    exit;
+                }
+                break;
+            
              //////////QL Phòng
             case "phong":
                 enforce_act_or_403('phong'); // Kiểm tra quyền

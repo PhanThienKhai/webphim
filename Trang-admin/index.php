@@ -270,9 +270,19 @@ if(isset($_SESSION['user1'])) {
                     $kg = pdo_query_one("SELECT id_phong FROM khung_gio_chieu WHERE id = ?", $id_tg);
                     $id_phong = (int)($kg['id_phong'] ?? 0);
                 }
-                if (!$id_phong) { echo json_encode([]); exit; }
-                $list = pg_list($id_phong);
-                echo json_encode($list); exit;
+                if (!$id_phong) { echo json_encode(['seats' => [], 'prices' => []]); exit; }
+                
+                // Lấy giá vé của phòng
+                $phong = pdo_query_one("SELECT gia_thuong, gia_trung, gia_vip FROM phongchieu WHERE id = ?", $id_phong);
+                $prices = [
+                    'cheap' => (int)($phong['gia_thuong'] ?? 60000),
+                    'middle' => (int)($phong['gia_trung'] ?? 80000),
+                    'expensive' => (int)($phong['gia_vip'] ?? 100000)
+                ];
+                
+                $seats = pg_list($id_phong);
+                echo json_encode(['seats' => $seats, 'prices' => $prices]); 
+                exit;
             }
             if ($act_api === 'api_times') {
                 $id_lc = (int)($_GET['id_lc'] ?? 0);
@@ -288,8 +298,10 @@ if(isset($_SESSION['user1'])) {
                 echo json_encode($list); exit;
             }
             if ($act_api === 'api_combos') {
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                if (!$id_rap) { echo json_encode([]); exit; }
                 try {
-                    $rows = pdo_query("SELECT id, ten_combo as name, gia as price, hinh_anh as image, mo_ta as description FROM combo_do_an WHERE trang_thai = 1 ORDER BY id");
+                    $rows = combo_by_rap($id_rap);
                     echo json_encode($rows); exit;
                 } catch (Exception $e) { echo json_encode([]); exit; }
             }
@@ -301,6 +313,75 @@ if(isset($_SESSION['user1'])) {
         unset($_SESSION['user1']);
         header('Location: login.php');
         exit;
+    }
+    
+    // Xử lý đặt vé AJAX trước khi include header
+    if (isset($_POST['datve_confirm']) && isset($_GET['act']) && $_GET['act'] === 'nv_datve') {
+        header('Content-Type: application/json; charset=utf-8');
+        
+        $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+        if (!$id_rap) {
+            echo json_encode(['success' => false, 'error' => 'Không xác định được rạp']);
+            exit;
+        }
+        
+        $id_phim = (int)($_POST['id_phim'] ?? 0);
+        $id_lc = (int)($_POST['id_lc'] ?? 0);
+        $id_tg = (int)($_POST['id_tg'] ?? 0);
+        $email_kh = trim($_POST['email_kh'] ?? '');
+        $ghe_csv = trim($_POST['ghe_csv'] ?? '');
+        $combo_text = trim($_POST['combo_text'] ?? '');
+        $price = (int)($_POST['price'] ?? 0);
+        
+        if (!$id_phim || !$id_lc || !$id_tg || $ghe_csv==='' || $price<=0 || $email_kh==='') {
+            echo json_encode(['success' => false, 'error' => 'Thiếu thông tin hoặc chưa chọn ghế']);
+            exit;
+        }
+        
+        // Validate seats
+        $valid = true; 
+        $msgInvalid = '';
+        $seats = array_filter(array_map('trim', explode(',', $ghe_csv)));
+        $map = pg_list_for_time($id_tg);
+        
+        if (!empty($map)){
+            $activeCodes = [];
+            foreach ($map as $m){ 
+                if ((int)$m['active']===1) $activeCodes[$m['code']] = true; 
+            }
+            foreach ($seats as $s){ 
+                if (!isset($activeCodes[$s])) { 
+                    $valid=false; 
+                    $msgInvalid='Ghế không hợp lệ trong phòng: '.$s; 
+                    break; 
+                } 
+            }
+        }
+        
+        // Check reserved
+        if ($valid){
+            $reserved = ve_reserved_seats($id_tg, $id_lc);
+            foreach ($seats as $s){ 
+                if (in_array($s, $reserved, true)) { 
+                    $valid=false; 
+                    $msgInvalid='Ghế đã có người đặt: '.$s; 
+                    break; 
+                } 
+            }
+        }
+        
+        $kh = get_tk_by_email($email_kh);
+        if (!$kh) {
+            echo json_encode(['success' => false, 'error' => 'Không tìm thấy khách hàng theo email']);
+            exit;
+        } elseif(!$valid) {
+            echo json_encode(['success' => false, 'error' => $msgInvalid]);
+            exit;
+        } else {
+            $ve_id = ve_create_admin($id_phim, $id_rap, $id_tg, $id_lc, (int)$kh['id'], $ghe_csv, $price, (int)$_SESSION['user1']['id'], $combo_text);
+            echo json_encode(['success' => true, 've_id' => $ve_id]);
+            exit;
+        }
     }
     
     // Xử lý các POST actions trước khi include header (để tránh lỗi headers already sent)
@@ -534,57 +615,7 @@ if(isset($_SESSION['user1'])) {
                 if (!$id_rap) { include "./view/home/403.php"; break; }
                 // Chỉ hiển thị phim có lịch chiếu tại rạp nhân viên đang thuộc
                 $ds_phim = load_phim_by_rap_has_schedule($id_rap);
-                // Bước 2: chọn ghế + combo (từ form tự submit khi đã đủ phim/ngày/giờ/email)
-                if (isset($_POST['chon_lich'])) {
-                    $id_phim = (int)($_POST['id_phim'] ?? 0);
-                    $id_lc = (int)($_POST['id_lc'] ?? 0);
-                    $id_tg = (int)($_POST['id_tg'] ?? 0);
-                    $email_kh = trim($_POST['email_kh'] ?? '');
-                    if (!$id_phim || !$id_lc || !$id_tg || $email_kh==='') {
-                        $error = "Vui lòng chọn phim/ngày/giờ và nhập email khách hàng";
-                        include "./view/nhanvien/datve.php"; break;
-                    }
-                    $ghe_da_dat = ve_reserved_seats($id_tg, $id_lc);
-                    $seat_map = pg_list_for_time($id_tg);
-                    include "./view/nhanvien/datve_ghe.php"; break;
-                }
-                // Xác nhận đặt vé (một trang SPA)
-                if (isset($_POST['datve_confirm'])) {
-                    $id_phim = (int)($_POST['id_phim'] ?? 0);
-                    $id_lc = (int)($_POST['id_lc'] ?? 0);
-                    $id_tg = (int)($_POST['id_tg'] ?? 0);
-                    $email_kh = trim($_POST['email_kh'] ?? '');
-                    $ghe_csv = trim($_POST['ghe_csv'] ?? '');
-                    $combo_text = trim($_POST['combo_text'] ?? '');
-                    $price = (int)($_POST['price'] ?? 0);
-                    if (!$id_phim || !$id_lc || !$id_tg || $ghe_csv==='' || $price<=0 || $email_kh==='') {
-                        $error = "Thiếu thông tin hoặc chưa chọn ghế";
-                    } else {
-                        // Validate seats against room seat map and already-reserved list
-                        $valid = true; $msgInvalid = '';
-                        $seats = array_filter(array_map('trim', explode(',', $ghe_csv)));
-                        $map = pg_list_for_time($id_tg);
-                        if (!empty($map)){
-                            $activeCodes = [];
-                            foreach ($map as $m){ if ((int)$m['active']===1) $activeCodes[$m['code']] = true; }
-                            foreach ($seats as $s){ if (!isset($activeCodes[$s])) { $valid=false; $msgInvalid='Ghế không hợp lệ trong phòng: '.$s; break; } }
-                        }
-                        // also check reserved
-                        if ($valid){
-                            $reserved = ve_reserved_seats($id_tg, $id_lc);
-                            foreach ($seats as $s){ if (in_array($s, $reserved, true)) { $valid=false; $msgInvalid='Ghế đã có người đặt: '.$s; break; } }
-                        }
-                        $kh = get_tk_by_email($email_kh);
-                        if (!$kh) {
-                            $error = "Không tìm thấy khách hàng theo email";
-                        } elseif(!$valid) {
-                            $error = $msgInvalid;
-                        } else {
-                            ve_create_admin($id_phim, $id_rap, $id_tg, $id_lc, (int)$kh['id'], $ghe_csv, $price, (int)$_SESSION['user1']['id'], $combo_text);
-                            $success = "Đặt vé thành công";
-                        }
-                    }
-                }
+                // POST datve_confirm đã xử lý ở trên (trước khi include header) để trả JSON thuần
                 include "./view/nhanvien/datve.php";
                 break;
             case "api_dates":
@@ -607,15 +638,9 @@ if(isset($_SESSION['user1'])) {
                 if (!$id_lc || !$id_tg) { echo json_encode([]); exit; }
                 $list = ve_reserved_seats($id_tg, $id_lc);
                 echo json_encode($list); exit;
-            case "api_combos":
-                header('Content-Type: application/json; charset=utf-8');
-                // Nếu có bảng combo_do_an thì lấy, không thì dùng danh sách mặc định
-                try {
-                    $rows = pdo_query("SELECT id, ten_combo as name, gia as price FROM combo_do_an WHERE trang_thai = 1 ORDER BY id");
-                    echo json_encode($rows); exit;
-                } catch(Exception $e){
-                    echo json_encode([]); exit;
-                }
+            
+            // api_combos đã xử lý ở dòng 300-311 (filter theo id_rap)
+            // case "api_combos": - REMOVED duplicate
 
             // Enhanced calendar với tính năng phân công nhân viên
             case "ql_lichlamviec_calendar":

@@ -52,3 +52,12 @@ function combo_toggle($id){
     pdo_execute("UPDATE combo_do_an SET trang_thai=? WHERE id=?", $new, $id);
 }
 
+// Lấy combo theo rạp (từ cột id_rap trong combo_do_an)
+function combo_by_rap($id_rap){
+    $sql = "SELECT id, ten_combo as name, gia as price, hinh_anh as image, mo_ta as description
+            FROM combo_do_an
+            WHERE (id_rap = ? OR id_rap IS NULL) AND trang_thai = 1
+            ORDER BY id";
+    return pdo_query($sql, $id_rap);
+}
+

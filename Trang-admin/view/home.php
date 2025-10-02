@@ -1,5 +1,13 @@
-<?php include "./view/home/sideheader.php";
+<?php 
+include "./view/home/sideheader.php";
 
+// Kiểm tra role và hiển thị dashboard phù hợp
+if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == ROLE_QUAN_LY_RAP) {
+    // Dashboard cho Quản lý rạp
+    include "./view/home/dashboard_quan_ly_rap.php";
+    include "./view/home/footer.php";
+    exit;
+}
 ?>
 
 <!-- Content Body Start -->

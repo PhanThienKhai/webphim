@@ -10,18 +10,33 @@ function loadall_vephim(){
     return $re;
 }
 function loadone_vephim($id){
-    $sql="SELECT v.id, phim.tieu_de,lichchieu.ngay_chieu, v.price, v.ngay_dat, v.ghe, v.combo, taikhoan.name, khung_gio_chieu.thoi_gian_chieu, v.id_hd, v.trang_thai, phongchieu.name as tenphong
-FROM ve v
-LEFT JOIN taikhoan ON taikhoan.id = v.id_tk
-LEFT JOIN khung_gio_chieu ON khung_gio_chieu.id = v.id_thoi_gian_chieu
-LEFT JOIN phim ON phim.id = v.id_phim
-LEFT JOIN lichchieu ON lichchieu.id = khung_gio_chieu.id_lich_chieu
-LEFT JOIN phongchieu ON phongchieu.id = khung_gio_chieu.id_phong
-WHERE v.id = ".$id;
+    $sql="SELECT v.id, 
+                 phim.tieu_de,
+                 lichchieu.ngay_chieu, 
+                 v.price, 
+                 v.ngay_dat, 
+                 v.ghe, 
+                 v.combo, 
+                 taikhoan.name, 
+                 khung_gio_chieu.thoi_gian_chieu, 
+                 v.id_hd, 
+                 v.trang_thai, 
+                 phongchieu.name as tenphong,
+                 rap_chieu.ten_rap as tenrap,
+                 v.ma_ve,
+                 v.check_in_luc,
+                 v.check_in_boi
+          FROM ve v
+          LEFT JOIN taikhoan ON taikhoan.id = v.id_tk
+          LEFT JOIN khung_gio_chieu ON khung_gio_chieu.id = v.id_thoi_gian_chieu
+          LEFT JOIN phim ON phim.id = v.id_phim
+          LEFT JOIN lichchieu ON lichchieu.id = v.id_ngay_chieu
+          LEFT JOIN phongchieu ON phongchieu.id = khung_gio_chieu.id_phong
+          LEFT JOIN rap_chieu ON rap_chieu.id = v.id_rap
+          WHERE v.id = ?";
 
-    $re =pdo_query_one($sql);
-    return $re ;
-
+    $re = pdo_query_one($sql, $id);
+    return $re;
 }
 function update_vephim($id,$trang_thai){
     $sql = "update ve set `trang_thai`='{$trang_thai}' where `ve`.`id`=" . $id;
@@ -98,7 +113,20 @@ function ve_create_admin($id_phim, $id_rap, $id_tg, $id_lc, $id_kh, $ghe_csv, $p
     $ma = substr(md5(uniqid((string)$id_kh, true)), 0, 12);
     $sql = "INSERT INTO ve(id_phim,id_rap,id_thoi_gian_chieu,id_ngay_chieu,id_tk,ghe,combo,price,id_hd,trang_thai,ngay_dat,ma_ve,tao_boi)
             VALUES(?,?,?,?,?,?,?,?,0,1,NOW(),?,?)";
-    pdo_execute($sql, $id_phim, $id_rap, $id_tg, $id_lc, $id_kh, $ghe_csv, $combo_text, $price, $ma, $id_nv);
+    
+    // Sử dụng kết nối trực tiếp để lấy lastInsertId
+    try {
+        $conn = pdo_get_connection();
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id_phim, $id_rap, $id_tg, $id_lc, $id_kh, $ghe_csv, $combo_text, $price, $ma, $id_nv]);
+        $ve_id = $conn->lastInsertId();
+        return (int)$ve_id;
+    } catch(PDOException $e) {
+        error_log("ve_create_admin error: " . $e->getMessage());
+        throw $e;
+    } finally {
+        unset($conn);
+    }
 }
 
 function ve_reserved_seats($id_tg, $id_lc){

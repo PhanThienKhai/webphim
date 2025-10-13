@@ -1,12 +1,12 @@
 <?php
-function them_ve($gia_ghe, $ngay_tt, $ghe, $id_user, $id_kgc, $id_hd, $id_lc, $id_phim, $combo) 
+function them_ve($gia_ghe, $ngay_tt, $ghe, $id_user, $id_kgc, $id_hd, $id_lc, $id_phim, $combo, $id_rap = null) 
 {
-    $sql = 'INSERT INTO `ve` (`price`, `ngay_dat`, `ghe`, `id_tk`, `id_thoi_gian_chieu`, `id_hd`, `id_ngay_chieu`, `id_phim`, `combo`) VALUES (?,?,?,?,?,?,?,?,?)';
+    $sql = 'INSERT INTO `ve` (`price`, `ngay_dat`, `ghe`, `id_tk`, `id_thoi_gian_chieu`, `id_hd`, `id_ngay_chieu`, `id_phim`, `combo`, `id_rap`) VALUES (?,?,?,?,?,?,?,?,?,?)';
 
     // Kiểm tra xem combo có tồn tại không
     $comboValue = ($combo !== null) ? $combo : '';  // Nếu không có combo, gán giá trị mặc định
 
-    return pdo_execute_return_interlastid($sql, $gia_ghe, $ngay_tt, $ghe, $id_user, $id_kgc, $id_hd, $id_lc, $id_phim, $comboValue);
+    return pdo_execute_return_interlastid($sql, $gia_ghe, $ngay_tt, $ghe, $id_user, $id_kgc, $id_hd, $id_lc, $id_phim, $comboValue, $id_rap);
 }
 
 
@@ -17,14 +17,15 @@ function  dich_vu_insert($id_ve,$combo){
 
 
 function load_ve($id){
-        $sql = "SELECT v.id, phim.tieu_de, lichchieu.ngay_chieu, khung_gio_chieu.thoi_gian_chieu, taikhoan.name, v.ghe, v.price, v.ngay_dat, v.combo, v.trang_thai, phongchieu.name as tenphong
+        $sql = "SELECT v.id, phim.tieu_de, lichchieu.ngay_chieu, khung_gio_chieu.thoi_gian_chieu, taikhoan.name, v.ghe, v.price, v.ngay_dat, v.combo, v.trang_thai, phongchieu.name as tenphong, rap_chieu.ten_rap, rap_chieu.dia_chi as dia_chi_rap
     FROM ve v
     LEFT JOIN khung_gio_chieu ON khung_gio_chieu.id = v.id_thoi_gian_chieu
     LEFT JOIN taikhoan ON taikhoan.id = v.id_tk
     LEFT JOIN phim ON phim.id = v.id_phim
     LEFT JOIN lichchieu ON lichchieu.id = v.id_ngay_chieu
     LEFT JOIN phongchieu ON phongchieu.id = khung_gio_chieu.id_phong
-    WHERE v.trang_thai IN (1, 2, 3,4)  -- Lấy cả trạng thái 1, 2, và 3
+    LEFT JOIN rap_chieu ON rap_chieu.id = v.id_rap
+    WHERE v.trang_thai IN (1, 2, 3, 4)  -- Lấy cả trạng thái 1, 2, 3 và 4
     AND id_tk = ".$id."
     ORDER BY v.id DESC;";
         $re = pdo_query($sql);
@@ -50,7 +51,7 @@ function trangthai_hd($id)
 
 function load_ve_tt($id)
 {
-        $sql = "SELECT h.thanh_tien, ve.id,h.ngay_tt, taikhoan.name, khung_gio_chieu.thoi_gian_chieu, lichchieu.ngay_chieu, phim.tieu_de, ve.ghe, ve.combo, phongchieu.name as tenphong
+        $sql = "SELECT h.thanh_tien, ve.id, h.ngay_tt, taikhoan.name, khung_gio_chieu.thoi_gian_chieu, lichchieu.ngay_chieu, phim.tieu_de, ve.ghe, ve.combo, phongchieu.name as tenphong, rap_chieu.ten_rap, rap_chieu.dia_chi as dia_chi_rap
     FROM hoa_don h
     JOIN ve ON ve.id_hd = h.id 
     JOIN taikhoan ON ve.id_tk = taikhoan.id 
@@ -58,6 +59,7 @@ function load_ve_tt($id)
     JOIN lichchieu ON lichchieu.id = khung_gio_chieu.id_lich_chieu 
     JOIN phongchieu ON phongchieu.id = khung_gio_chieu.id_phong
     JOIN phim ON phim.id = lichchieu.id_phim
+    LEFT JOIN rap_chieu ON rap_chieu.id = ve.id_rap
     WHERE h.id = ".$id;
 
 

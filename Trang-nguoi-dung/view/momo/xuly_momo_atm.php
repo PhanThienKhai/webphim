@@ -38,10 +38,16 @@ $myMomoAccount  = '0384104942';            // Số tài khoản MoMo của bạn
 $myMomoName     = 'Phan Thiên Khải';      // Tên chủ TK MoMo
 $orderInfo      = "Thanh toán {$movieTitle} - TK MoMo: {$myMomoAccount} ({$myMomoName})";
 
-if (isset($_SESSION['tong'][4]) && is_numeric($_SESSION['tong'][4])) {
-    $amount = $_SESSION['tong'][4];
-} else {
-    $amount = isset($_SESSION['tong'][2]) ? $_SESSION['tong'][2] : 0;
+// Lấy số tiền thanh toán (đã bao gồm ghế + combo - giảm giá nếu có)
+$amount = isset($_SESSION['tong']['gia_ghe']) ? (int)$_SESSION['tong']['gia_ghe'] : 0;
+
+// Validate số tiền
+if ($amount < 10000) {
+    die("Lỗi: Số tiền thanh toán phải tối thiểu 10,000 VND. Số tiền hiện tại: " . number_format($amount) . " VND");
+}
+
+if ($amount > 50000000) {
+    die("Lỗi: Số tiền thanh toán vượt quá giới hạn 50,000,000 VND. Số tiền hiện tại: " . number_format($amount) . " VND");
 }
 
 // Tạo các ID đơn hàng & request

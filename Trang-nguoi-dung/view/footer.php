@@ -117,8 +117,7 @@
 <script src="js/external/twitterfeed.js"></script> -->
 
 <!-- Custom -->
-<script src="js/custom.js"></script>
-<script src="js/custom.js"></script>
+<script src="js/custom.js?v=<?php echo time(); ?>"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {

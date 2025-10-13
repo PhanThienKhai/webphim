@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+// Set timezone to Vietnam
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
 include "model/pdo.php";
 include "model/loai_phim.php";
 include "model/phim.php";
@@ -8,6 +12,7 @@ include "model/lichchieu.php";
 include "model/ve.php";
 include "model/hoadon.php";
 include "model/rap.php";
+include "model/combo.php";
 date_default_timezone_set("Asia/Ho_Chi_Minh");
 $loadloai = loadall_loaiphim();
 $loadphim = loadall_phim();
@@ -245,42 +250,113 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                         // }
                         break;
 
-        case "datve": //Đặt vé chọn khung giờ chọn ngày
-            $khunggio = array();
+        case "datve": //Đặt vé - Flow: Chọn rạp → Chọn ngày → Chọn giờ
             $realtime = date('Y-m-d H:i:s');
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                $id_phim = $_GET['id'];
-                $phim = loadone_phim($id_phim);
-            } else {
-                $id_phim = 0;
+            
+            // Lấy thông tin phim
+            $id_phim = isset($_GET['id']) && $_GET['id'] > 0 ? (int)$_GET['id'] : 0;
+            if ($id_phim == 0) {
+                echo '<script>window.location.href="index.php";</script>';
+                exit;
             }
-            // optional selected cinema (rap) to scope show dates and times
+            
+            $phim = loadone_phim($id_phim);
+            if (!$phim) {
+                echo '<script>window.location.href="index.php";</script>';
+                exit;
+            }
+            
+            // Lấy các tham số
             $id_rap = isset($_GET['id_rap']) && $_GET['id_rap'] ? (int)$_GET['id_rap'] : 0;
-            if ((isset($_GET['id_lc'])) && ($_GET['id_lc'])) {
-                $id_lc = $_GET['id_lc'];
-                $khunggio = khunggiochieu_select_by_idxc($id_lc);
-            }
-            if ($id_rap) {
-                $lc = lichchieu_select_by_id_phim_and_rap($id_phim, $id_rap);
-            } else {
-                $lc = lichchieu_select_by_id_phim($id_phim);
-            }
+            $ngay_chieu = isset($_GET['ngay_chieu']) ? $_GET['ngay_chieu'] : '';
+            $id_lc = isset($_GET['id_lc']) ? (int)$_GET['id_lc'] : 0;
+            
+            // Reset session khi bắt đầu đặt vé mới
             unset($_SESSION['mv']);
-            // make $id_rap available to views
+            unset($_SESSION['tong']);
+            
+            // Lấy danh sách rạp đang chiếu phim này
+            $raps_showing = get_raps_showing_phim($id_phim);
+            
+            // Nếu không có rạp nào chiếu phim này
+            if (empty($raps_showing)) {
+                $_SESSION['thongbao_datve'] = "⚠️ Phim này hiện chưa có lịch chiếu tại các rạp. Vui lòng quay lại sau!";
+                echo '<script>window.location.href="index.php?act=ctphim&id=' . $id_phim . '";</script>';
+                exit;
+            }
+            
+            // FLOW: Nếu chưa chọn rạp → hiển thị danh sách rạp
+            if ($id_rap == 0) {
+                $selected_rap = 0;
+                $rap_info = null;
+                $dates = [];
+                $times = [];
+                include "view/dv.php";
+                break;
+            }
+            
+            // Đã chọn rạp → lấy thông tin rạp
+            $rap_info = loadone_rap($id_rap);
+            if (!$rap_info) {
+                echo '<script>window.location.href="index.php?act=datve&id=' . $id_phim . '";</script>';
+                exit;
+            }
+            
+            // Kiểm tra rạp có chiếu phim này không
+            if (!check_rap_showing_phim($id_rap, $id_phim)) {
+                $thongbao = "Rạp này không chiếu phim này.";
+                $selected_rap = 0;
+                $dates = [];
+                $times = [];
+                include "view/dv.php";
+                break;
+            }
+            
+            // Lấy danh sách ngày chiếu
+            $dates = get_dates_for_phim_at_rap($id_phim, $id_rap);
+            
+            // FLOW: Nếu chưa chọn ngày → hiển thị danh sách ngày
+            if (empty($ngay_chieu)) {
+                $selected_rap = $id_rap;
+                $selected_date = '';
+                $times = [];
+                include "view/dv.php";
+                break;
+            }
+            
+            // Đã chọn ngày → lấy danh sách giờ chiếu
+            $times = get_showtimes_for_date($id_phim, $id_rap, $ngay_chieu);
+            
+            // NOTE: Các hàm cũ đã bị loại bỏ, giờ dùng get_showtimes_for_date()
+            // if ($id_lc) {
+            //     $khunggio = khunggiochieu_select_by_idxc($id_lc);
+            // } else {
+            //     $khunggio = [];
+            // }
+            // $lc = lichchieu_select_by_id_phim_and_rap($id_phim, $id_rap);
+            
             $selected_rap = $id_rap;
+            $selected_date = $ngay_chieu;
+            
             include "view/dv.php";
             break;
 
         case "datve2": //Đặt vé chọn ghế
 
-            if (!isset($_SESSION['mv'])) {
+            // Always update session if GET parameters are provided (new time slot selected)
+            if (isset($_GET['id']) && isset($_GET['id_lc']) && isset($_GET['id_g'])) {
                 $id_phim = $_GET['id'];
                 $id_lichchieu = $_GET['id_lc'];
                 $id_gio = $_GET['id_g'];
                 $_SESSION['mv'] = [$id_phim, $id_lichchieu, $id_gio];
                 $list_lc = load_lc_p($id_phim, $id_lichchieu, $id_gio);
-            } else {
+            } elseif (isset($_SESSION['mv'])) {
+                // Use existing session data if no new parameters
                 $list_lc = load_lc_p($_SESSION['mv'][0], $_SESSION['mv'][1], $_SESSION['mv'][2]);
+            } else {
+                // Fallback - redirect back to movie selection
+                header('Location: index.php?act=datve');
+                exit;
             }
             $_SESSION['tong'] = $list_lc;
 
@@ -293,70 +369,100 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                 $thongbao['dangnhap'] = 'đăng nhập đi để đặt vé!';
                 include 'view/login/dangnhap.php';
             }
-
             break;
-            case "dv3": //Chọn combo
-                if (isset($_POST['tiep_tuc']) && ($_POST['tiep_tuc'])) {
-                    $ten_ghe = array();
-                    foreach ($_POST as $key => $value) {
-                        if ($key == "ten_ghe") {
-                            $ten_ghe['ghe'] = $value;
-                        }
-                    }
-    
-                    $gia_ghe = $_POST['giaghe'];
-                    array_push($_SESSION['tong'], $gia_ghe, $ten_ghe);
-                    if (isset($ten_ghe['ghe']) && ($ten_ghe['ghe'])) {
-                        $thongbaoghe = "";
-                    }else{
-                        $thongbaoghe = "Phải chọn ghế";
-                        include "view/dv2.php";
-                        break;
-                    }
+            
+        case "dv3": //Chọn combo đồ ăn
+            // Process seat selection from POST
+            if (isset($_POST['tiep_tuc']) && $_POST['tiep_tuc']) {
+                // Get seat data from POST
+                $ten_ghe_array = isset($_POST['ten_ghe']) ? $_POST['ten_ghe'] : array();
+                $gia_ghe = $_POST['giaghe'] ?? 0;
+                
+                // Validate seat selection
+                if (empty($ten_ghe_array)) {
+                    $thongbaoghe = "Phải chọn ghế";
+                    include "view/dv2.php";
+                    break;
                 }
-                include 'view/doan.php';
-                break;
-            case "dv4": //Vô trang xác nhận thanh toán
-                if (isset($_POST['tiep_tuc']) && ($_POST['tiep_tuc'])) 
-                {
-                    $ten_ghe = array();
-                    foreach ($_POST as $key => $value) {
-                        if ($key == "ten_ghe") {
-                            $ten_ghe['ghe'] = $value;
-                        }
-                    }    
-                    $ten_doan = array();
-                    foreach ($_POST as $key => $value) {
-                        if ($key == "ten_do_an") {
-                            $ten_doan['doan'] = $value;
-                        }
-                    }   
-                    $gia_ghe = $_POST['giaghe'];
-                    array_push($_SESSION['tong'], $gia_ghe, $ten_ghe, $ten_doan);
-                    $ghe = implode(',', $ten_ghe['ghe']);
-                    $ngay_tt = date('Y-m-d H:i:s');
-                    $id_user = $_SESSION['user']['id'];
-                    $id_kgc = $_SESSION['tong']['id_gio'];
-                    $combo = (isset($ten_doan['doan']) && !empty($ten_doan['doan'])) ? implode(', ', $ten_doan['doan']) : null;
-                    $id_lc = $_SESSION['tong']['id_lichchieu'];
-                    $id_phim = $_SESSION['tong']['id_phim'];
-                    $id_hd = them_hoa_don($ngay_tt, $gia_ghe);
-                    if ($id_hd) {
-                        $_SESSION['id_hd'] = $id_hd;
-                        $id_ve = them_ve($gia_ghe, $ngay_tt, $ghe, $id_user, $id_kgc, $id_hd, $id_lc, $id_phim, $combo);
-    
-                        if ($id_ve) {
-                            $_SESSION['id_ve'] = $id_ve;
-                        } else {
-                            echo "Đã xảy ra lỗi khi đặt vé. Vui lòng thử lại.";
-                        }
+                
+                // Store seat price and selection for combo page
+                $_SESSION['tong']['gia_ghe'] = $gia_ghe;
+                $_SESSION['tong']['ten_ghe'] = array('ghe' => $ten_ghe_array);
+            }
+            
+            // Ensure we have seat data before showing combo page
+            if (!isset($_SESSION['tong']['gia_ghe'])) {
+                // No seat data - redirect back to seat selection
+                header('Location: index.php?act=datve2');
+                exit;
+            }
+            
+            // Prepare data for view
+            $ten_ghe = $_SESSION['tong']['ten_ghe'] ?? array('ghe' => array());
+            $ten_doan = $_SESSION['tong']['ten_doan'] ?? array('doan' => array());
+            
+            // Lấy combo theo rạp
+            $id_rap = isset($_SESSION['tong']['id_rap']) ? $_SESSION['tong']['id_rap'] : 0;
+            if ($id_rap > 0) {
+                $combos = get_combos_for_rap($id_rap);
+            } else {
+                $combos = []; // Nếu không có rạp, không hiển thị combo
+            }
+            
+            include 'view/doan.php';
+            break;
+            
+            include 'view/doan.php';
+            break;
+        case "dv4": //Vô trang xác nhận thanh toán
+            if (isset($_POST['tiep_tuc']) && ($_POST['tiep_tuc'])) 
+            {
+                // Get selected seats from session (already selected in dv2)  
+                $ten_ghe_data = $_SESSION['tong']['ten_ghe'] ?? array();
+                $ten_ghe = isset($ten_ghe_data['ghe']) ? $ten_ghe_data['ghe'] : array();
+                
+                // Get selected combos from form
+                $ten_doan = isset($_POST['ten_do_an']) ? $_POST['ten_do_an'] : array();
+                
+                // Get total price (seat + combo) from form
+                $gia_tong = $_POST['giaghe'] ?? 0;
+                
+                // Store combo selection and final price in session
+                $_SESSION['tong']['ten_doan'] = array('doan' => $ten_doan);
+                $_SESSION['tong']['gia_ghe'] = $gia_tong; // Update with final total (seat + combo)
+                
+                // Convert seat array to string for database
+                $ghe = is_array($ten_ghe) && !empty($ten_ghe) ? implode(',', $ten_ghe) : '';
+                $ngay_tt = date('Y-m-d H:i:s');
+                $id_user = $_SESSION['user']['id'];
+                $id_kgc = $_SESSION['tong']['id_gio'];
+                $combo = (is_array($ten_doan) && !empty($ten_doan)) ? implode(', ', $ten_doan) : null;
+                $id_lc = $_SESSION['tong']['id_lichchieu'];
+                $id_phim = $_SESSION['tong']['id_phim'];
+                $id_rap = isset($_SESSION['tong']['id_rap']) ? $_SESSION['tong']['id_rap'] : null; // Lấy id_rap từ session
+                
+                $id_hd = them_hoa_don($ngay_tt, $gia_tong);
+                if ($id_hd) {
+                    $_SESSION['id_hd'] = $id_hd;
+                    $id_ve = them_ve($gia_tong, $ngay_tt, $ghe, $id_user, $id_kgc, $id_hd, $id_lc, $id_phim, $combo, $id_rap); // Thêm id_rap
+
+                    if ($id_ve) {
+                        $_SESSION['id_ve'] = $id_ve;
                     } else {
-                        echo " xảy ra lỗi khi tạo hóa đơn. Vui lòng thử lại.";
+                        echo "Đã xảy ra lỗi khi đặt vé. Vui lòng thử lại.";
                     }
-    
+                } else {
+                    echo " xảy ra lỗi khi tạo hóa đơn. Vui lòng thử lại.";
                 }
-                include 'view/thanhtoan.php';
-                break;
+
+            }
+            
+            // Prepare data for payment view
+            $ten_ghe = $_SESSION['tong']['ten_ghe'] ?? array('ghe' => array());
+            $ten_doan = $_SESSION['tong']['ten_doan'] ?? array('doan' => array());
+            
+            include 'view/thanhtoan.php';
+            break;
 
         case "dangxuat"://Đăng xuất
             dang_xuat();

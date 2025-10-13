@@ -1,6 +1,18 @@
 <?php include "view/search.php";
 
 ?>
+<!-- Hiển thị thông báo nếu có -->
+<?php if (isset($_SESSION['thongbao_datve']) && !empty($_SESSION['thongbao_datve'])): ?>
+<div class="container" style="margin-top: 20px;">
+    <div class="alert alert-warning" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-size: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <?= $_SESSION['thongbao_datve'] ?>
+    </div>
+</div>
+<?php 
+    unset($_SESSION['thongbao_datve']); // Xóa thông báo sau khi hiển thị
+endif; 
+?>
+
 <!-- Main content -->
 <section class="container">
     <div class="col-sm-12">

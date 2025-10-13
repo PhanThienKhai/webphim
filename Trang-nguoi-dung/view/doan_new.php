@@ -133,13 +133,13 @@
                 <?php endif; ?>
                 
                 <p style="font-size: 20px; color: #dc3545; font-weight: bold; margin-top: 10px;">
-                    Giá: <?= number_format($combo['gia'] ?? 0, 0, ',', '.') ?>đ
+                    Giá: <?= number_format($combo['gia_combo'], 0, ',', '.') ?>đ
                 </p>
                 
                 <div class="combo-doan-right">
                     <span class="check_do_an btn btn-md btn--danger" 
-                          check-price='<?= $combo['gia'] ?? 0 ?>' 
-                          check-place='<?= htmlspecialchars($combo['ten_combo'] ?? $combo['ten'] ?? '') ?>'>
+                          check-price='<?= $combo['gia_combo'] ?>' 
+                          check-place='<?= htmlspecialchars($combo['ten_combo']) ?>'>
                         CHỌN NGAY
                     </span>
                 </div>
@@ -197,9 +197,12 @@
                     <span>Tổng cộng:</span>
                     <input name="giaghe" style="width: 80px; font-size: 20px; border: none;" type="text" id="gia_ghe"
                            value="<?php 
-                           // Get seat price from session
-                           $seat_price = $_SESSION['tong']['gia_ghe'] ?? 0;
-                           echo $seat_price; 
+                           if (isset($_SESSION['tong'][0])) {
+                               $displayValue = ($_SESSION['tong'][0] == 0) ? $_SESSION['tong'][2] : $_SESSION['tong'][0];
+                           } else {
+                               $displayValue = 0;
+                           }
+                           echo $displayValue; 
                            ?>"> VND
                 </div>
             </div>
@@ -221,53 +224,12 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Initialize window.tong if not set
-        if (typeof window.tong === 'undefined') {
-            var priceElement = document.getElementById('gia_ghe');
-            window.tong = parseInt(priceElement?.value || 0);
-        }
-        
         // Xử lý sự kiện click cho nút chọn combo
-        $('.check_do_an').off('click touchstart').on('click touchstart', function (e) {
-            e.preventDefault();
-            
-            var tenCombo = $(this).attr('check-place');
-            var doanPrice = $(this).attr('check-price');
-            var comboPrice = parseInt(doanPrice) || 0;
-            
+        $('.check_do_an').on('click touchstart', function () {
             if ($(this).hasClass('btn--danger')) {
-                // Chọn combo - ADD
                 $(this).removeClass('btn--danger').addClass('btn--success').text('BỎ CHỌN');
-                
-                // Add combo name to display
-                $('.check-doan').prepend(
-                    '<span class="choosen-place ' + tenCombo + '">' + tenCombo + '</span>'
-                );
-                $('.check-doan').prepend(
-                    '<input class="' + tenCombo + '" type="hidden" name="ten_do_an[]" value="' + tenCombo + '">'
-                );
-                
-                // Add price
-                window.tong = (window.tong || 0) + comboPrice;
-                
             } else {
-                // Bỏ chọn combo - REMOVE
                 $(this).removeClass('btn--success').addClass('btn--danger').text('CHỌN NGAY');
-                
-                // Remove combo from display
-                $('.' + tenCombo).remove();
-                
-                // Subtract price
-                window.tong = (window.tong || 0) - comboPrice;
-            }
-            
-            // Update price display
-            $('#gia_ghe').val(window.tong);
-            $('[name="giaghe"]').val(window.tong);
-            var priceEl = document.getElementById('gia_ghe');
-            if (priceEl) {
-                priceEl.value = window.tong;
-                priceEl.setAttribute('value', window.tong);
             }
         });
     });

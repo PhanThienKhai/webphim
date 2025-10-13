@@ -128,14 +128,32 @@ function load_phimsc(){
 }
 
 function load_lc_p($id, $id_lichchieu, $id_gio) {
-    $sql = "SELECT phim.id AS id_phim, phim.tieu_de, lichchieu.ngay_chieu, khung_gio_chieu.thoi_gian_chieu, lichchieu.id AS id_lichchieu, khung_gio_chieu.id AS id_gio 
-            FROM phim 
-            INNER JOIN lichchieu ON phim.id = lichchieu.id_phim 
-            INNER JOIN khung_gio_chieu ON lichchieu.id = khung_gio_chieu.id_lich_chieu 
-            WHERE phim.id = '$id' AND lichchieu.id = '$id_lichchieu' AND khung_gio_chieu.id = '$id_gio'";
+    $sql = "SELECT 
+                p.id AS id_phim, 
+                p.tieu_de,
+                p.img,
+                p.thoi_luong_phim,
+                lc.ngay_chieu,
+                lc.id AS id_lichchieu,
+                kgc.thoi_gian_chieu,
+                kgc.id AS id_gio,
+                phong.name as ten_phong,
+                phong.id as id_phong,
+                phong.loai_phong,
+                rap.ten_rap,
+                rap.id as id_rap,
+                rap.dia_chi as dia_chi_rap,
+                rap.so_dien_thoai as sdt_rap
+            FROM khung_gio_chieu kgc
+            JOIN lichchieu lc ON kgc.id_lich_chieu = lc.id
+            JOIN phim p ON lc.id_phim = p.id
+            JOIN phongchieu phong ON kgc.id_phong = phong.id
+            JOIN rap_chieu rap ON lc.id_rap = rap.id
+            WHERE p.id = ? 
+              AND lc.id = ? 
+              AND kgc.id = ?";
 
-
-    return pdo_query_one($sql);
+    return pdo_query_one($sql, $id, $id_lichchieu, $id_gio);
 }
 
 

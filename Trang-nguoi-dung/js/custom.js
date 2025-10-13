@@ -578,8 +578,105 @@ function init_BookingOne() {
     });
 }
 
+// === COMBO HANDLERS - Separated to work on combo page ===
+function setupComboHandlers() {
+    console.log('🍿 Setting up combo handlers...');
+    console.log('Found combo buttons:', $(".check_do_an").length);
+    
+    $(".check_do_an").off('click').on('click', function (e) {
+        e.preventDefault();
+        console.log('🎯 Combo button clicked!');
+        
+        var tenCombo = $(this).attr("check-place");
+        var doanPrice = $(this).attr("check-price");
+        
+        console.log('Combo name:', tenCombo);
+        console.log('Combo price attr:', doanPrice);
+        console.log('Current window.tong:', window.tong);
+
+        if (!$(e.target).hasClass("trangThai")) {
+            if (!$(this).hasClass("sits-state--not")) {
+                $(this).addClass("trangThai");
+
+                $(".check-doan").prepend(
+                    '<span class="choosen-place ' + tenCombo + '">' + tenCombo + "</span>"
+                );
+                $(".check-doan").prepend(
+                    '<input class="' +
+                    tenCombo +
+                    '" type="hidden" name="ten_do_an[]" value="' +
+                    tenCombo +
+                    '">'
+                );
+                
+                // Use actual combo price from attribute
+                var comboPrice = parseInt(doanPrice) || 0;
+                window.tong = (window.tong || 0) + comboPrice;
+                console.log('➕ Added combo:', tenCombo, 'Price:', comboPrice, 'New total:', window.tong);
+                
+                const gia_ghe = window.tong;
+
+                // Update price display with multiple methods
+                var priceElement = document.getElementById("gia_ghe");
+                if (priceElement) {
+                    priceElement.setAttribute("value", gia_ghe);
+                    priceElement.value = gia_ghe;
+                    console.log('Updated DOM element to:', gia_ghe);
+                }
+                $("#gia_ghe").val(gia_ghe);
+                $("[name='giaghe']").val(gia_ghe);
+                console.log('✅ Updated all price elements to:', gia_ghe);
+            }
+        } else {
+            $(this).removeClass("trangThai");
+            $("." + tenCombo + "").remove();
+
+            // Use actual combo price from attribute
+            var comboPrice = parseInt(doanPrice) || 0;
+            window.tong = (window.tong || 0) - comboPrice;
+            console.log('➖ Removed combo:', tenCombo, 'Price:', comboPrice, 'New total:', window.tong);
+
+            const gia_ghe = window.tong;
+
+            // Update price display
+            var priceElement = document.getElementById("gia_ghe");
+            if (priceElement) {
+                priceElement.setAttribute("value", gia_ghe);
+                priceElement.value = gia_ghe;
+            }
+            $("#gia_ghe").val(gia_ghe);
+            $("[name='giaghe']").val(gia_ghe);
+            console.log('✅ Updated all price elements to:', gia_ghe);
+        }
+    });
+}
+
 function init_BookingTwo() {
     "use strict";
+
+    // ===== EARLY EXIT FOR NON-SEAT PAGES =====
+    // If this is combo page or payment page, don't run seat selection logic
+    var isComboPage = $(".prodoan").length > 0 || window.location.href.includes('act=dv3');
+    var isPaymentPage = window.location.href.includes('act=dv4');
+    
+    if (isComboPage || isPaymentPage) {
+        console.log('Not a seat selection page - skipping init_BookingTwo logic');
+        
+        // IMPORTANT: Initialize window.tong from seat price for combo calculations
+        var priceElement = document.querySelector("#gia_ghe");
+        var initialPrice = priceElement ? priceElement.value : "0";
+        window.tong = parseInt(initialPrice) || 0;
+        console.log('🎯 Initialized window.tong for combo page:', window.tong);
+        console.log('Price element:', priceElement);
+        console.log('Initial price value:', initialPrice);
+        
+        // IMPORTANT: Setup combo click handlers BEFORE returning
+        setupComboHandlers();
+        
+        return; // Exit function completely
+    }
+    
+    console.log('Seat selection page detected - initializing booking logic');
 
     //1. Buttons for choose order method
     //order factor
@@ -608,11 +705,65 @@ function init_BookingTwo() {
     var middle = 0;
     var expansive = 0;
 
+    // ONLY run seat selection code if we're on the seat selection page
+    // Multiple checks for better reliability
+    var hasSeatGrid = $(".sits__place").length > 0;
+    var hasComboList = $(".prodoan").length > 0;
+    var hasCheckDoan = $(".check_do_an").length > 0;
+    var urlHasDv3 = window.location.href.includes('act=dv3');
+    var urlHasDv4 = window.location.href.includes('act=dv4');
+    
+    console.log('=== PAGE DETECTION DEBUG ===');
+    console.log('Has seat grid (.sits__place):', hasSeatGrid);
+    console.log('Has combo list (.prodoan):', hasComboList);
+    console.log('Has combo buttons (.check_do_an):', hasCheckDoan);
+    console.log('URL includes act=dv3:', urlHasDv3);
+    console.log('URL includes act=dv4:', urlHasDv4);
+    console.log('Current URL:', window.location.href);
+    
+    var isSeatPage = hasSeatGrid && !hasComboList && !hasCheckDoan && !urlHasDv3 && !urlHasDv4;
+    var isComboOrPaymentPage = hasComboList || hasCheckDoan || urlHasDv3 || urlHasDv4;
+    
+    console.log('DECISION: isSeatPage =', isSeatPage);
+    console.log('DECISION: isComboOrPaymentPage =', isComboOrPaymentPage);
+    
+    if (isSeatPage) {
+        // This is the seat selection page (dv2) - reset is OK
+        $(".sits__place").removeClass("sits-state--your");
+        $("#gia_ghe").val(0);
+        $("[name='giaghe']").val(0);
+        $(".checked-place").empty();
+        console.log('✅ Seat page - reset performed');
+    } else if (isComboOrPaymentPage) {
+        // This is combo/payment page - DON'T reset, keep existing price
+        console.log('✅ Combo/Payment page - keeping existing values');
+        console.log('Current #gia_ghe value:', $("#gia_ghe").val());
+        console.log('Current .checked-place HTML:', $(".checked-place").html());
+        
+        // IMPORTANT: Initialize window.tong from seat price BEFORE exiting
+        var priceElement = document.querySelector("#gia_ghe");
+        var initialPrice = priceElement ? priceElement.value : "0";
+        window.tong = parseInt(initialPrice) || 0;
+        console.log('Initialized window.tong for combo page:', window.tong);
+        
+        // Exit early - don't run seat selection code
+        return;
+    } else {
+        console.log('⚠️ Unknown page type - defaulting to no reset');
+        return;
+    }
 
     $(".sits__place").click(function (e) {
         e.preventDefault();
         var place = $(this).attr("data-place");
         var ticketPrice = $(this).attr("data-price");
+        
+        console.log('Clicked seat:', place, 'Raw price:', ticketPrice, 'Current sum:', sum);
+        
+        // Debug DOM elements
+        console.log('DOM ready state:', document.readyState);
+        console.log('All elements with gia_ghe ID:', document.querySelectorAll('#gia_ghe'));
+        console.log('All elements with giaghe name:', document.querySelectorAll('[name="giaghe"]'));
 
         if (!$(e.target).hasClass("sits-state--your")) {
 
@@ -631,23 +782,57 @@ function init_BookingTwo() {
                         '">'
                     );
 
-                    switch (ticketPrice) {
-                        case "10":
-                            sum += 100000;
-                            cheap += 1;
-                            break;
-                        case "20":
-                            sum += 200000;
-                            middle += 1;
-                            break;
-                        case "30":
-                            sum += 300000;
-                            expansive += 1;
-                            break;
+                    // Use actual price from data-price attribute
+                    var actualPrice = parseInt(ticketPrice) || 0;
+                    sum += actualPrice;
+                    
+                    console.log('Selected seat:', place, 'Price:', actualPrice, 'Total:', sum);
+                    
+                    // Count ticket types based on price ranges
+                    if (actualPrice <= 60000) {
+                        cheap += 1;
+                    } else if (actualPrice <= 80000) {
+                        middle += 1;
+                    } else {
+                        expansive += 1;
                     }
 
                     const gia_ghe = sum;
-                    document.getElementById("gia_ghe").setAttribute("value", gia_ghe);
+                    
+                    // Try multiple ways to update price
+                    console.log('Updating total to:', gia_ghe);
+                    
+                    // Method 1: jQuery by ID
+                    var $priceElement = $("#gia_ghe");
+                    if ($priceElement.length) {
+                        $priceElement.val(gia_ghe);
+                        console.log('Updated via jQuery ID:', $priceElement.val());
+                    } else {
+                        console.log('jQuery: Element #gia_ghe not found');
+                    }
+                    
+                    // Method 2: jQuery by name
+                    var $priceByName = $("[name='giaghe']");
+                    if ($priceByName.length) {
+                        $priceByName.val(gia_ghe);
+                        console.log('Updated via jQuery name:', $priceByName.val());
+                    } else {
+                        console.log('jQuery: Element with name=giaghe not found');
+                    }
+                    
+                    // Method 3: Direct DOM
+                    var priceElement = document.getElementById("gia_ghe");
+                    if (priceElement) {
+                        priceElement.value = gia_ghe;
+                        console.log('Updated via DOM ID:', priceElement.value);
+                    } else {
+                        console.log('DOM: Element gia_ghe not found');
+                    }
+                    
+                    // Method 4: Update any span/div containing total text
+                    $(".checked-result").find("input").val(gia_ghe);
+                    
+                    console.log('Final update complete');
                 }
 
         } else {
@@ -656,23 +841,32 @@ function init_BookingTwo() {
             $("." + place + "").remove();
 
 
-            switch (ticketPrice) {
-                case "10":
-                    sum -= 100000;
-                    cheap -= 1;
-                    break;
-                case "20":
-                    sum -= 200000;
-                    middle -= 1;
-                    break;
-                case "30":
-                    sum -= 300000;
-                    expansive -= 1;
-                    break;
+            // Use actual price from data-price attribute
+            var actualPrice = parseInt(ticketPrice) || 0;
+            sum -= actualPrice;
+            
+            console.log('Deselected seat:', place, 'Price:', actualPrice, 'Total:', sum);
+            
+            // Count ticket types based on price ranges
+            if (actualPrice <= 60000) {
+                cheap -= 1;
+            } else if (actualPrice <= 80000) {
+                middle -= 1;
+            } else {
+                expansive -= 1;
             }
 
             const gia_ghe = sum;
-            document.getElementById("gia_ghe").setAttribute("value", gia_ghe);
+            
+            // Update price using multiple methods
+            $("#gia_ghe").val(gia_ghe);
+            $("[name='giaghe']").val(gia_ghe);
+            $(".checked-result").find("input").val(gia_ghe);
+            
+            var priceElement = document.getElementById("gia_ghe");
+            if (priceElement) priceElement.value = gia_ghe;
+            
+            console.log('Updated total to:', gia_ghe);
         }
 
         // Cập nhật các thông số khác và đồng bộ hóa dữ liệu với form
@@ -700,9 +894,26 @@ function init_BookingTwo() {
     });
 
 
-    // tinh tien do an
-    var tong_tda = document.querySelector("#gia_ghe").value;
-    var tong = parseInt(tong_tda);
+    // tinh tien do an - get initial seat price with delay for DOM ready
+    setTimeout(function() {
+        var priceElement = document.querySelector("#gia_ghe");
+        var tong_tda = priceElement ? priceElement.value : "0";
+        window.tong = parseInt(tong_tda) || 0; // Make global for combo functions
+        
+        console.log('DOM ready - Initial total from seats:', window.tong);
+        console.log('Price element found:', priceElement);
+        console.log('Price element value:', tong_tda);
+        
+        // Also try jQuery method
+        var jqPrice = $("#gia_ghe").val();
+        console.log('jQuery price value:', jqPrice);
+        
+        // Use the higher value if different
+        if (parseInt(jqPrice) > window.tong) {
+            window.tong = parseInt(jqPrice) || 0;
+            console.log('Updated to jQuery value:', window.tong);
+        }
+    }, 100);
     $(".check_do_an").click(function (e) {
         e.preventDefault();
         var tenCombo = $(this).attr("check-place");
@@ -722,71 +933,44 @@ function init_BookingTwo() {
                     tenCombo +
                     '">'
                 );
-                switch (doanPrice) {
-                    case "1":
-                        tong += 125000;
-                        cheap += 1;
-                        break;
-                    case "2":
-                        tong += 185000;
-                        middle += 1;
-                        break;
-                    case "3":
-                        tong += 59000;
-                        expansive += 1;
-                        break;
-                    case "4":
-                        tong += 259000;
-                        expansive += 1;
-                        break;
-                    case "5":
-                        tong += 219000;
-                        expansive += 1;
-                        break;
-                    case "6":
-                        tong += 199000;
-                        expansive += 1;
-                        break;
-                }
-                const gia_ghe = tong;
+                // Use actual combo price from attribute
+                var comboPrice = parseInt(doanPrice) || 0;
+                window.tong = (window.tong || 0) + comboPrice;
+                console.log('Added combo:', tenCombo, 'Price:', comboPrice, 'New total:', window.tong);
+                const gia_ghe = window.tong;
 
-                document.getElementById("gia_ghe").setAttribute("value", gia_ghe);
+                // Update price display with multiple methods
+                var priceElement = document.getElementById("gia_ghe");
+                if (priceElement) {
+                    priceElement.setAttribute("value", gia_ghe);
+                    priceElement.value = gia_ghe;
+                    console.log('Updated DOM element to:', gia_ghe);
+                }
+                $("#gia_ghe").val(gia_ghe);
+                $("[name='giaghe']").val(gia_ghe);
+                console.log('Updated all price elements to:', gia_ghe);
             }
         } else {
             $(this).removeClass("trangThai");
 
             $("." + tenCombo + "").remove();
 
-            switch (doanPrice) {
-                case "1":
-                    tong -= 125000;
-                    cheap -= 1;
-                    break;
-                case "2":
-                    tong -= 185000;
-                    middle -= 1;
-                    break;
-                case "3":
-                    tong -= 59000;
-                    expansive -= 1;
-                    break;
-                case "4":
-                    tong -= 259000;
-                    expansive -= 1;
-                    break;
-                case "5":
-                    tong -= 219000;
-                    expansive -= 1;
-                    break;
-                case "6":
-                    tong -= 199000;
-                    expansive -= 1;
-                    break;
+            // Use actual combo price from attribute
+            var comboPrice = parseInt(doanPrice) || 0;
+            window.tong = (window.tong || 0) - comboPrice;
+            console.log('Removed combo:', tenCombo, 'Price:', comboPrice, 'New total:', window.tong);
+
+            const gia_ghe = window.tong;
+
+            // Update price display with multiple methods
+            var priceElement = document.getElementById("gia_ghe");
+            if (priceElement) {
+                priceElement.setAttribute("value", gia_ghe);
+                priceElement.value = gia_ghe;
             }
-
-            const gia_ghe = tong;
-
-            document.getElementById("gia_ghe").setAttribute("value", gia_ghe);
+            $("#gia_ghe").val(gia_ghe);
+            $("[name='giaghe']").val(gia_ghe);
+            console.log('Updated all price elements to:', gia_ghe);
         }
     });
 

@@ -87,7 +87,7 @@
                             </li>
                             <li class="has-sub-menu"><a href="#"><i class="zmdi zmdi-local-offer"></i> <span>Ưu đãi</span></a>
                                 <ul class="side-header-sub-menu">
-                                    <li><a href="index.php?act=QLkm" class="<?= $currentAct==='QLkm'?'is-active':''; ?>"><i class="zmdi zmdi-ticket-star"></i> <span>Khuyến mãi (Mã giảm giá)</span></a></li>
+                                    <li><a href="index.php?act=QLkm" class="<?= $currentAct==='QLkm'?'is-active':''; ?>"><i class="zmdi zmdi-ticket-star"></i> <span>Khuyến mãi</span></a></li>
                                     <li><a href="index.php?act=QLcombo" class="<?= $currentAct==='QLcombo'?'is-active':''; ?>"><i class="zmdi zmdi-cocktail"></i> <span>Combo</span></a></li>
                                 </ul>
                             </li>
@@ -122,6 +122,7 @@
                             <li><a href="index.php?act=nv_datve"><i class="zmdi zmdi-ticket-star"></i> <span>Đặt vé cho khách</span></a></li>
                             <li><a href="index.php?act=scanve"><i class="zmdi zmdi-check"></i> <span>Kiểm tra vé</span></a></li>
                             <li><a href="index.php?act=nv_lichlamviec"><i class="zmdi zmdi-calendar"></i> <span>Lịch làm việc</span></a></li>
+                            <li><a href="index.php?act=nv_chamcong"><i class="zmdi zmdi-time"></i> <span>Chấm công của tôi</span></a></li>
                             <li><a href="index.php?act=xinnghi"><i class="zmdi zmdi-time-restore"></i> <span>Xin nghỉ phép</span></a></li>
                             <li><a href="index.php?act=nv_baocao"><i class="fa fa-line-chart"></i> <span>Báo cáo cá nhân</span></a></li>
                         <?php endif; ?>

@@ -11,24 +11,51 @@
 
     <div class="table-responsive">
         <table class="table table-bordered">
-            <thead><tr><th>Tên KM</th><th>Loại</th><th>Giảm</th><th>Hiệu lực</th><th>Điều kiện</th><th>Trạng thái</th><th></th></tr></thead>
+            <thead><tr><th>Mã code</th><th>Tên KM</th><th>Loại</th><th>Giảm</th><th>Hiệu lực</th><th>Điều kiện</th><th>Rạp áp dụng</th><th>Trạng thái</th><th></th></tr></thead>
             <tbody>
                 <?php foreach (($ds_km ?? []) as $km): ?>
                     <tr>
+                        <td>
+                            <strong style="font-family:monospace;color:#3b82f6;font-size:14px">
+                                <?= htmlspecialchars($km['ma_khuyen_mai'] ?? 'N/A') ?>
+                            </strong>
+                        </td>
                         <td><?= htmlspecialchars($km['ten_khuyen_mai'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($km['loai_giam'] ?? '') ?></td>
+                        <td>
+                            <?php 
+                            $loai_text = ($km['loai_giam'] ?? '') === 'phan_tram' ? 'Phần trăm' : 'Tiền mặt';
+                            ?>
+                            <span style="display:inline-block;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:600;
+                                        background:<?= ($km['loai_giam'] ?? '') === 'phan_tram' ? '#dbeafe' : '#fef3c7' ?>;
+                                        color:<?= ($km['loai_giam'] ?? '') === 'phan_tram' ? '#1e40af' : '#92400e' ?>">
+                                <?= $loai_text ?>
+                            </span>
+                        </td>
                         <td>
                             <?php if (($km['loai_giam'] ?? '')==='phan_tram'): ?>
-                                <?= number_format((float)($km['phan_tram_giam'] ?? 0), 2) ?>%
+                                <span style="color:#10b981;font-weight:600"><?= number_format((float)($km['phan_tram_giam'] ?? 0), 0) ?>%</span>
                             <?php else: ?>
-                                <?= number_format((int)($km['gia_tri_giam'] ?? 0)) ?> VND
+                                <span style="color:#f59e0b;font-weight:600"><?= number_format((int)($km['gia_tri_giam'] ?? 0)) ?>đ</span>
                             <?php endif; ?>
                         </td>
-                        <td><?= htmlspecialchars(($km['ngay_bat_dau'] ?? '').' → '.($km['ngay_ket_thuc'] ?? '')) ?></td>
+                        <td style="font-size:13px"><?= htmlspecialchars(($km['ngay_bat_dau'] ?? '').' → '.($km['ngay_ket_thuc'] ?? '')) ?></td>
                         <td><?= htmlspecialchars($km['dieu_kien_ap_dung'] ?? '') ?></td>
-                        <td><?= ((int)($km['trang_thai'] ?? 1)===1?'Hoạt động':'Tắt') ?></td>
                         <td>
-                            <a class="button button-sm" href="index.php?act=km_toggle&id=<?= (int)($km['id'] ?? 0) ?>">Đổi trạng thái</a>
+                            <?php if (empty($km['id_rap'])): ?>
+                                <span style="color:#8b5cf6;font-weight:600">🌐 Toàn cụm</span>
+                            <?php else: ?>
+                                <span style="color:#6b7280">Rạp #<?= (int)$km['id_rap'] ?></span>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <?php if ((int)($km['trang_thai'] ?? 1)===1): ?>
+                                <span style="color:#10b981;font-weight:600">✓ Hoạt động</span>
+                            <?php else: ?>
+                                <span style="color:#ef4444">✗ Tắt</span>
+                            <?php endif; ?>
+                        </td>
+                        <td style="white-space:nowrap">
+                            <a class="button button-sm" href="index.php?act=km_toggle&id=<?= (int)($km['id'] ?? 0) ?>">Đổi TT</a>
                             <a class="button button-sm button-info" href="index.php?act=km_sua&id=<?= (int)($km['id'] ?? 0) ?>">Sửa</a>
                             <a class="button button-sm button-danger" href="index.php?act=km_xoa&id=<?= (int)($km['id'] ?? 0) ?>" onclick="return confirm('Xóa mã này?')">Xóa</a>
                         </td>

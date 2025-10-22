@@ -85,6 +85,7 @@ function permission_map()
 
         // Nhân viên: lịch làm, xin nghỉ, scan vé
         'nv_lichlamviec' => [ROLE_NHAN_VIEN],
+        'nv_chamcong'    => [ROLE_NHAN_VIEN], // Self-service attendance check-in/out
         'xinnghi'        => [ROLE_NHAN_VIEN],
         'scanve'         => [ROLE_NHAN_VIEN, ROLE_QUAN_LY_RAP],
         'nv_datve'       => [ROLE_NHAN_VIEN],
@@ -100,7 +101,7 @@ function permission_map()
         'sodoghe'        => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
         'chamcong'       => [ROLE_QUAN_LY_RAP],
         'bangluong'      => [ROLE_QUAN_LY_RAP],
-        'QLfeed'        => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
+        'QLfeed'         => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
         // Combo / Khuyến mãi
         'QLcombo'        => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],
         'combo_them'     => [ROLE_QUAN_LY_RAP, ROLE_ADMIN_HE_THONG],

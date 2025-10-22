@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// Set timezone to Vietnam
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
 // Handle Enhanced Calendar POST requests FIRST (before any includes or output)
 if (isset($_GET['act']) && $_GET['act'] === 'ql_lichlamviec_calendar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     // Clear any output buffer
@@ -916,28 +919,165 @@ if(isset($_SESSION['user1'])) {
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
                 $ym = $_GET['ym'] ?? date('Y-m');
                 $nv = isset($_GET['nv']) ? (int)$_GET['nv'] : 0;
-                if (isset($_GET['xoa'])) { cc_delete((int)$_GET['xoa']); }
+                
+                if (isset($_GET['xoa'])) { 
+                    cc_delete((int)$_GET['xoa']); 
+                    $success = "Đã xóa bản ghi chấm công";
+                }
+                
+                // Quick check-in
+                if (isset($_POST['checkin_now'])) {
+                    $id_nv = (int)($_POST['id_nv'] ?? 0);
+                    if ($id_nv) {
+                        $ngay = date('Y-m-d');
+                        $gio_vao = date('H:i:s');
+                        $gio_ra = date('H:i:s', strtotime('+8 hours')); // Default 8h shift
+                        try {
+                            cc_insert($id_nv, $id_rap, $ngay, $gio_vao, $gio_ra, 'Check-in nhanh');
+                            $success = "✓ Đã check-in lúc " . date('H:i');
+                        } catch (Exception $e) {
+                            $error = "✗ Lỗi check-in: " . $e->getMessage();
+                        }
+                    }
+                }
+                
                 if (isset($_POST['them'])) {
                     $id_nv = (int)($_POST['id_nv'] ?? 0);
                     $ngay = $_POST['ngay'] ?? '';
                     $gio_vao = $_POST['gio_vao'] ?? '';
                     $gio_ra = $_POST['gio_ra'] ?? '';
                     $ghi_chu = $_POST['ghi_chu'] ?? null;
-                    if ($id_nv && $ngay && $gio_vao && $gio_ra) { cc_insert($id_nv, $id_rap, $ngay, $gio_vao, $gio_ra, $ghi_chu); $success = "Đã chấm công"; }
-                    else { $error = "Thiếu thông tin"; }
+                    
+                    if ($id_nv && $ngay && $gio_vao && $gio_ra) {
+                        try {
+                            cc_insert($id_nv, $id_rap, $ngay, $gio_vao, $gio_ra, $ghi_chu);
+                            $success = "✓ Đã chấm công thành công";
+                        } catch (Exception $e) {
+                            $error = "✗ " . $e->getMessage();
+                        }
+                    } else { 
+                        $error = "✗ Thiếu thông tin bắt buộc"; 
+                    }
                 }
+                
                 $ds_nv = pdo_query("SELECT id, name FROM taikhoan WHERE vai_tro = 1 AND id_rap = ? ORDER BY name", $id_rap);
                 $ds_cc = cc_list_by_rap_month($id_rap, $ym, $nv ?: null);
-                // Summary: nếu chọn 1 nhân viên thì tổng giờ của NV đó, nếu không thì tổng theo từng NV trong tháng (rate=1 => lương = giờ)
-                if ($nv) { $sum_hours = cc_sum_hours($nv, $id_rap, $ym); }
-                else { $sum_by_emp = luong_tinh_thang($id_rap, $ym, 1); }
+                
+                // Summary
+                if ($nv) { 
+                    $sum_hours = cc_sum_hours($nv, $id_rap, $ym);
+                    $attendance_summary = cc_attendance_summary($nv, $id_rap, $ym);
+                    $attendance_detail = cc_compare_with_schedule($nv, $id_rap, $ym);
+                } else { 
+                    $sum_by_emp = luong_tinh_thang($id_rap, $ym, 1); 
+                }
+                
                 include "./view/quanly/chamcong.php";
+                break;
+            case "nv_chamcong":
+                // Self-service attendance for employees
+                $id_nv = (int)($_SESSION['user1']['id'] ?? 0);
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                $ym = $_GET['ym'] ?? date('Y-m');
+                
+                // Handle check-in/check-out actions
+                if (isset($_POST['action'])) {
+                    try {
+                        if ($_POST['action'] === 'checkin') {
+                            cc_quick_checkin($id_nv, $id_rap);
+                            $success = "✓ Check-in thành công lúc " . date('H:i');
+                        } elseif ($_POST['action'] === 'checkout') {
+                            cc_quick_checkout($id_nv, $id_rap);
+                            $success = "✓ Check-out thành công lúc " . date('H:i');
+                        }
+                    } catch (Exception $e) {
+                        $error = "✗ " . $e->getMessage();
+                    }
+                }
+                
+                // Get today's status
+                $today_status = cc_check_today_status($id_nv, $id_rap);
+                
+                // Debug: Log status to check
+                error_log("DEBUG nv_chamcong: id_nv=$id_nv, id_rap=$id_rap, status=" . json_encode($today_status));
+                
+                // Get history for current month
+                $history = cc_my_history($id_nv, $id_rap, $ym);
+                
+                // Calculate total hours and simple stats
+                $total_hours = 0;
+                $late_count = 0;
+                foreach ($history as $h) {
+                    $diff = strtotime($h['gio_ra']) - strtotime($h['gio_vao']);
+                    $total_hours += $diff / 3600;
+                    
+                    // Simple late check: if check-in after 8:30 AM
+                    $checkin_time = date('H:i', strtotime($h['gio_vao']));
+                    if ($checkin_time > '08:30') {
+                        $late_count++;
+                    }
+                }
+                
+                // Create simple summary (without schedule comparison)
+                $summary = [
+                    'late_count' => $late_count,
+                    'total_days' => count($history),
+                    'total_hours' => $total_hours
+                ];
+                
+                include "./view/nhanvien/chamcong_self.php";
                 break;
             case "bangluong":
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                $id_user = (int)($_SESSION['user1']['id'] ?? 0);
                 $ym = $_GET['ym'] ?? date('Y-m');
                 $rate = isset($_GET['rate']) ? (int)$_GET['rate'] : 30000;
+                
+                // Xử lý các action
+                if (isset($_POST['action'])) {
+                    $action = $_POST['action'];
+                    
+                    // Tính lương trước khi thực hiện action
+                    $ds_luong = luong_tinh_thang($id_rap, $ym, $rate);
+                    
+                    try {
+                        switch ($action) {
+                            case 'save':
+                                bl_save($id_rap, $ym, $ds_luong, $id_user);
+                                $success = "✓ Đã lưu bảng lương tháng " . date('m/Y', strtotime($ym.'-01'));
+                                break;
+                            
+                            case 'send_approval':
+                                bl_update_status($id_rap, $ym, 'cho_duyet', null);
+                                $success = "✓ Đã gửi bảng lương lên cấp trên duyệt";
+                                break;
+                            
+                            case 'approve':
+                                bl_update_status($id_rap, $ym, 'da_duyet', $id_user);
+                                $success = "✓ Đã duyệt bảng lương";
+                                break;
+                            
+                            case 'mark_paid':
+                                bl_update_status($id_rap, $ym, 'da_thanh_toan', $id_user);
+                                $success = "✓ Đã đánh dấu đã thanh toán";
+                                break;
+                        }
+                    } catch (Exception $e) {
+                        $error = "✗ Lỗi: " . $e->getMessage();
+                    }
+                }
+                
+                // Tính lương
                 $ds_luong = luong_tinh_thang($id_rap, $ym, $rate);
+                
+                // Kiểm tra đã lưu chưa
+                $is_saved = bl_is_saved($id_rap, $ym);
+                $saved_status = 'nhap';
+                if ($is_saved) {
+                    $saved = pdo_query_one("SELECT trang_thai FROM bang_luong WHERE id_rap = ? AND thang = ? LIMIT 1", $id_rap, $ym);
+                    $saved_status = $saved['trang_thai'] ?? 'nhap';
+                }
+                
                 include "./view/quanly/bangluong.php";
                 break;
             case "thietbiphong":

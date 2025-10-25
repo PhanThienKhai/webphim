@@ -1,66 +1,341 @@
 <?php
 // Dynamic list of rạp. Index.php should provide $allRaps (from model/rap.php)
-// Optional ?id_rap= to highlight/show a specific rạp at top
-$selectedId = isset($_GET['id_rap']) ? (int)$_GET['id_rap'] : null;
 $placeholderImg = 'login-ui2/login-ui2/assets/galaxygovap.jpg';
-
-// Find selected rap if any
-$selectedRap = null;
-if ($selectedId && !empty($allRaps)) {
-    foreach ($allRaps as $r) {
-        if ((int)$r['id'] === $selectedId) { $selectedRap = $r; break; }
-    }
-}
 ?>
 
-<?php if ($selectedRap) : ?>
-    <div style="max-width: 900px; margin: 24px auto;">
-        <h2 style="color: #d35400;">🎬 <?= htmlspecialchars($selectedRap['ten_rap']) ?></h2>
-        <img src="<?= (!empty($selectedRap['logo']) ? htmlspecialchars($selectedRap['logo']) : $placeholderImg) ?>" alt="<?= htmlspecialchars($selectedRap['ten_rap']) ?>" style="width:100%;border-radius:10px;margin-bottom:20px;">
-        <p style="font-family: Arial, sans-serif;line-height:1.6;color:#333;"><?= nl2br(htmlspecialchars($selectedRap['mo_ta'] ?? '')) ?></p>
-    </div>
-<?php else: ?>
-    <div style="max-width: 900px; margin: 24px auto;">
-        <h2 style="color: #d35400;">🎬 Rạp chiếu</h2>
-        <p style="font-family: Arial, sans-serif;line-height:1.6;color:#333;">Danh sách tất cả rạp chiếu. Bạn có thể thêm ảnh (`logo`) và mô tả (`mo_ta`) trong bảng `rap_chieu` để hiển thị đẹp hơn.</p>
-    </div>
-<?php endif; ?>
+<?php include "view/search.php"; ?>
 
 <style>
-.rap-list {max-width:1100px;margin:24px auto;display:flex;flex-direction:column;gap:24px;padding-bottom:48px}
-.rap-item {background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.07);padding:18px;display:flex;gap:18px;align-items:flex-start}
-.rap-img {width:320px;flex-shrink:0;border-radius:8px;overflow:hidden}
-.rap-img img{width:100%;height:200px;object-fit:cover}
-.rap-body{flex:1}
-.rap-title {font-size:20px;font-weight:700;color:#007bff;margin-bottom:6px}
-.rap-address {font-size:14px;color:#333;margin-bottom:12px}
-.rap-map {width:100%;height:200px;border-radius:8px;overflow:hidden;margin-bottom:12px}
-.rap-btn {display:inline-block;padding:8px 18px;background:#28a745;color:#fff;border:none;border-radius:5px;font-size:15px;text-decoration:none;transition:background 0.2s}
-.rap-btn:hover {background:#1e7e34}
-@media (max-width:900px){.rap-item{flex-direction:column}.rap-img img{height:220px}}
+.cinema-page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 50px 0;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.cinema-page-title {
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+}
+
+.cinema-page-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cinema-grid {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    padding: 0 15px;
+}
+
+.cinema-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 30px;
+}
+
+.cinema-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+.cinema-card-inner {
+    display: flex;
+    gap: 0;
+}
+
+.cinema-image {
+    width: 350px;
+    height: 280px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.cinema-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.cinema-card:hover .cinema-image img {
+    transform: scale(1.1);
+}
+
+.cinema-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(102, 126, 234, 0.95);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+}
+
+.cinema-content {
+    flex: 1;
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cinema-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cinema-name i {
+    color: #667eea;
+}
+
+.cinema-info {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.cinema-info-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 1rem;
+}
+
+.cinema-info-item i {
+    width: 24px;
+    color: #667eea;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.cinema-map {
+    width: 100%;
+    height: 180px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 2px solid #e9ecef;
+}
+
+.cinema-map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.cinema-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-cinema {
+    flex: 1;
+    min-width: 140px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.btn-primary-cinema {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary-cinema:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-success-cinema {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    color: white;
+}
+
+.btn-success-cinema:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+}
+
+.btn-info-cinema {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.btn-info-cinema:hover {
+    background: #667eea;
+    color: white;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.empty-state i {
+    font-size: 5rem;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    color: #999;
+}
+
+@media (max-width: 992px) {
+    .cinema-card-inner {
+        flex-direction: column;
+    }
+    
+    .cinema-image {
+        width: 100%;
+        height: 250px;
+    }
+    
+    .cinema-page-title {
+        font-size: 2rem;
+    }
+    
+    .cinema-name {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .cinema-actions {
+        flex-direction: column;
+    }
+    
+    .btn-cinema {
+        width: 100%;
+    }
+}
 </style>
 
-<div class="rap-list">
+<!-- Header Section -->
+<div class="cinema-page-header">
+    <div class="container">
+        <h1 class="cinema-page-title">
+            <i class="fa fa-film"></i> Hệ Thống Rạp Chiếu
+        </h1>
+        <p class="cinema-page-subtitle">
+            Khám phá các rạp chiếu phim chất lượng cao với công nghệ hiện đại và dịch vụ tốt nhất
+        </p>
+    </div>
+</div>
+
+<!-- Cinema Grid -->
+<div class="cinema-grid">
     <?php if (!empty($allRaps) && is_array($allRaps)) {
         foreach ($allRaps as $r) {
             $img = !empty($r['logo']) ? $r['logo'] : $placeholderImg;
-            $address = $r['dia_chi'] ?? '';
+            $address = $r['dia_chi'] ?? 'Đang cập nhật';
+            $phone = $r['so_dien_thoai'] ?? 'Đang cập nhật';
+            $email = $r['email'] ?? '';
             $mapSrc = 'https://www.google.com/maps?q=' . urlencode($address) . '&output=embed';
             $dirLink = 'https://www.google.com/maps/dir/?api=1&destination=' . urlencode($address);
-            $detailLink = 'index.php?act=rapchieu&id_rap=' . $r['id'];
+            $phimLink = 'index.php?act=phim_theo_rap&id_rap=' . $r['id'];
     ?>
-    <div class="rap-item">
-        <div class="rap-img"><img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($r['ten_rap']) ?>"></div>
-        <div class="rap-body">
-            <div class="rap-title"><?= htmlspecialchars($r['ten_rap']) ?></div>
-            <div class="rap-address"><?= htmlspecialchars($address) ?></div>
-            <div class="rap-map"><iframe src="<?= $mapSrc ?>" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
-            <a class="rap-btn" href="<?= $dirLink ?>" target="_blank">Chỉ đường</a>
-            <a class="rap-btn" href="<?= $detailLink ?>" style="background:#007bff;margin-left:8px">Xem chi tiết</a>
+    <div class="cinema-card">
+        <div class="cinema-card-inner">
+            <div class="cinema-image">
+                <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($r['ten_rap']) ?>">
+                <div class="cinema-badge">
+                    <i class="fa fa-star"></i> Rạp chính
+                </div>
+            </div>
+            
+            <div class="cinema-content">
+                <h2 class="cinema-name">
+                    <i class="fa fa-building"></i>
+                    <?= htmlspecialchars($r['ten_rap']) ?>
+                </h2>
+                
+                <div class="cinema-info">
+                    <div class="cinema-info-item">
+                        <i class="fa fa-map-marker"></i>
+                        <span><?= htmlspecialchars($address) ?></span>
+                    </div>
+                    <div class="cinema-info-item">
+                        <i class="fa fa-phone"></i>
+                        <span><?= htmlspecialchars($phone) ?></span>
+                    </div>
+                    <?php if ($email): ?>
+                    <div class="cinema-info-item">
+                        <i class="fa fa-envelope"></i>
+                        <span><?= htmlspecialchars($email) ?></span>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                
+                <div class="cinema-map">
+                    <iframe src="<?= $mapSrc ?>" 
+                            allowfullscreen="" 
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                
+                <div class="cinema-actions">
+                    <a href="<?= $phimLink ?>" class="btn-cinema btn-primary-cinema">
+                        <i class="fa fa-ticket"></i>
+                        Xem phim đang chiếu
+                    </a>
+                    <a href="<?= $dirLink ?>" target="_blank" class="btn-cinema btn-success-cinema">
+                        <i class="fa fa-location-arrow"></i>
+                        Chỉ đường
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
     <?php }
     } else { ?>
-        <div style="padding:24px;background:#fff;border-radius:8px;max-width:900px;margin:auto;text-align:center">Hiện chưa có rạp nào trong hệ thống.</div>
+        <div class="empty-state">
+            <i class="fa fa-film"></i>
+            <h3>Chưa có rạp chiếu</h3>
+            <p>Hiện tại chưa có rạp nào trong hệ thống. Vui lòng quay lại sau!</p>
+        </div>
     <?php } ?>
 </div>
+
+<div class="clearfix"></div>

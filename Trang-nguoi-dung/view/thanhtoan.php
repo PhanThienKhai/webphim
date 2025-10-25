@@ -42,6 +42,19 @@ if (isset($_POST['ap_dung_ma']) && !empty($_POST['ma_khuyen_mai'])) {
             $_SESSION['tong']['ma_khuyen_mai'] = $ma_code;
             $_SESSION['tong']['giam_gia'] = $giam_gia;
             $_SESSION['tong']['gia_sau_giam'] = $gia_total;
+            
+            // CẬP NHẬT LẠI GIÁ VÉ VÀ HÓA ĐƠN ĐÃ TẠO (nếu có)
+            if (isset($_SESSION['id_ve']) && isset($_SESSION['id_hd'])) {
+                require_once __DIR__ . '/../model/pdo.php';
+                
+                // Cập nhật giá vé
+                $sql_ve = "UPDATE ve SET price = ? WHERE id = ?";
+                pdo_execute($sql_ve, $gia_total, $_SESSION['id_ve']);
+                
+                // Cập nhật giá hóa đơn
+                $sql_hd = "UPDATE hoa_don SET thanh_tien = ? WHERE id = ?";
+                pdo_execute($sql_hd, $gia_total, $_SESSION['id_hd']);
+            }
         } else {
             $error_km = 'Mã khuyến mãi không áp dụng cho rạp này!';
         }

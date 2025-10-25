@@ -101,7 +101,8 @@
                         <?php if (!empty($allRaps) && is_array($allRaps)) { ?>
                         <ul>
                             <?php foreach ($allRaps as $r) {
-                                $r_link = 'index.php?act=rapchieu&id_rap=' . $r['id'];
+                                // Link mới: dẫn tới trang phim theo rạp
+                                $r_link = 'index.php?act=phim_theo_rap&id_rap=' . $r['id'];
                                 echo '<li class="menu__nav-item"><a href="' . $r_link . '">' . htmlspecialchars($r['ten_rap']) . '</a></li>'; 
                             } ?>
                         </ul>

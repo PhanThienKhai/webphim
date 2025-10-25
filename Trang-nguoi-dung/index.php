@@ -85,6 +85,28 @@ if(isset($_GET['act']) && $_GET['act']!=""){
         case "rapchieu"://rạp chiếu
             include "view/rapchieu.php";
             break;
+        
+        case "phim_theo_rap": // Xem phim đang chiếu tại rạp cụ thể
+            $id_rap = isset($_GET['id_rap']) ? (int)$_GET['id_rap'] : 0;
+            
+            if ($id_rap <= 0) {
+                // Nếu không có id_rap, redirect về trang chủ
+                header("Location: index.php");
+                exit;
+            }
+            
+            // Lấy thông tin rạp
+            $rap_info = loadone_rap($id_rap);
+            
+            // Lấy danh sách phim đang chiếu tại rạp này
+            $ds_phim = [];
+            if ($rap_info) {
+                $ds_phim = load_phim_dang_chieu_theo_rap($id_rap);
+            }
+            
+            include "view/phim_theo_rap.php";
+            break;
+        
         case "dangnhap"://Đăng nhập
             if (isset($_POST['login'])) {
                  $user = htmlspecialchars($_POST['user'], ENT_QUOTES, 'UTF-8');
@@ -360,14 +382,58 @@ if(isset($_GET['act']) && $_GET['act']!=""){
             }
             $_SESSION['tong'] = $list_lc;
 
-            if (isset($_SESSION['user']) && ($_SESSION['user'])) {
+            // XỬ LÝ THÔNG TIN KHÁCH VÃNG LAI
+            if (isset($_POST['guest_name']) && isset($_POST['guest_phone']) && isset($_POST['guest_email'])) {
+                $guest_name = trim($_POST['guest_name']);
+                $guest_phone = trim($_POST['guest_phone']);
+                $guest_email = trim($_POST['guest_email']);
+                
+                // Validate
+                if (empty($guest_name) || empty($guest_phone) || empty($guest_email)) {
+                    $thongbao['guest_error'] = '❌ Vui lòng điền đầy đủ thông tin!';
+                    include 'view/login/guest_info.php';
+                    break;
+                }
+                
+                // Validate phone (10 số bắt đầu bằng 0)
+                if (!preg_match('/^0[0-9]{9}$/', $guest_phone)) {
+                    $thongbao['guest_error'] = '❌ Số điện thoại không hợp lệ (phải có 10 số)!';
+                    include 'view/login/guest_info.php';
+                    break;
+                }
+                
+                // Validate email
+                if (!filter_var($guest_email, FILTER_VALIDATE_EMAIL)) {
+                    $thongbao['guest_error'] = '❌ Email không hợp lệ!';
+                    include 'view/login/guest_info.php';
+                    break;
+                }
+                
+                // Tạo tài khoản khách vãng lai
+                $guest_account = create_guest_account($guest_name, $guest_phone, $guest_email);
+                
+                if ($guest_account) {
+                    // Lưu vào session như user bình thường
+                    $_SESSION['user'] = $guest_account;
+                    $_SESSION['is_guest'] = true; // Đánh dấu là khách vãng lai
+                    
+                    // Redirect về datve2 để hiển thị trang chọn ghế (dùng JS vì header đã gửi)
+                    echo '<script>window.location.href="index.php?act=datve2";</script>';
+                    exit;
+                } else {
+                    $thongbao['guest_error'] = '❌ Có lỗi xảy ra. Vui lòng thử lại!';
+                    include 'view/login/guest_info.php';
+                    break;
+                }
+            }
 
+            // KIỂM TRA LOGIN/GUEST
+            if (isset($_SESSION['user']) && ($_SESSION['user'])) {
+                // Đã login hoặc đã nhập thông tin guest → Hiển thị trang chọn ghế
                 include "view/dv2.php";
             } else {
-                $error = "";
-                $thongbao1= "";
-                $thongbao['dangnhap'] = 'đăng nhập đi để đặt vé!';
-                include 'view/login/dangnhap.php';
+                // Chưa login → Hiển thị form nhập thông tin khách vãng lai
+                include 'view/login/guest_info.php';
             }
             break;
             
@@ -429,7 +495,7 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                 
                 // Store combo selection and final price in session
                 $_SESSION['tong']['ten_doan'] = array('doan' => $ten_doan);
-                $_SESSION['tong']['gia_ghe'] = $gia_tong; // Update with final total (seat + combo)
+                $_SESSION['tong']['gia_ghe'] = $gia_tong; // Update with final total (seat + combo) - CHƯA GIẢM GIÁ
                 
                 // Convert seat array to string for database
                 $ghe = is_array($ten_ghe) && !empty($ten_ghe) ? implode(',', $ten_ghe) : '';
@@ -439,12 +505,18 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                 $combo = (is_array($ten_doan) && !empty($ten_doan)) ? implode(', ', $ten_doan) : null;
                 $id_lc = $_SESSION['tong']['id_lichchieu'];
                 $id_phim = $_SESSION['tong']['id_phim'];
-                $id_rap = isset($_SESSION['tong']['id_rap']) ? $_SESSION['tong']['id_rap'] : null; // Lấy id_rap từ session
+                $id_rap = isset($_SESSION['tong']['id_rap']) ? $_SESSION['tong']['id_rap'] : null;
                 
-                $id_hd = them_hoa_don($ngay_tt, $gia_tong);
+                // Sử dụng giá sau giảm nếu có mã khuyến mãi
+                $gia_luu_db = $gia_tong; // Mặc định dùng giá gốc
+                if (isset($_SESSION['tong']['gia_sau_giam']) && $_SESSION['tong']['gia_sau_giam'] > 0) {
+                    $gia_luu_db = $_SESSION['tong']['gia_sau_giam']; // Dùng giá đã giảm
+                }
+                
+                $id_hd = them_hoa_don($ngay_tt, $gia_luu_db);
                 if ($id_hd) {
                     $_SESSION['id_hd'] = $id_hd;
-                    $id_ve = them_ve($gia_tong, $ngay_tt, $ghe, $id_user, $id_kgc, $id_hd, $id_lc, $id_phim, $combo, $id_rap); // Thêm id_rap
+                    $id_ve = them_ve($gia_luu_db, $ngay_tt, $ghe, $id_user, $id_kgc, $id_hd, $id_lc, $id_phim, $combo, $id_rap);
 
                     if ($id_ve) {
                         $_SESSION['id_ve'] = $id_ve;

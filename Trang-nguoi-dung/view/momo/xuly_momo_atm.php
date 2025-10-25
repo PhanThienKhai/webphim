@@ -38,8 +38,14 @@ $myMomoAccount  = '0384104942';            // Số tài khoản MoMo của bạn
 $myMomoName     = 'Phan Thiên Khải';      // Tên chủ TK MoMo
 $orderInfo      = "Thanh toán {$movieTitle} - TK MoMo: {$myMomoAccount} ({$myMomoName})";
 
-// Lấy số tiền thanh toán (đã bao gồm ghế + combo - giảm giá nếu có)
-$amount = isset($_SESSION['tong']['gia_ghe']) ? (int)$_SESSION['tong']['gia_ghe'] : 0;
+// Lấy số tiền thanh toán - ưu tiên giá sau giảm nếu có mã khuyến mãi
+if (isset($_SESSION['tong']['gia_sau_giam']) && $_SESSION['tong']['gia_sau_giam'] > 0) {
+    // Đã áp dụng mã khuyến mãi - dùng giá sau giảm
+    $amount = (int)$_SESSION['tong']['gia_sau_giam'];
+} else {
+    // Chưa áp mã - dùng giá gốc
+    $amount = isset($_SESSION['tong']['gia_ghe']) ? (int)$_SESSION['tong']['gia_ghe'] : 0;
+}
 
 // Validate số tiền
 if ($amount < 10000) {

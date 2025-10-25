@@ -148,4 +148,50 @@ function update_pass_by_email($email, $newpass) {
     $sql = "UPDATE taikhoan SET pass = ? WHERE email = ?";
     pdo_execute($sql, $newpass, $email);
 }
+
+/**
+ * Tạo tài khoản khách vãng lai
+ * @param string $name Họ tên
+ * @param string $phone Số điện thoại (10 số)
+ * @param string $email Email
+ * @return array|false Thông tin tài khoản vừa tạo hoặc false nếu lỗi
+ */
+function create_guest_account($name, $phone, $email) {
+    // Kiểm tra số điện thoại đã tồn tại chưa (trong tài khoản guest)
+    $check_phone_sql = "SELECT * FROM taikhoan WHERE phone = ? AND vai_tro = -1";
+    $existing = pdo_query_one($check_phone_sql, $phone);
+    
+    if ($existing) {
+        // Đã có tài khoản guest với SĐT này → Cập nhật thông tin
+        $update_sql = "UPDATE taikhoan SET name = ?, email = ? WHERE id = ?";
+        pdo_execute($update_sql, $name, $email, $existing['id']);
+        return loadone_taikhoan($existing['id']);
+    }
+    
+    // Tạo username: guest_PHONE
+    $username = 'guest_' . $phone;
+    
+    // Mật khẩu random (không cần thiết vì guest không login lại)
+    $password = substr(md5(time()), 0, 8);
+    
+    // Insert tài khoản mới với vai_tro = -1 (khách vãng lai)
+    $sql = "INSERT INTO taikhoan (name, user, pass, email, phone, dia_chi, vai_tro, id_rap, img) 
+            VALUES (?, ?, ?, ?, ?, '', -1, NULL, '')";
+    
+    $id = pdo_execute_return_interlastid($sql, $name, $username, $password, $email, $phone);
+    
+    // Trả về thông tin tài khoản vừa tạo
+    return loadone_taikhoan($id);
+}
+
+/**
+ * Kiểm tra số điện thoại đã được sử dụng chưa
+ * @param string $phone
+ * @return bool True nếu đã tồn tại
+ */
+function check_phone_exists($phone) {
+    $sql = "SELECT id FROM taikhoan WHERE phone = ?";
+    $result = pdo_query_one($sql, $phone);
+    return $result !== false;
+}
 ?>

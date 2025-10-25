@@ -25,10 +25,10 @@ function load_ve($id){
     LEFT JOIN lichchieu ON lichchieu.id = v.id_ngay_chieu
     LEFT JOIN phongchieu ON phongchieu.id = khung_gio_chieu.id_phong
     LEFT JOIN rap_chieu ON rap_chieu.id = v.id_rap
-    WHERE v.trang_thai IN (1, 2, 3, 4)  -- Lấy cả trạng thái 1, 2, 3 và 4
-    AND id_tk = ".$id."
-    ORDER BY v.id DESC;";
-        $re = pdo_query($sql);
+    WHERE v.trang_thai IN (0, 1, 2, 3, 4)  -- Lấy cả vé chưa thanh toán (0) và đã thanh toán (1,2,3,4)
+    AND v.id_tk = ?
+    ORDER BY v.id DESC";
+        $re = pdo_query($sql, $id);
         return $re;
 }
 
@@ -68,11 +68,16 @@ function load_ve_tt($id)
 
 function khoa_ghe($id_kgc, $id_lc, $id_phim)
 {
+    // Khóa ghế cho cả vé chưa thanh toán (0) và đã thanh toán (1)
+    // Trạng thái 3 = đã hủy, 4 = hết hạn (không khóa)
     $sql = "SELECT ve.ghe FROM ve 
     JOIN khung_gio_chieu ON ve.id_thoi_gian_chieu = khung_gio_chieu.id 
     JOIN lichchieu ON lichchieu.id = khung_gio_chieu.id_lich_chieu  
-    WHERE trang_thai = 1  AND id_thoi_gian_chieu = '$id_kgc' AND lichchieu.id = '$id_lc' AND lichchieu.id_phim = '$id_phim' ";
-    return pdo_query($sql);
+    WHERE ve.trang_thai IN (0, 1, 2) 
+      AND ve.id_thoi_gian_chieu = ? 
+      AND lichchieu.id = ? 
+      AND lichchieu.id_phim = ?";
+    return pdo_query($sql, $id_kgc, $id_lc, $id_phim);
 }
 
 

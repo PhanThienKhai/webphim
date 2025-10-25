@@ -162,3 +162,68 @@ function dat_phim($ten, $ngay, $gio, $gia,$tk)
     $sql = "insert into `ve` (`id_thoi_gian_chieu`,`id_ngay_chieu`,`id_phim`,`id_tk`,`ghe`,`price`) values ('$gio','$ngay','$ten','$gia','$tk','0','$gia')";
     pdo_execute($sql);
 }
+
+/**
+ * Lấy danh sách phim đang chiếu tại rạp cụ thể (có lịch chiếu từ hôm nay)
+ * @param int $id_rap ID của rạp
+ * @return array Danh sách phim
+ */
+function load_phim_dang_chieu_theo_rap($id_rap) {
+    $sql = "SELECT DISTINCT
+                p.id,
+                p.tieu_de,
+                p.daodien,
+                p.dienvien,
+                p.img,
+                p.mo_ta,
+                p.date_phat_hanh,
+                p.thoi_luong_phim,
+                p.quoc_gia,
+                p.gia_han_tuoi,
+                p.link_trailer,
+                lp.name as ten_loai,
+                MIN(lc.ngay_chieu) as ngay_chieu_dau,
+                MAX(lc.ngay_chieu) as ngay_chieu_cuoi,
+                COUNT(DISTINCT DATE(lc.ngay_chieu)) as so_ngay_chieu,
+                COUNT(kgc.id) as tong_suat_chieu
+            FROM phim p
+            INNER JOIN loaiphim lp ON lp.id = p.id_loai
+            INNER JOIN lichchieu lc ON lc.id_phim = p.id
+            LEFT JOIN khung_gio_chieu kgc ON kgc.id_lich_chieu = lc.id
+            WHERE lc.id_rap = ?
+              AND DATE(lc.ngay_chieu) >= CURDATE()
+              AND lc.trang_thai_duyet = 'Đã duyệt'
+            GROUP BY p.id, p.tieu_de, p.daodien, p.dienvien, p.img, p.mo_ta, 
+                     p.date_phat_hanh, p.thoi_luong_phim, p.quoc_gia, 
+                     p.gia_han_tuoi, p.link_trailer, lp.name
+            ORDER BY ngay_chieu_dau ASC, p.tieu_de ASC";
+    
+    return pdo_query($sql, $id_rap);
+}
+
+/**
+ * Lấy giờ chiếu preview của phim tại rạp (để hiển thị nhanh trên card)
+ * @param int $id_phim
+ * @param int $id_rap
+ * @param int $limit Số giờ chiếu tối đa
+ * @return array
+ */
+function get_gio_chieu_preview($id_phim, $id_rap, $limit = 4) {
+    // Ép kiểu limit về integer để tránh SQL injection
+    $limit = (int)$limit;
+    
+    $sql = "SELECT DISTINCT 
+                kgc.thoi_gian_chieu,
+                lc.ngay_chieu,
+                DATE(lc.ngay_chieu) as ngay
+            FROM khung_gio_chieu kgc
+            JOIN lichchieu lc ON kgc.id_lich_chieu = lc.id
+            WHERE lc.id_phim = ?
+              AND lc.id_rap = ?
+              AND DATE(lc.ngay_chieu) >= CURDATE()
+              AND lc.trang_thai_duyet = 'Đã duyệt'
+            ORDER BY lc.ngay_chieu ASC, kgc.thoi_gian_chieu ASC
+            LIMIT $limit";
+    
+    return pdo_query($sql, $id_phim, $id_rap);
+}

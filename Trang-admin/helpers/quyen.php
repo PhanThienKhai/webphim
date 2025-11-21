@@ -87,7 +87,9 @@ function permission_map()
         'nv_lichlamviec' => [ROLE_NHAN_VIEN],
         'nv_chamcong'    => [ROLE_NHAN_VIEN], // Self-service attendance check-in/out
         'xinnghi'        => [ROLE_NHAN_VIEN],
-        'scanve'         => [ROLE_NHAN_VIEN, ROLE_QUAN_LY_RAP],
+        'scanve_new'     => [ROLE_NHAN_VIEN, ROLE_QUAN_LY_RAP], // Modern QR scanner
+        'scanve_simple'  => [ROLE_NHAN_VIEN, ROLE_QUAN_LY_RAP], // Simple native camera QR scanner
+        'scanve_history' => [ROLE_NHAN_VIEN, ROLE_QUAN_LY_RAP], // Check-in history API
         'nv_datve'       => [ROLE_NHAN_VIEN],
         'nv_baocao'      => [ROLE_NHAN_VIEN, ROLE_QUAN_LY_RAP],
         'nv_xeplich'     => [ROLE_NHAN_VIEN],

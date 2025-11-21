@@ -50,7 +50,6 @@
                             <th class="border-0"><i class="zmdi zmdi-movie"></i> Phim</th>
                             <th class="border-0"><i class="zmdi zmdi-label"></i> Thể loại</th>
                             <th class="border-0"><i class="zmdi zmdi-calendar"></i> Thời gian</th>
-                            <th class="border-0"><i class="zmdi zmdi-time"></i> Số suất</th>
                             <th class="border-0"><i class="zmdi zmdi-account"></i> Người tạo</th>
                             <th class="border-0"><i class="zmdi zmdi-flag"></i> Trạng thái</th>
                             <th class="border-0 text-center"><i class="zmdi zmdi-settings"></i> Hành động</th>
@@ -88,17 +87,17 @@
                                         <span class="badge badge-info"><?= htmlspecialchars($r['ten_loai'] ?: 'Chưa phân loại') ?></span>
                                     </td>
                                     <td>
-                                        <div class="text-sm">
-                                            <div><?= date('d/m/Y', strtotime($r['tu_ngay'])) ?></div>
-                                            <?php if ($r['tu_ngay'] != $r['den_ngay']): ?>
-                                                <div class="text-muted">đến <?= date('d/m/Y', strtotime($r['den_ngay'])) ?></div>
-                                            <?php endif; ?>
-                                            <small class="text-success">(<?= $r['so_ngay_chieu'] ?> ngày)</small>
-                                            <br><small class="text-muted">Ngày: <?= $r['danh_sach_ngay'] ?></small>
+                                        <div style="min-width: 150px;">
+                                            <div class="font-weight-medium">
+                                                <?= date('d/m/Y', strtotime($r['tu_ngay'])) ?>
+                                                <?php if ($r['tu_ngay'] != $r['den_ngay']): ?>
+                                                    → <?= date('d/m/Y', strtotime($r['den_ngay'])) ?>
+                                                <?php endif; ?>
+                                            </div>
+                                            <small class="text-success d-block mt-1">
+                                                <i class="zmdi zmdi-calendar-check"></i> <?= $r['so_ngay_chieu'] ?> ngày chiếu
+                                            </small>
                                         </div>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-primary"><?= $r['so_ngay_chieu'] ?> ngày</span>
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
@@ -110,7 +109,7 @@
                                         <span class="badge <?= $badge_class ?>"><?= htmlspecialchars($st_text) ?></span>
                                     </td>
                                     <td>
-                                        <div class="btn-group-vertical btn-group-sm">
+                                        <div class="btn-group-vertical btn-group-sm" style="min-width: 120px;">
                                             <button class="btn btn-outline-info btn-sm mb-1" 
                                                     onclick="xemChiTiet('<?= htmlspecialchars($r['ma_ke_hoach']) ?>')" 
                                                     title="Xem chi tiết">
@@ -123,34 +122,24 @@
                                                        href="index.php?act=duyet_lichchieu&duyet_kehoach=1&ma_ke_hoach=<?= urlencode($r['ma_ke_hoach']) ?>&action=duyet" 
                                                        onclick="return confirm('Duyệt toàn bộ kế hoạch chiếu này?')" 
                                                        title="Duyệt kế hoạch">
-                                                        <i class="zmdi zmdi-check"></i>
+                                                        <i class="zmdi zmdi-check"></i> Duyệt
                                                     </a>
                                                     <a class="btn btn-outline-danger btn-sm" 
                                                        href="index.php?act=duyet_lichchieu&duyet_kehoach=1&ma_ke_hoach=<?= urlencode($r['ma_ke_hoach']) ?>&action=tu_choi" 
                                                        onclick="return confirm('Từ chối kế hoạch chiếu này?')" 
                                                        title="Từ chối kế hoạch">
-                                                        <i class="zmdi zmdi-close"></i>
+                                                        <i class="zmdi zmdi-close"></i> Từ chối
                                                     </a>
                                                 </div>
                                             <?php endif; ?>
                                         </div>
                                         
                                         <?php if (!empty($r['ghi_chu'])): ?>
-                                            <div class="mt-2">
-                                                <small class="text-info">
+                                            <div class="mt-2" style="max-width: 200px;">
+                                                <small class="text-muted d-block" style="font-size: 11px;">
                                                     <i class="zmdi zmdi-comment-text"></i> 
-                                                    <?= htmlspecialchars(substr($r['ghi_chu'], 0, 50)) ?>
-                                                    <?= strlen($r['ghi_chu']) > 50 ? '...' : '' ?>
-                                                </small>
-                                            </div>
-                                        <?php endif; ?>
-                                        
-                                        <?php if (!empty($r['ghi_chu'])): ?>
-                                            <div class="mt-2">
-                                                <small class="text-info">
-                                                    <i class="zmdi zmdi-comment-text"></i> 
-                                                    <?= htmlspecialchars(substr($r['ghi_chu'], 0, 50)) ?>
-                                                    <?= strlen($r['ghi_chu']) > 50 ? '...' : '' ?>
+                                                    <?= htmlspecialchars(mb_substr($r['ghi_chu'], 0, 40)) ?>
+                                                    <?= mb_strlen($r['ghi_chu']) > 40 ? '...' : '' ?>
                                                 </small>
                                             </div>
                                         <?php endif; ?>
@@ -159,7 +148,7 @@
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="9" class="text-center py-5">
+                                <td colspan="8" class="text-center py-5">
                                     <div class="text-muted">
                                         <i class="zmdi zmdi-inbox" style="font-size: 3rem; opacity: 0.3;"></i>
                                         <div class="mt-2">
@@ -265,41 +254,204 @@ code {
 }
 </style>
 
-<!-- Modal Chi tiết kế hoạch -->
-<div class="modal fade" id="modalChiTiet" tabindex="-1" role="dialog" aria-labelledby="modalChiTietLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalChiTietLabel">Chi tiết kế hoạch chiếu</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="modalChiTietContent">
-                <div class="text-center">
-                    <i class="zmdi zmdi-spinner zmdi-hc-spin"></i> Đang tải...
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+<!-- Modal Chi tiết kế hoạch - Custom Fullscreen -->
+<div id="modalChiTiet" class="custom-modal" style="display: none;">
+    <div class="custom-modal-overlay" onclick="dongModal()"></div>
+    <div class="custom-modal-container">
+        <div class="custom-modal-header">
+            <h5><i class="zmdi zmdi-info-outline"></i> Chi tiết kế hoạch chiếu</h5>
+            <button class="custom-modal-close" onclick="dongModal()" title="Đóng">
+                <i class="zmdi zmdi-close"></i>
+            </button>
+        </div>
+        <div class="custom-modal-body" id="modalChiTietContent">
+            <div class="text-center">
+                <i class="zmdi zmdi-spinner zmdi-hc-spin"></i> Đang tải...
             </div>
         </div>
     </div>
 </div>
 
+<!-- Style cho custom modal -->
+<style>
+/* Fullscreen overlay */
+.custom-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Backdrop đen đậm - che hoàn toàn */
+.custom-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, -0.05);
+    z-index: 1;
+    backdrop-filter: blur(5px);
+}
+
+/* Container chứa nội dung */
+.custom-modal-container {
+    position: relative;
+    z-index: 2;
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Header */
+.custom-modal-header {
+    padding: 20px 25px;
+    border-bottom: 2px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #9a9fb3ff 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.custom-modal-header h5 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.custom-modal-header h5 i {
+    margin-right: 8px;
+}
+
+/* Close button */
+.custom-modal-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 20px;
+}
+
+.custom-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* Body */
+.custom-modal-body {
+    padding: 25px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Custom scrollbar */
+.custom-modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.custom-modal-body::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.custom-modal-body::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .custom-modal-container {
+        width: 95%;
+        max-height: 95vh;
+    }
+    
+    .custom-modal-header {
+        padding: 15px 20px;
+    }
+    
+    .custom-modal-header h5 {
+        font-size: 16px;
+    }
+    
+    .custom-modal-body {
+        padding: 20px;
+    }
+}
+</style>
+
 <script>
 function xemChiTiet(maKeHoach) {
-    $('#modalChiTiet').modal('show');
-    $('#modalChiTietContent').html('<div class="text-center"><i class="zmdi zmdi-spinner zmdi-hc-spin"></i> Đang tải...</div>');
+    // Hiển thị modal
+    document.getElementById('modalChiTiet').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Disable scroll trang chính
+    
+    // Loading state
+    document.getElementById('modalChiTietContent').innerHTML = 
+        '<div class="text-center py-5"><i class="zmdi zmdi-spinner zmdi-hc-spin" style="font-size: 3rem; color: #667eea;"></i><p class="mt-3 text-muted">Đang tải dữ liệu...</p></div>';
     
     // AJAX load nội dung chi tiết
     $.get('index.php', {
         act: 'ajax_chi_tiet_kehoach_new',
         ma: maKeHoach
     }, function(data) {
-        $('#modalChiTietContent').html(data);
+        document.getElementById('modalChiTietContent').innerHTML = data;
     }).fail(function() {
-        $('#modalChiTietContent').html('<div class="alert alert-danger">Lỗi khi tải dữ liệu!</div>');
+        document.getElementById('modalChiTietContent').innerHTML = 
+            '<div class="alert alert-danger"><i class="zmdi zmdi-alert-triangle"></i> Lỗi khi tải dữ liệu! Vui lòng thử lại.</div>';
     });
 }
+
+function dongModal() {
+    document.getElementById('modalChiTiet').style.display = 'none';
+    document.body.style.overflow = ''; // Enable scroll lại
+}
+
+// Đóng khi nhấn ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        dongModal();
+    }
+});
 </script>

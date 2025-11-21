@@ -68,20 +68,63 @@ try {
                 <div class="card-body" style="padding: 1rem;">
                     <form id="form-kehoach" method="post" action="index.php?act=luu_kehoach">
                         
-                        <!-- Chọn phim -->
+                        <!-- Chọn phim (nhiều phim cùng lúc) -->
                         <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label" style="font-size: 13px; margin-bottom: 0.3rem;">Chọn Phim *</label>
-                                <select name="ma_phim" id="ma_phim" class="form-control form-control-sm" required>
-                                    <option value="">-- Chọn phim --</option>
-                                    <?php foreach($danh_sach_phim as $phim): ?>
-                                        <option value="<?= $phim['id'] ?>"><?= $phim['tieu_de'] ?> (<?= $phim['thoi_luong_phim'] ?> phút)</option>
-                                    <?php endforeach; ?>
-                                </select>
+                            <div class="col-md-12">
+                                <label class="form-label" style="font-size: 14px; margin-bottom: 0.5rem; font-weight: 600;">
+                                    <i class="zmdi zmdi-movie"></i> Chọn Phim * 
+                                    <span class="badge badge-info" id="count-phim-selected">0 phim</span>
+                                </label>
+                                
+                                <!-- Search box -->
+                                <input type="text" id="search-phim" class="form-control form-control-sm mb-2" 
+                                       placeholder="🔍 Tìm kiếm phim..." style="max-width: 300px;">
+                                
+                                <!-- Container checkbox với scroll -->
+                                <div style="border: 1px solid #dee2e6; border-radius: 6px; background: #fff;">
+                                    
+                                    <!-- Nút chọn tất cả - CỐ ĐỊNH -->
+                                    <div style="position: sticky; top: 0; background: #f8f9fa; padding: 10px; border-bottom: 2px solid #dee2e6; z-index: 10;">
+                                        <button type="button" class="btn btn-sm btn-outline-primary" onclick="chonTatCaPhim()">
+                                            ✓ Chọn tất cả
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="boChonTatCaPhim()">
+                                            ✗ Bỏ chọn tất cả
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Danh sách checkbox phim với scroll -->
+                                    <div id="phim-checkbox-container" style="max-height: 300px; overflow-y: auto; padding: 10px;">
+                                        <?php foreach($danh_sach_phim as $phim): ?>
+                                            <div class="phim-checkbox-item" style="padding: 8px 10px; border-bottom: 1px solid #e9ecef; display: flex; align-items: center;">
+                                                <input class="phim-checkbox" 
+                                                       type="checkbox" 
+                                                       name="ma_phim[]" 
+                                                       value="<?= $phim['id'] ?>" 
+                                                       id="phim_<?= $phim['id'] ?>"
+                                                       data-ten="<?= htmlspecialchars($phim['tieu_de']) ?>"
+                                                       onchange="updateCountPhim()"
+                                                       style="width: 18px; height: 18px; margin-right: 10px; cursor: pointer; flex-shrink: 0;">
+                                                <label for="phim_<?= $phim['id'] ?>" style="font-size: 13px; cursor: pointer; margin: 0; flex: 1;">
+                                                    <strong><?= $phim['tieu_de'] ?></strong> 
+                                                    <span class="text-muted">(<?= $phim['thoi_luong_phim'] ?> phút)</span>
+                                                </label>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <small class="text-muted" style="font-size: 11px; display: block; margin-top: 5px;">
+                                    💡 Chọn nhiều phim để tạo kế hoạch chiếu cùng lúc với cùng khung giờ
+                                </small>
                             </div>
-                            <div class="col-md-6">
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-12">
                                 <label class="form-label" style="font-size: 13px; margin-bottom: 0.3rem;">Ghi chú</label>
-                                <input type="text" name="ghi_chu" class="form-control form-control-sm" placeholder="Ghi chú cho kế hoạch chiếu...">
+                                <input type="text" name="ghi_chu" class="form-control form-control-sm" placeholder="Ghi chú chung cho tất cả kế hoạch chiếu...">
                             </div>
                         </div>
                         
@@ -269,26 +312,7 @@ try {
 </div><!-- Content Body End -->
 
 <style>
-/* Chỉ áp dụng font-size cho nội dung trang này - KHÔNG ảnh hưởng header/sidebar */
-.content-body * {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-
-.content-body p, 
-.content-body span:not(.badge), 
-.content-body div:not([class*="zmdi"]):not([class*="fa"]), 
-.content-body td, 
-.content-body input, 
-.content-body select, 
-.content-body textarea {
-    font-size: 14px;
-}
-
-.content-body label {
-    font-size: 14px;
-}
-
-/* Footer cố định cho trang này */
+/* Toast notification */
 .footer-section {
     position: fixed;
     bottom: 0;
@@ -640,6 +664,14 @@ function hienThongBao(type, message) {
 
 // Validation form
 document.getElementById('form-kehoach').addEventListener('submit', function(e) {
+    // Kiểm tra có chọn phim nào không
+    var selectedPhims = document.querySelectorAll('.phim-checkbox:checked').length;
+    if (selectedPhims === 0) {
+        e.preventDefault();
+        hienThongBao('error', '❌ Vui lòng chọn ít nhất 1 phim!');
+        return;
+    }
+    
     var tuNgay = document.getElementById('tu_ngay').value;
     var denNgay = document.getElementById('den_ngay').value;
     
@@ -656,7 +688,54 @@ document.getElementById('form-kehoach').addEventListener('submit', function(e) {
         return;
     }
     
-    hienThongBao('success', '⏳ Đang lưu kế hoạch...');
+    hienThongBao('success', '⏳ Đang lưu kế hoạch cho ' + selectedPhims + ' phim...');
+});
+
+// ============ FUNCTIONS CHO MULTI-SELECT PHIM ============
+
+// Update số lượng phim được chọn
+function updateCountPhim() {
+    var count = document.querySelectorAll('.phim-checkbox:checked').length;
+    document.getElementById('count-phim-selected').textContent = count + ' phim';
+}
+
+// Chọn tất cả phim (chỉ những phim đang hiển thị)
+function chonTatCaPhim() {
+    var visibleCheckboxes = document.querySelectorAll('.phim-checkbox-item:not([style*="display: none"]) .phim-checkbox');
+    visibleCheckboxes.forEach(function(cb) {
+        cb.checked = true;
+    });
+    updateCountPhim();
+    hienThongBao('success', '✓ Đã chọn ' + visibleCheckboxes.length + ' phim');
+}
+
+// Bỏ chọn tất cả
+function boChonTatCaPhim() {
+    document.querySelectorAll('.phim-checkbox').forEach(function(cb) {
+        cb.checked = false;
+    });
+    updateCountPhim();
+    hienThongBao('success', '✗ Đã bỏ chọn tất cả');
+}
+
+// Search phim
+document.addEventListener('DOMContentLoaded', function() {
+    var searchInput = document.getElementById('search-phim');
+    if (searchInput) {
+        searchInput.addEventListener('keyup', function() {
+            var searchText = this.value.toLowerCase().trim();
+            var items = document.querySelectorAll('.phim-checkbox-item');
+            
+            items.forEach(function(item) {
+                var tenPhim = item.querySelector('.phim-checkbox').getAttribute('data-ten').toLowerCase();
+                if (tenPhim.includes(searchText)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    }
 });
 
 // Hiển thị thông báo ban đầu từ URL

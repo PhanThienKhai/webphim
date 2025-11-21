@@ -77,7 +77,7 @@
                             </li>
                             <li><a href="index.php?act=ql_duyetnghi"><i class="zmdi zmdi-time-restore"></i> <span>Duyệt nghỉ phép</span></a></li>
                             <li><a href="index.php?act=kehoach" class="<?= $currentAct==='kehoach'?'is-active':''; ?>"><i class="zmdi zmdi-movie-alt"></i> <span>Lập kế hoạch chiếu phim</span></a></li>
-                            <li><a href="index.php?act=phong"><i class="zmdi zmdi-local-movies zmdi-hc-fw"></i> <span>Quản Lý Phòng</span></a></li>
+                            <li><a href="index.php?act=phong"><i class="zmdi zmdi-local-movies zmdi-hc-fw"></i> <span>Quản Lý Phòng - Ghế</span></a></li>
                             <li class="has-sub-menu"><a href="#"><i class="zmdi zmdi-tv-alt-play zmdi-hc-fw"></i> <span>Quản Lý Suất Chiếu</span></a>
                                 <ul class="side-header-sub-menu">
                                     <li><a href="index.php?act=QLsuatchieu"><i class="zmdi zmdi-tv-alt-play zmdi-hc-fw"></i><span>Suất Chiếu</span></a></li>
@@ -112,6 +112,7 @@
                             <li class="has-sub-menu"><a href="#"><i class="ti-shopping-cart"></i> <span>Vé</span></a>
                                 <ul class="side-header-sub-menu">
                                     <li><a href="index.php?act=ve"><i class="ti-shopping-cart"></i> <span>Quản lý vé</span></a></li>
+                                    <li><a href="index.php?act=scanve_new"><i class="zmdi zmdi-check"></i> <span>Kiểm tra vé (QR)</span></a></li>
                                     <li><a href="index.php?act=doi_hoan_ve"><i class="zmdi zmdi-refresh"></i> <span>Đổi/Hoàn vé</span></a></li>
                                 </ul>
                             </li>
@@ -120,7 +121,7 @@
                         <?php elseif ($role == ROLE_NHAN_VIEN): ?>
                             <li><a href="index.php?act=ve"><i class="ti-shopping-cart"></i> <span>Đặt/Quản lý vé</span></a></li>
                             <li><a href="index.php?act=nv_datve"><i class="zmdi zmdi-ticket-star"></i> <span>Đặt vé cho khách</span></a></li>
-                            <li><a href="index.php?act=scanve"><i class="zmdi zmdi-check"></i> <span>Kiểm tra vé</span></a></li>
+                            <li><a href="index.php?act=scanve_new"><i class="zmdi zmdi-check"></i> <span>Kiểm tra vé (QR)</span></a></li>
                             <li><a href="index.php?act=nv_lichlamviec"><i class="zmdi zmdi-calendar"></i> <span>Lịch làm việc</span></a></li>
                             <li><a href="index.php?act=nv_chamcong"><i class="zmdi zmdi-time"></i> <span>Chấm công của tôi</span></a></li>
                             <li><a href="index.php?act=xinnghi"><i class="zmdi zmdi-time-restore"></i> <span>Xin nghỉ phép</span></a></li>

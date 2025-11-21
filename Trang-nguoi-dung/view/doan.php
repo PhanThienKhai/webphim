@@ -77,6 +77,58 @@
         color: #999;
         font-size: 18px;
     }
+    
+    /* Quantity control styles */
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    .quantity-btn {
+        background: #667eea;
+        color: white;
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    
+    .quantity-btn:hover {
+        background: #764ba2;
+        transform: scale(1.1);
+    }
+    
+    .quantity-btn:active {
+        transform: scale(0.95);
+    }
+    
+    .quantity-display {
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+        min-width: 30px;
+        text-align: center;
+    }
+    
+    .combo-selected-indicator {
+        background: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 12px;
+        margin-top: 10px;
+        display: inline-block;
+    }
 </style>
 
 <!-- Info Bar hiển thị thông tin đặt vé -->
@@ -136,12 +188,17 @@
                     Giá: <?= number_format($combo['gia'] ?? 0, 0, ',', '.') ?>đ
                 </p>
                 
-                <div class="combo-doan-right">
-                    <span class="check_do_an btn btn-md btn--danger" 
-                          check-price='<?= $combo['gia'] ?? 0 ?>' 
-                          check-place='<?= htmlspecialchars($combo['ten_combo'] ?? $combo['ten'] ?? '') ?>'>
-                        CHỌN NGAY
-                    </span>
+                <!-- Quantity control -->
+                <div class="quantity-control" data-combo-id="<?= $combo['id'] ?? $combo['id_combo'] ?>" 
+                     data-combo-name="<?= htmlspecialchars($combo['ten_combo'] ?? $combo['ten'] ?? '') ?>"
+                     data-combo-price="<?= $combo['gia'] ?? 0 ?>">
+                    <button type="button" class="quantity-btn btn-decrease">−</button>
+                    <span class="quantity-display">0</span>
+                    <button type="button" class="quantity-btn btn-increase">+</button>
+                </div>
+                
+                <div class="combo-selected-indicator" style="display: none;">
+                    Đã chọn: <span class="selected-count">0</span>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -180,15 +237,8 @@
             
             <div style="display: flex; margin-bottom: 10px;">
                 <span>🍿 Combo đã chọn:</span>
-                <div class="check-doan">
-                    <?php
-                    if (isset($ten_doan['doan'])) {
-                        foreach ($ten_doan['doan'] as $doan) {
-                            echo '<span class="check-doan">' . htmlspecialchars($doan) . '</span>';
-                            echo '<input type="hidden" name="ten_do_an[]" value="' . htmlspecialchars($doan) . '">';
-                        }
-                    }
-                    ?>
+                <div class="check-doan" id="selected-combos-display">
+                    <!-- Combos will be dynamically added here -->
                 </div>
             </div>
 
@@ -221,53 +271,145 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Initialize window.tong if not set
-        if (typeof window.tong === 'undefined') {
-            var priceElement = document.getElementById('gia_ghe');
-            window.tong = parseInt(priceElement?.value || 0);
+        // Initialize total price from seat selection
+        var priceElement = document.getElementById('gia_ghe');
+        var seatPrice = parseInt(priceElement?.value || 0);
+        var comboTotal = 0;
+        
+        // Object to store combo quantities
+        var comboQuantities = {};
+        
+        // Function to update total price display
+        function updateTotalPrice() {
+            var totalPrice = seatPrice + comboTotal;
+            $('#gia_ghe').val(totalPrice);
+            $('[name="giaghe"]').val(totalPrice);
         }
         
-        // Xử lý sự kiện click cho nút chọn combo
-        $('.check_do_an').off('click touchstart').on('click touchstart', function (e) {
-            e.preventDefault();
+        // Function to update combo display
+        function updateComboDisplay() {
+            var displayHtml = '';
+            var hasCombo = false;
             
-            var tenCombo = $(this).attr('check-place');
-            var doanPrice = $(this).attr('check-price');
-            var comboPrice = parseInt(doanPrice) || 0;
+            // Clear existing hidden inputs
+            $('#selected-combos-display').empty();
             
-            if ($(this).hasClass('btn--danger')) {
-                // Chọn combo - ADD
-                $(this).removeClass('btn--danger').addClass('btn--success').text('BỎ CHỌN');
-                
-                // Add combo name to display
-                $('.check-doan').prepend(
-                    '<span class="choosen-place ' + tenCombo + '">' + tenCombo + '</span>'
-                );
-                $('.check-doan').prepend(
-                    '<input class="' + tenCombo + '" type="hidden" name="ten_do_an[]" value="' + tenCombo + '">'
-                );
-                
-                // Add price
-                window.tong = (window.tong || 0) + comboPrice;
-                
-            } else {
-                // Bỏ chọn combo - REMOVE
-                $(this).removeClass('btn--success').addClass('btn--danger').text('CHỌN NGAY');
-                
-                // Remove combo from display
-                $('.' + tenCombo).remove();
-                
-                // Subtract price
-                window.tong = (window.tong || 0) - comboPrice;
+            // Build display and hidden inputs
+            $.each(comboQuantities, function(comboName, data) {
+                if (data.quantity > 0) {
+                    hasCombo = true;
+                    displayHtml += '<span class="choosen-place" style="margin: 5px; padding: 5px 10px; background: #667eea; color: white; border-radius: 15px; display: inline-block;">' + 
+                                  comboName + ' x' + data.quantity + 
+                                  '</span>';
+                    
+                    // Add multiple hidden inputs (one for each quantity)
+                    for (var i = 0; i < data.quantity; i++) {
+                        $('#selected-combos-display').append(
+                            '<input type="hidden" name="ten_do_an[]" value="' + comboName + '">'
+                        );
+                    }
+                }
+            });
+            
+            if (!hasCombo) {
+                displayHtml = '<span style="color: #999; font-style: italic;">Chưa chọn combo nào</span>';
             }
             
-            // Update price display
-            $('#gia_ghe').val(window.tong);
-            $('[name="giaghe"]').val(window.tong);
-            var priceEl = document.getElementById('gia_ghe');
-            if (priceEl) {
-                priceEl.value = window.tong;
-                priceEl.setAttribute('value', window.tong);
+            $('#selected-combos-display').html($('#selected-combos-display').html() + displayHtml);
+        }
+        
+        // Handle increase button
+        $('.btn-increase').on('click', function(e) {
+            e.preventDefault();
+            
+            var container = $(this).closest('.quantity-control');
+            var comboName = container.data('combo-name');
+            var comboPrice = parseInt(container.data('combo-price')) || 0;
+            var quantityDisplay = container.find('.quantity-display');
+            var currentQty = parseInt(quantityDisplay.text()) || 0;
+            var indicator = container.siblings('.combo-selected-indicator');
+            
+            // Increase quantity
+            currentQty++;
+            quantityDisplay.text(currentQty);
+            
+            // Update indicator
+            indicator.find('.selected-count').text(currentQty);
+            indicator.show();
+            
+            // Update combo quantities object
+            if (!comboQuantities[comboName]) {
+                comboQuantities[comboName] = {
+                    price: comboPrice,
+                    quantity: 0
+                };
+            }
+            comboQuantities[comboName].quantity = currentQty;
+            
+            // Update combo total
+            comboTotal += comboPrice;
+            
+            // Update displays
+            updateTotalPrice();
+            updateComboDisplay();
+            
+            // Visual feedback
+            $(this).css('transform', 'scale(1.2)');
+            setTimeout(() => {
+                $(this).css('transform', 'scale(1)');
+            }, 200);
+        });
+        
+        // Handle decrease button
+        $('.btn-decrease').on('click', function(e) {
+            e.preventDefault();
+            
+            var container = $(this).closest('.quantity-control');
+            var comboName = container.data('combo-name');
+            var comboPrice = parseInt(container.data('combo-price')) || 0;
+            var quantityDisplay = container.find('.quantity-display');
+            var currentQty = parseInt(quantityDisplay.text()) || 0;
+            var indicator = container.siblings('.combo-selected-indicator');
+            
+            // Decrease quantity (minimum 0)
+            if (currentQty > 0) {
+                currentQty--;
+                quantityDisplay.text(currentQty);
+                
+                // Update indicator
+                if (currentQty > 0) {
+                    indicator.find('.selected-count').text(currentQty);
+                } else {
+                    indicator.hide();
+                }
+                
+                // Update combo quantities object
+                if (comboQuantities[comboName]) {
+                    comboQuantities[comboName].quantity = currentQty;
+                }
+                
+                // Update combo total
+                comboTotal -= comboPrice;
+                
+                // Update displays
+                updateTotalPrice();
+                updateComboDisplay();
+                
+                // Visual feedback
+                $(this).css('transform', 'scale(1.2)');
+                setTimeout(() => {
+                    $(this).css('transform', 'scale(1)');
+                }, 200);
+            }
+        });
+        
+        // Prevent form submission if no seats selected
+        $('form').on('submit', function(e) {
+            var seatInputs = $('input[name="ten_ghe[]"]');
+            if (seatInputs.length === 0) {
+                e.preventDefault();
+                alert('Vui lòng chọn ghế trước khi tiếp tục!');
+                return false;
             }
         });
     });

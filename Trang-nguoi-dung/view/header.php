@@ -111,6 +111,11 @@
                     </li>
                     <li>
                         <span class="sub-nav-toggle plus"></span>
+                        <a href="index.php?act=khuyenmai">Khuyến mãi</a>
+
+                    </li>
+                    <li>
+                        <span class="sub-nav-toggle plus"></span>
                         <a href="index.php?act=lienhe">Liên hệ</a>
 
                     </li>
@@ -122,13 +127,74 @@
                 </ul>
             </nav>
             <div class="control-panel">
-                           <?php if (isset($_SESSION['user'])){
-                                  extract($_SESSION['user']);
-                                  echo '<a href="index.php?act=dangnhap" class="btn btn-md btn--warning btn--book ">'.$name.'</a>';
-                                  }else{
-                               echo '<a href="index.php?act=dangnhap" class="btn btn-md btn--warning btn--book ">Đăng nhập</a>';
-                                  }?>
-
+                <?php if (isset($_SESSION['user'])): 
+                    $user_data = $_SESSION['user'];
+                    $name = isset($user_data['name']) ? $user_data['name'] : 'User';
+                    $id_user = isset($user_data['id']) ? (int)$user_data['id'] : 0;
+                    $vai_tro_user = isset($user_data['vai_tro']) ? (int)$user_data['vai_tro'] : 0;
+                    $diem_user = isset($user_data['diem_tich_luy']) ? (int)$user_data['diem_tich_luy'] : 0;
+                    $hang_user = isset($user_data['hang_thanh_vien']) ? $user_data['hang_thanh_vien'] : 'dong';
+                    
+                    // Chỉ load thông tin hạng nếu là thành viên
+                    $mau_hang = '#CD7F32'; // Màu mặc định
+                    if ($vai_tro_user == 0 && file_exists('model/diem.php')) {
+                        require_once 'model/diem.php';
+                        $hang_info = get_thong_tin_hang($hang_user);
+                        $mau_hang = $hang_info ? $hang_info['mau_sac'] : '#CD7F32';
+                    }
+                ?>
+                    <!-- Dropdown menu user -->
+                    <div style="position: relative; display: inline-block;">
+                        <button class="btn btn-md btn--warning btn--book" 
+                                style="display: flex; align-items: center; gap: 10px; cursor: pointer; border: none;"
+                                onclick="toggleUserMenu()">
+                            <span><?= htmlspecialchars($name) ?></span>
+                            <?php if ($vai_tro_user == 0 && $diem_user >= 0): ?>
+                                <span style="background: <?= $mau_hang ?>; color: white; padding: 4px 10px; border-radius: 15px; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 5px;">
+                                    <i class="fa fa-star"></i>
+                                    <?= number_format($diem_user) ?>
+                                </span>
+                            <?php endif; ?>
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        
+                        <!-- Dropdown content -->
+                        <div id="userMenuDropdown" style="display: none; position: absolute; right: 0; top: 100%; margin-top: 5px; background: white; min-width: 200px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1000; overflow: hidden;">
+                            <?php if ($vai_tro_user == 0): ?>
+                                <a href="index.php?act=lich_su_diem" style="display: block; padding: 12px 20px; color: #333; text-decoration: none; border-bottom: 1px solid #eee;">
+                                    <i class="fa fa-star"></i> Lịch sử điểm
+                                </a>
+                            <?php endif; ?>
+                            <a href="index.php?act=ve&id=<?= $id_user ?>" style="display: block; padding: 12px 20px; color: #333; text-decoration: none; border-bottom: 1px solid #eee;">
+                                <i class="fa fa-ticket"></i> Vé của tôi
+                            </a>
+                            <a href="index.php?act=dangnhap" style="display: block; padding: 12px 20px; color: #333; text-decoration: none; border-bottom: 1px solid #eee;">
+                                <i class="fa fa-user"></i> Thông tin cá nhân
+                            </a>
+                            <a href="index.php?act=dangxuat" style="display: block; padding: 12px 20px; color: #dc3545; text-decoration: none;">
+                                <i class="fa fa-sign-out"></i> Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <script>
+                    function toggleUserMenu() {
+                        const menu = document.getElementById('userMenuDropdown');
+                        menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+                    }
+                    
+                    // Đóng menu khi click bên ngoài
+                    document.addEventListener('click', function(event) {
+                        const menu = document.getElementById('userMenuDropdown');
+                        const button = event.target.closest('.btn--book');
+                        if (!button && menu) {
+                            menu.style.display = 'none';
+                        }
+                    });
+                    </script>
+                <?php else: ?>
+                    <a href="index.php?act=dangnhap" class="btn btn-md btn--warning btn--book">Đăng nhập</a>
+                <?php endif; ?>
             </div>
 
         </div>

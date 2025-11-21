@@ -3,32 +3,32 @@ session_start();
 header('Content-Type: text/html; charset=utf-8');
 
 // ====================================================
-// CẤU HÌNH THANH TOÁN MOMO
+// CẤU HÌNH THANH TOÁN ZALOPAY
 // ====================================================
 // Đổi MODE để chuyển giữa DEMO và THẬT:
-// - 'DEMO': Thanh toán giả lập, không cần credentials MoMo
-// - 'PRODUCTION': Thanh toán thật qua MoMo API
+// - 'DEMO': Thanh toán giả lập, không cần credentials ZaloPay
+// - 'PRODUCTION': Thanh toán thật qua ZaloPay API
 
-define('MOMO_MODE', 'DEMO'); // Đổi thành 'PRODUCTION' khi có tài khoản MoMo Business
+define('ZALOPAY_MODE', 'DEMO'); // Đổi thành 'PRODUCTION' khi có tài khoản ZaloPay Business
 
 // ====================================================
-// THÔNG TIN TÀI KHOẢN MOMO (CHỈ CẦN KHI MODE = PRODUCTION)
+// THÔNG TIN TÀI KHOẢN ZALOPAY (CHỈ CẦN KHI MODE = PRODUCTION)
 // ====================================================
-// Đăng ký tại: https://business.momo.vn
-// Sau khi đăng ký, lấy thông tin này từ MoMo Business Portal
+// Đăng ký tại: https://docs.zalopay.vn hoặc https://business.zalopay.vn
+// Sau khi đăng ký, lấy thông tin này từ ZaloPay Business Portal
 
-if (MOMO_MODE === 'PRODUCTION') {
+if (ZALOPAY_MODE === 'PRODUCTION') {
     // ⚠️ THAY BẰNG THÔNG TIN TÀI KHOẢN THẬT CỦA BẠN
-    $MOMO_ENDPOINT = "https://payment.momo.vn/v2/gateway/api/create"; // Production endpoint
-    $MOMO_PARTNER_CODE = 'MOMOXXXXXXXXXXX'; // Partner Code từ MoMo Business
-    $MOMO_ACCESS_KEY = 'XXXXXXXXXXXXXXXX'; // Access Key từ MoMo Business
-    $MOMO_SECRET_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'; // Secret Key từ MoMo Business
+    $ZALOPAY_ENDPOINT = "https://openapi.zalopay.vn/v2/create"; // Production endpoint
+    $ZALOPAY_APP_ID = 0; // App ID từ ZaloPay Business (VD: 2553)
+    $ZALOPAY_KEY1 = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'; // Key 1 từ ZaloPay
+    $ZALOPAY_KEY2 = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'; // Key 2 từ ZaloPay
 } else {
-    // Tài khoản TEST (chỉ cho demo)
-    $MOMO_ENDPOINT = "https://test-payment.momo.vn/v2/gateway/api/create";
-    $MOMO_PARTNER_CODE = 'MOMOBKUN20180529';
-    $MOMO_ACCESS_KEY = 'klm05TvNBzhg7h7j';
-    $MOMO_SECRET_KEY = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+    // Tài khoản TEST (sandbox - chỉ cho demo)
+    $ZALOPAY_ENDPOINT = "https://sb-openapi.zalopay.vn/v2/create"; // Sandbox endpoint
+    $ZALOPAY_APP_ID = 2553; // App ID test
+    $ZALOPAY_KEY1 = 'PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL'; // Key 1 test
+    $ZALOPAY_KEY2 = 'kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz'; // Key 2 test
 }
 
 $movieTitle = isset($_SESSION['tong']['tieu_de']) ? $_SESSION['tong']['tieu_de'] : 'Vé phim';
@@ -54,7 +54,7 @@ $_SESSION['tong_tien'] = $amount;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thanh toán MoMo</title>
+    <title>Thanh toán ZaloPay</title>
     <style>
         * {
             margin: 0;
@@ -64,7 +64,7 @@ $_SESSION['tong_tien'] = $amount;
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0068FF 0%, #00A7FF 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -94,18 +94,19 @@ $_SESSION['tong_tien'] = $amount;
             }
         }
         
-        .momo-logo {
-            width: 100px;
-            height: 100px;
-            background: #A50064;
+        .zalopay-logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #0068FF, #00A7FF);
             border-radius: 50%;
             margin: 0 auto 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 48px;
             color: white;
             font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0, 104, 255, 0.3);
         }
         
         h2 {
@@ -123,7 +124,9 @@ $_SESSION['tong_tien'] = $amount;
         .amount {
             font-size: 48px;
             font-weight: bold;
-            color: #A50064;
+            background: linear-gradient(135deg, #0068FF, #00A7FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin: 30px 0;
         }
         
@@ -154,6 +157,8 @@ $_SESSION['tong_tien'] = $amount;
         .info-value {
             color: #2c3e50;
             font-weight: 600;
+            text-align: right;
+            max-width: 60%;
         }
         
         .btn-group {
@@ -174,13 +179,13 @@ $_SESSION['tong_tien'] = $amount;
         }
         
         .btn-pay {
-            background: linear-gradient(135deg, #A50064, #d60055);
+            background: linear-gradient(135deg, #0068FF, #00A7FF);
             color: white;
         }
         
         .btn-pay:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(165, 0, 100, 0.4);
+            box-shadow: 0 8px 20px rgba(0, 104, 255, 0.4);
         }
         
         .btn-cancel {
@@ -193,20 +198,37 @@ $_SESSION['tong_tien'] = $amount;
         }
         
         .notice {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
+            background: #cfe2ff;
+            border: 1px solid #0068FF;
             border-radius: 8px;
             padding: 15px;
             margin-top: 20px;
             font-size: 14px;
-            color: #856404;
+            color: #004085;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .method-badge {
+            padding: 5px 12px;
+            background: #e3f2fd;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #0068FF;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
     <div class="payment-container">
-        <div class="momo-logo">M</div>
-        <h2>Thanh toán qua MoMo</h2>
+        <div class="zalopay-logo">Z</div>
+        <h2>Thanh toán qua ZaloPay</h2>
         <p class="movie-title"><?= htmlspecialchars($movieTitle) ?></p>
         
         <div class="amount"><?= number_format($amount) ?> ₫</div>
@@ -230,11 +252,17 @@ $_SESSION['tong_tien'] = $amount;
             </div>
         </div>
         
+        <div class="payment-methods">
+            <span class="method-badge">💳 Thẻ ATM</span>
+            <span class="method-badge">💰 Ví ZaloPay</span>
+            <span class="method-badge">🏦 Ngân hàng</span>
+        </div>
+        
         <div class="notice">
-            <?php if (MOMO_MODE === 'DEMO'): ?>
-                ⚠️ <strong>Chế độ Demo:</strong> Đây là thanh toán giả lập. Nhấn "Thanh toán" để hoàn tất đặt vé và nhận điểm tích lũy.
+            <?php if (ZALOPAY_MODE === 'DEMO'): ?>
+                ⚠️ <strong>Chế độ Demo:</strong> Đây là thanh toán giả lập cho mục đích đồ án. Nhấn "Thanh toán" để hoàn tất đặt vé và nhận điểm tích lũy.
             <?php else: ?>
-                🔒 <strong>Thanh toán bảo mật:</strong> Bạn sẽ được chuyển đến cổng thanh toán MoMo chính thức.
+                🔒 <strong>Thanh toán bảo mật:</strong> Bạn sẽ được chuyển đến cổng thanh toán ZaloPay chính thức. Tiền sẽ chuyển vào tài khoản merchant.
             <?php endif; ?>
         </div>
         
@@ -250,7 +278,7 @@ $_SESSION['tong_tien'] = $amount;
     
     <script>
         function processPayment() {
-            const mode = '<?= MOMO_MODE ?>';
+            const mode = '<?= ZALOPAY_MODE ?>';
             
             if (mode === 'DEMO') {
                 // Chế độ DEMO: Redirect trực tiếp
@@ -261,12 +289,12 @@ $_SESSION['tong_tien'] = $amount;
                     window.location.href = '../../index.php?act=xacnhan&message=Successful.';
                 }, 1500);
             } else {
-                // Chế độ PRODUCTION: Gọi API MoMo thật
-                document.querySelector('.btn-pay').textContent = 'Đang kết nối MoMo...';
+                // Chế độ PRODUCTION: Gọi API ZaloPay thật
+                document.querySelector('.btn-pay').textContent = 'Đang kết nối ZaloPay...';
                 document.querySelector('.btn-pay').disabled = true;
                 
                 // Chuyển sang trang xử lý API
-                window.location.href = 'xuly_momo_api.php';
+                window.location.href = 'xuly_zalopay_api.php';
             }
         }
     </script>

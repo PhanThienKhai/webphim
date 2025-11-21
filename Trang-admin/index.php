@@ -257,6 +257,45 @@ if(isset($_SESSION['user1'])) {
     // API JSON cho đặt vé (trả JSON thuần trước khi include header)
     if (isset($_GET['act'])) {
         $act_api = $_GET['act'];
+        
+        // AJAX chi tiết kế hoạch - PHẢI XỬ LÝ TRƯỚC include header
+        if ($act_api === 'ajax_chi_tiet_kehoach_new') {
+            $ma_ke_hoach = $_GET['ma'] ?? '';
+            
+            if ($ma_ke_hoach) {
+                // Lấy chi tiết các lịch chiếu theo mã kế hoạch
+                $sql = "SELECT 
+                            lc.id,
+                            lc.ngay_chieu,
+                            lc.trang_thai_duyet,
+                            p.tieu_de as ten_phim,
+                            p.thoi_luong_phim,
+                            p.img,
+                            lp.name as ten_loai,
+                            r.ten_rap,
+                            GROUP_CONCAT(
+                                CONCAT(kgc.thoi_gian_chieu, ' (', ph.name, ')') 
+                                ORDER BY kgc.thoi_gian_chieu 
+                                SEPARATOR ', '
+                            ) as khung_gio
+                        FROM lichchieu lc
+                        LEFT JOIN phim p ON lc.id_phim = p.id
+                        LEFT JOIN loaiphim lp ON p.id_loai = lp.id
+                        LEFT JOIN rap_chieu r ON lc.id_rap = r.id
+                        LEFT JOIN khung_gio_chieu kgc ON lc.id = kgc.id_lich_chieu
+                        LEFT JOIN phongchieu ph ON kgc.id_phong = ph.id
+                        WHERE lc.ma_ke_hoach = ?
+                        GROUP BY lc.id
+                        ORDER BY lc.ngay_chieu";
+                
+                $chi_tiet = pdo_query($sql, $ma_ke_hoach);
+                include "./view/cum/chi_tiet_kehoach_modal.php";
+            } else {
+                echo '<div class="alert alert-danger">Thông tin không hợp lệ!</div>';
+            }
+            exit;
+        }
+        
         if (in_array($act_api, ['api_dates','api_times','api_reserved','api_combos','api_seatmap','api_check_promo','api_promos'], true)) {
             header('Content-Type: application/json; charset=utf-8');
             if ($act_api === 'api_dates') {
@@ -483,7 +522,7 @@ if(isset($_SESSION['user1'])) {
         
         try {
             // Lấy dữ liệu từ form
-            $ma_phim = (int)($_POST['ma_phim'] ?? 0);
+            $ma_phim_arr = $_POST['ma_phim'] ?? []; // Array của nhiều phim
             $tu_ngay = $_POST['tu_ngay'] ?? '';
             $den_ngay = $_POST['den_ngay'] ?? '';
             $ghi_chu = $_POST['ghi_chu'] ?? '';
@@ -491,7 +530,7 @@ if(isset($_SESSION['user1'])) {
             $ma_phong = $_POST['ma_phong'] ?? [];
             
             // Validate dữ liệu
-            if ($ma_phim <= 0 || empty($tu_ngay) || empty($den_ngay) || empty($gio_bat_dau) || empty($ma_phong)) {
+            if (empty($ma_phim_arr) || empty($tu_ngay) || empty($den_ngay) || empty($gio_bat_dau) || empty($ma_phong)) {
                 throw new Exception("Vui lòng điền đầy đủ thông tin bắt buộc!");
             }
             
@@ -499,58 +538,257 @@ if(isset($_SESSION['user1'])) {
                 throw new Exception("Số lượng khung giờ và phòng chiếu không khớp!");
             }
             
-            // Tạo mã kế hoạch duy nhất cho toàn bộ kế hoạch
-            $ma_ke_hoach = 'KH_' . $ma_rap . '_' . date('YmdHis') . '_' . rand(100, 999);
-            $nguoi_tao = $_SESSION['user1']['id'] ?? null;
-            
-            // Tạo lịch chiếu cho từng ngày
+            // Đếm tổng số kế hoạch sẽ tạo
+            $so_phim = count($ma_phim_arr);
             $start_date = new DateTime($tu_ngay);
             $end_date = new DateTime($den_ngay);
+            $interval = $start_date->diff($end_date);
+            $so_ngay = $interval->days + 1;
+            $tong_ke_hoach = $so_phim * $so_ngay;
+            
+            // Tạo timestamp cho batch này
+            $batch_time = date('YmdHis');
+            $nguoi_tao = $_SESSION['user1']['id'] ?? null;
             $ke_hoach_ids = [];
             
-            while ($start_date <= $end_date) {
-                $ngay_chieu = $start_date->format('Y-m-d');
+            // Lặp qua từng phim được chọn
+            foreach ($ma_phim_arr as $ma_phim) {
+                $ma_phim = (int)$ma_phim;
                 
-                // Tạo lịch chiếu với hàm cũ
-                $id_lich_chieu = them_lichchieu_return_id($ma_phim, $ngay_chieu, $ma_rap);
+                if ($ma_phim <= 0) continue;
                 
-                if ($id_lich_chieu) {
-                    $ke_hoach_ids[] = $id_lich_chieu;
+                // Tạo mã kế hoạch riêng cho mỗi phim
+                $ma_ke_hoach = 'KH_' . $ma_rap . '_P' . $ma_phim . '_' . $batch_time . '_' . rand(100, 999);
+                
+                // Reset date cho mỗi phim
+                $current_date = new DateTime($tu_ngay);
+                
+                // Tạo lịch chiếu cho từng ngày
+                while ($current_date <= $end_date) {
+                    $ngay_chieu = $current_date->format('Y-m-d');
                     
-                    // Cập nhật mã kế hoạch và thông tin người tạo
-                    pdo_execute("UPDATE lichchieu SET ma_ke_hoach = ?, ghi_chu = ?, nguoi_tao = ? WHERE id = ?", 
-                               $ma_ke_hoach, $ghi_chu, $nguoi_tao, $id_lich_chieu);
+                    // Tạo lịch chiếu với hàm cũ
+                    $id_lich_chieu = them_lichchieu_return_id($ma_phim, $ngay_chieu, $ma_rap);
                     
-                    // Tạo các khung giờ chiếu
-                    for ($i = 0; $i < count($gio_bat_dau); $i++) {
-                        if (!empty($gio_bat_dau[$i]) && !empty($ma_phong[$i])) {
-                            $id_phong = (int)$ma_phong[$i];
-                            
-                            // Kiểm tra phòng có thuộc rạp hiện tại không
-                            $phong_check = pdo_query_one("SELECT id FROM phongchieu WHERE id = ? AND id_rap = ?", 
-                                                        $id_phong, $ma_rap);
-                            
-                            if ($phong_check) {
-                                // Chỉ tạo khung giờ nếu phòng thuộc rạp hiện tại
-                                them_kgc($id_lich_chieu, $id_phong, $gio_bat_dau[$i]);
+                    if ($id_lich_chieu) {
+                        $ke_hoach_ids[] = $id_lich_chieu;
+                        
+                        // Cập nhật mã kế hoạch và thông tin người tạo
+                        pdo_execute("UPDATE lichchieu SET ma_ke_hoach = ?, ghi_chu = ?, nguoi_tao = ? WHERE id = ?", 
+                                   $ma_ke_hoach, $ghi_chu, $nguoi_tao, $id_lich_chieu);
+                        
+                        // Tạo các khung giờ chiếu
+                        for ($i = 0; $i < count($gio_bat_dau); $i++) {
+                            if (!empty($gio_bat_dau[$i]) && !empty($ma_phong[$i])) {
+                                $id_phong = (int)$ma_phong[$i];
+                                
+                                // Kiểm tra phòng có thuộc rạp hiện tại không
+                                $phong_check = pdo_query_one("SELECT id FROM phongchieu WHERE id = ? AND id_rap = ?", 
+                                                            $id_phong, $ma_rap);
+                                
+                                if ($phong_check) {
+                                    // Chỉ tạo khung giờ nếu phòng thuộc rạp hiện tại
+                                    them_kgc($id_lich_chieu, $id_phong, $gio_bat_dau[$i]);
+                                }
                             }
-                            // Nếu phòng không thuộc rạp, bỏ qua (có thể log warning)
                         }
                     }
+                    
+                    $current_date->add(new DateInterval('P1D'));
                 }
-                
-                $start_date->add(new DateInterval('P1D'));
             }
             
-            // Redirect thành công với mã kế hoạch
-            $so_luong = count($ke_hoach_ids);
-            header("Location: index.php?act=kehoach&msg=success&ke_hoach=" . urlencode($ma_ke_hoach));
+            // Redirect thành công
+            $success_msg = "Đã tạo thành công " . count($ke_hoach_ids) . " lịch chiếu cho " . $so_phim . " phim (" . $so_ngay . " ngày)!";
+            header("Location: index.php?act=kehoach&msg=success&success=" . urlencode($success_msg));
             exit;
             
         } catch (Exception $e) {
             header("Location: index.php?act=kehoach&msg=error&error=" . urlencode($e->getMessage()));
             exit;
         }
+    }
+    
+    // Handle scanve_check JSON POST - CHỈ KIỂM TRA VÉ (không check-in)
+    if (isset($_GET['act']) && $_GET['act'] === 'scanve_check' && $_SERVER['REQUEST_METHOD'] === 'POST' && 
+        isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+        
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+        
+        header('Content-Type: application/json; charset=utf-8');
+        
+        if (!isset($_SESSION['user1'])) {
+            echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+            exit;
+        }
+        
+        include "./model/scanve_api.php";
+        
+        $input = json_decode(file_get_contents('php://input'), true);
+        $ma_ve = trim($input['ma_ve'] ?? '');
+
+        if (empty($ma_ve)) {
+            echo json_encode(['success' => false, 'message' => 'Vui lòng nhập mã vé']);
+            exit;
+        }
+
+        $ticket = check_ticket_by_code($ma_ve);
+        
+        if (!$ticket) {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Vé không tồn tại',
+                'details' => 'Không tìm thấy vé với mã: ' . htmlspecialchars($ma_ve)
+            ]);
+            exit;
+        }
+
+        $errors = validate_ticket($ticket);
+        if (!empty($errors)) {
+            // Nếu lỗi là vé đã check-in, vẫn trả success=true để hiển thị thông tin
+            if ($ticket['trang_thai'] == 4) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Vé đã được check-in',
+                    'ticket' => [
+                        'id' => (int)$ticket['id'],
+                        'movie_title' => htmlspecialchars($ticket['tieu_de']),
+                        'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
+                        'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
+                        'room_name' => htmlspecialchars($ticket['tenphong']),
+                        'seat' => htmlspecialchars($ticket['ghe']),
+                        'trang_thai' => (int)$ticket['trang_thai'],
+                        'check_in_luc' => htmlspecialchars($ticket['check_in_luc'])
+                    ]
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => $errors[0],
+                    'details' => implode('<br>', array_map('htmlspecialchars', $errors)),
+                    'ticket' => [
+                        'id' => (int)$ticket['id'],
+                        'movie_title' => htmlspecialchars($ticket['tieu_de']),
+                        'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
+                        'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
+                        'room_name' => htmlspecialchars($ticket['tenphong']),
+                        'seat' => htmlspecialchars($ticket['ghe'])
+                    ]
+                ]);
+            }
+            exit;
+        }
+
+        // Vé hợp lệ, hiển thị thông tin (không check-in)
+        echo json_encode([
+            'success' => true,
+            'message' => 'Vé hợp lệ - Nhấn Check-in để xác nhận',
+            'ticket' => [
+                'id' => (int)$ticket['id'],
+                'movie_title' => htmlspecialchars($ticket['tieu_de']),
+                'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
+                'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
+                'room_name' => htmlspecialchars($ticket['tenphong']),
+                'seat' => htmlspecialchars($ticket['ghe'])
+            ]
+        ]);
+        exit;
+    }
+    
+    // Handle scanve_new JSON POST - THỰC HIỆN CHECK-IN
+    if (isset($_GET['act']) && $_GET['act'] === 'scanve_new' && $_SERVER['REQUEST_METHOD'] === 'POST' && 
+        isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+        
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+        
+        header('Content-Type: application/json; charset=utf-8');
+        
+        if (!isset($_SESSION['user1'])) {
+            echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+            exit;
+        }
+        
+        include "./model/scanve_api.php";
+        
+        $input = json_decode(file_get_contents('php://input'), true);
+        $id_ve = (int)($input['id_ve'] ?? 0);
+
+        if ($id_ve <= 0) {
+            echo json_encode(['success' => false, 'message' => 'Vé không hợp lệ']);
+            exit;
+        }
+
+        // Load ticket by ID
+        $ticket = check_ticket_by_id($id_ve);
+        
+        if (!$ticket) {
+            echo json_encode([
+                'success' => false, 
+                'message' => 'Vé không tồn tại'
+            ]);
+            exit;
+        }
+
+        // Thực hiện check-in
+        update_ticket_checkin($ticket['id'], $_SESSION['user1']['id']);
+        
+        echo json_encode([
+            'success' => true,
+            'message' => 'Check-in thành công! ✅',
+            'ticket' => [
+                'id' => (int)$ticket['id'],
+                'movie_title' => htmlspecialchars($ticket['tieu_de']),
+                'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
+                'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
+                'room_name' => htmlspecialchars($ticket['tenphong']),
+                'seat' => htmlspecialchars($ticket['ghe'])
+            ]
+        ]);
+        exit;
+    }
+    
+    // Handle scanve_history API BEFORE header output
+    if (isset($_GET['act']) && $_GET['act'] === 'scanve_history' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+        
+        header('Content-Type: application/json; charset=utf-8');
+        
+        if (!isset($_SESSION['user1'])) {
+            echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+            exit;
+        }
+
+        include "./model/scanve_api.php";
+
+        $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+        if (!$id_rap) {
+            echo json_encode(['success' => false, 'message' => 'Không có thông tin rạp']);
+            exit;
+        }
+
+        $history = get_checkin_history($id_rap);
+
+        $formatted = [];
+        foreach ($history as $item) {
+            // Use ma_ve if available, otherwise use ID
+            $ma_ve_display = !empty($item['ma_ve']) ? $item['ma_ve'] : 'VE' . str_pad($item['id'], 5, '0', STR_PAD_LEFT);
+            
+            $formatted[] = [
+                'ma_ve' => htmlspecialchars($ma_ve_display),
+                'phim' => htmlspecialchars($item['phim']),
+                'check_in_time' => htmlspecialchars($item['check_in_luc']),
+                'staff' => htmlspecialchars($item['staff_name'])
+            ];
+        }
+
+        echo json_encode(['success' => true, 'history' => $formatted]);
+        exit;
     }
     
     include "./view/home/header.php";
@@ -665,28 +903,18 @@ if(isset($_SESSION['user1'])) {
                 $dnp_cua_toi = np_list_by_user($_SESSION['user1']['id']);
                 include "./view/nhanvien/xinnghi.php";
                 break;
-            case "scanve":
-                if (isset($_POST['kiemtra'])) {
-                    $ma = trim($_POST['ma_ve'] ?? '');
-                    if ($ma === '') {
-                        $err = "Vui lòng nhập mã vé";
-                    } else {
-                        $ve_chi_tiet = ve_find_by_code($ma);
-                        if ($ve_chi_tiet) {
-                            if (empty($ve_chi_tiet['check_in_luc'])) {
-                                ve_checkin($ve_chi_tiet['id'], $_SESSION['user1']['id']);
-                                $msg = "Check-in thành công";
-                                $ve_chi_tiet = ve_find_by_code($ma);
-                            } else {
-                                $msg = "Vé đã được check-in lúc " . $ve_chi_tiet['check_in_luc'];
-                            }
-                        } else {
-                            $err = "Không tìm thấy vé với mã này";
-                        }
-                    }
-                }
-                include "./view/nhanvien/scanve.php";
+
+            // Modern QR scanner interface
+            case "scanve_new":
+                include "./view/nhanvien/scanve_new.php";
                 break;
+
+            // Simple QR scanner with native camera
+            case "scanve_simple":
+                include "./view/nhanvien/scanve_simple.php";
+                break;
+
+            // API endpoint for check-in history
             case "nv_datve":
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
                 if (!$id_rap) { include "./view/home/403.php"; break; }
@@ -1223,41 +1451,6 @@ if(isset($_SESSION['user1'])) {
                     ]);
                 }
                 exit;
-            case "ajax_chi_tiet_kehoach_new":
-                $ma_ke_hoach = $_GET['ma'] ?? '';
-                
-                if ($ma_ke_hoach) {
-                    // Lấy chi tiết các lịch chiếu theo mã kế hoạch
-                    $sql = "SELECT 
-                                lc.id,
-                                lc.ngay_chieu,
-                                lc.trang_thai_duyet,
-                                p.tieu_de as ten_phim,
-                                p.thoi_luong_phim,
-                                p.img,
-                                lp.name as ten_loai,
-                                r.ten_rap,
-                                GROUP_CONCAT(
-                                    CONCAT(kgc.thoi_gian_chieu, ' (', ph.name, ')') 
-                                    ORDER BY kgc.thoi_gian_chieu 
-                                    SEPARATOR ', '
-                                ) as khung_gio
-                            FROM lichchieu lc
-                            LEFT JOIN phim p ON lc.id_phim = p.id
-                            LEFT JOIN loaiphim lp ON p.id_loai = lp.id
-                            LEFT JOIN rap_chieu r ON lc.id_rap = r.id
-                            LEFT JOIN khung_gio_chieu kgc ON lc.id = kgc.id_lich_chieu
-                            LEFT JOIN phongchieu ph ON kgc.id_phong = ph.id
-                            WHERE lc.ma_ke_hoach = ?
-                            GROUP BY lc.id
-                            ORDER BY lc.ngay_chieu";
-                    
-                    $chi_tiet = pdo_query($sql, $ma_ke_hoach);
-                    include "./view/cum/chi_tiet_kehoach_modal.php";
-                } else {
-                    echo '<div class="alert alert-danger">Thông tin không hợp lệ!</div>';
-                }
-                exit;
             case "lich_rap":
                 // If manager of a cinema: restrict to own cinema
                 if ((int)($_SESSION['user1']['vai_tro'] ?? -1) === 3) {
@@ -1660,7 +1853,25 @@ if(isset($_SESSION['user1'])) {
                     $hinh = null;
                     if (!empty($_FILES['hinh']['name'])) {
                         $hinh = $_FILES['hinh']['name'];
-                        @move_uploaded_file($_FILES['hinh']['tmp_name'], "assets/images/".basename($hinh));
+                        $target_dir = "../Trang-nguoi-dung/images/combo/";
+                        
+                        // Tạo thư mục nếu chưa tồn tại
+                        if (!file_exists($target_dir)) {
+                            mkdir($target_dir, 0777, true);
+                        }
+                        
+                        // Tạo tên file unique để tránh trùng
+                        $file_extension = pathinfo($hinh, PATHINFO_EXTENSION);
+                        $file_name = "combo_" . time() . "_" . uniqid() . "." . $file_extension;
+                        $target_file = $target_dir . $file_name;
+                        
+                        if (@move_uploaded_file($_FILES['hinh']['tmp_name'], $target_file)) {
+                            // Lưu đường dẫn relative từ thư mục Trang-nguoi-dung
+                            $hinh = "images/combo/" . $file_name;
+                        } else {
+                            $error = "Không thể upload ảnh";
+                            $hinh = null;
+                        }
                     }
                     
                     // Tự động gán id_rap nếu là quản lý rạp
@@ -1704,8 +1915,26 @@ if(isset($_SESSION['user1'])) {
                     $trang_thai = (int)($_POST['trang_thai'] ?? 1);
                     $hinh = null;
                     if (!empty($_FILES['hinh']['name'])) { 
-                        $hinh = $_FILES['hinh']['name']; 
-                        @move_uploaded_file($_FILES['hinh']['tmp_name'], "assets/images/".basename($hinh)); 
+                        $hinh = $_FILES['hinh']['name'];
+                        $target_dir = "../Trang-nguoi-dung/images/combo/";
+                        
+                        // Tạo thư mục nếu chưa tồn tại
+                        if (!file_exists($target_dir)) {
+                            mkdir($target_dir, 0777, true);
+                        }
+                        
+                        // Tạo tên file unique để tránh trùng
+                        $file_extension = pathinfo($hinh, PATHINFO_EXTENSION);
+                        $file_name = "combo_" . time() . "_" . uniqid() . "." . $file_extension;
+                        $target_file = $target_dir . $file_name;
+                        
+                        if (@move_uploaded_file($_FILES['hinh']['tmp_name'], $target_file)) {
+                            // Lưu đường dẫn relative từ thư mục Trang-nguoi-dung
+                            $hinh = "images/combo/" . $file_name;
+                        } else {
+                            $error = "Không thể upload ảnh";
+                            $hinh = null;
+                        }
                     }
                     
                     // Tự động gán id_rap nếu là quản lý rạp

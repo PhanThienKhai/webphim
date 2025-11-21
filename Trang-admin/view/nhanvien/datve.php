@@ -7,11 +7,6 @@
 .content-body * {
     font-size: 14px;
 }
-.content-body {
-    padding: 30px;
-    background: #f9fafb;
-    min-height: calc(100vh - 60px);
-}
 .booking-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -48,7 +43,6 @@
     padding: 24px;
     margin-bottom: 20px;
     transition: all 0.3s;
-    width: 1700px;;
 }
 .step-card.disabled {
     opacity: 0.5;

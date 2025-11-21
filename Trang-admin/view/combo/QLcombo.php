@@ -14,6 +14,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Hình ảnh</th>
                     <th>Tên</th>
                     <th>Giá</th>
                     <?php if (($_SESSION['user1']['vai_tro'] ?? -1) != 3): ?>
@@ -41,9 +42,27 @@
                     if ($combo_id_rap > 0 && isset($rap_map[$combo_id_rap])) {
                         $rap_name = $rap_map[$combo_id_rap];
                     }
+                    
+                    // Xác định đường dẫn ảnh
+                    $img_path = '../Trang-nguoi-dung/images/combo/default.png';
+                    if (!empty($c['hinh_anh'])) {
+                        // Nếu đường dẫn đã có images/combo/ thì giữ nguyên
+                        if (strpos($c['hinh_anh'], 'images/combo/') === 0) {
+                            $img_path = '../Trang-nguoi-dung/' . $c['hinh_anh'];
+                        } else {
+                            // Nếu là đường dẫn cũ (chỉ tên file)
+                            $img_path = '../Trang-nguoi-dung/images/combo/' . basename($c['hinh_anh']);
+                        }
+                    }
                 ?>
                     <tr>
                         <td><?= (int)$c['id'] ?></td>
+                        <td>
+                            <img src="<?= htmlspecialchars($img_path) ?>" 
+                                 alt="<?= htmlspecialchars($c['ten_combo']) ?>" 
+                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;"
+                                 onerror="this.src='../Trang-nguoi-dung/imgavt/combo1.png'">
+                        </td>
                         <td><?= htmlspecialchars($c['ten_combo']) ?></td>
                         <td><?= number_format((int)$c['gia']) ?> đ</td>
                         <?php if ($is_admin): ?>

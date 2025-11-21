@@ -13,6 +13,28 @@ include "view/search.php";
                 <img class="order__images" alt='' src="images/tickets.png">
                 <p class="order__title">Cảm ơn <br><span class="order__descript">bạn đã mua vé thành công</span></p>
             </div>
+            
+            <?php if (isset($_SESSION['diem_cong_moi']) && $_SESSION['diem_cong_moi'] > 0): ?>
+            <!-- Thông báo tích điểm -->
+            <div style="background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; padding: 20px; border-radius: 15px; text-align: center; margin: 20px 0; box-shadow: 0 4px 15px rgba(255,215,0,0.3);">
+                <h3 style="margin: 0 0 10px 0; font-size: 1.5rem;">
+                    🎉 Chúc mừng! Bạn nhận được <strong><?= number_format($_SESSION['diem_cong_moi']) ?> điểm</strong>
+                </h3>
+                <p style="margin: 0; font-size: 1rem; opacity: 0.9;">
+                    <?php if (isset($_SESSION['hang_moi'])): ?>
+                        🏆 Bạn đã được nâng hạng lên <strong><?= $_SESSION['hang_moi'] ?></strong>!<br>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['diem_da_doi']) && $_SESSION['diem_da_doi'] > 0): ?>
+                        ⭐ Đã sử dụng <?= number_format($_SESSION['diem_da_doi']) ?> điểm để giảm giá<br>
+                    <?php endif; ?>
+                    Tổng điểm hiện tại: <strong><?= number_format($_SESSION['user']['diem_tich_luy'] ?? 0) ?> điểm</strong>
+                </p>
+            </div>
+            <?php 
+                unset($_SESSION['diem_cong_moi']);
+                unset($_SESSION['hang_moi']);
+                unset($_SESSION['diem_da_doi']);
+            endif; ?>
 
             <div class="ticket">
                 <div class="ticket-position">

@@ -82,6 +82,20 @@ if(isset($_GET['act']) && $_GET['act']!=""){
         case "tintuc":
             include "view/tintuc-big.php";
             break;
+        
+        case "khuyenmai": // Trang khuyến mãi
+            // Lấy danh sách tất cả khuyến mãi đang hoạt động
+            $sql = "SELECT km.*, r.ten_rap 
+                    FROM khuyen_mai km
+                    LEFT JOIN rap_chieu r ON km.id_rap = r.id
+                    WHERE km.trang_thai = 1 
+                    AND km.ngay_bat_dau <= NOW() 
+                    AND km.ngay_ket_thuc >= NOW() 
+                    ORDER BY km.ngay_bat_dau DESC";
+            $ds_khuyenmai = pdo_query($sql);
+            include "view/khuyenmai.php";
+            break;
+        
         case "rapchieu"://rạp chiếu
             include "view/rapchieu.php";
             break;
@@ -120,6 +134,9 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                 } else {
                      if (is_array($check_tk) && $check_tk['vai_tro'] == 0) {
                         $_SESSION['user'] = $check_tk;
+                        // Redirect để load lại header với trạng thái mới
+                        echo '<script>window.location.href="index.php";</script>';
+                        exit;
                     } else {
                          $thongbao = "Đăng nhập không thành công. Vui lòng kiểm tra tài khoản của bạn.";
                      }
@@ -497,36 +514,23 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                 $_SESSION['tong']['ten_doan'] = array('doan' => $ten_doan);
                 $_SESSION['tong']['gia_ghe'] = $gia_tong; // Update with final total (seat + combo) - CHƯA GIẢM GIÁ
                 
-                // Convert seat array to string for database
+                // Convert seat array to string for storage
                 $ghe = is_array($ten_ghe) && !empty($ten_ghe) ? implode(',', $ten_ghe) : '';
-                $ngay_tt = date('Y-m-d H:i:s');
-                $id_user = $_SESSION['user']['id'];
-                $id_kgc = $_SESSION['tong']['id_gio'];
                 $combo = (is_array($ten_doan) && !empty($ten_doan)) ? implode(', ', $ten_doan) : null;
-                $id_lc = $_SESSION['tong']['id_lichchieu'];
-                $id_phim = $_SESSION['tong']['id_phim'];
-                $id_rap = isset($_SESSION['tong']['id_rap']) ? $_SESSION['tong']['id_rap'] : null;
                 
-                // Sử dụng giá sau giảm nếu có mã khuyến mãi
+                // Lưu thông tin vào session để dùng sau khi thanh toán
+                $_SESSION['tong']['ghe_string'] = $ghe;
+                $_SESSION['tong']['combo_string'] = $combo;
+                
+                // Tính giá cuối cùng (sau giảm giá nếu có)
                 $gia_luu_db = $gia_tong; // Mặc định dùng giá gốc
                 if (isset($_SESSION['tong']['gia_sau_giam']) && $_SESSION['tong']['gia_sau_giam'] > 0) {
                     $gia_luu_db = $_SESSION['tong']['gia_sau_giam']; // Dùng giá đã giảm
                 }
+                $_SESSION['tong_tien'] = $gia_luu_db; // Lưu để dùng khi thanh toán
                 
-                $id_hd = them_hoa_don($ngay_tt, $gia_luu_db);
-                if ($id_hd) {
-                    $_SESSION['id_hd'] = $id_hd;
-                    $id_ve = them_ve($gia_luu_db, $ngay_tt, $ghe, $id_user, $id_kgc, $id_hd, $id_lc, $id_phim, $combo, $id_rap);
-
-                    if ($id_ve) {
-                        $_SESSION['id_ve'] = $id_ve;
-                    } else {
-                        echo "Đã xảy ra lỗi khi đặt vé. Vui lòng thử lại.";
-                    }
-                } else {
-                    echo " xảy ra lỗi khi tạo hóa đơn. Vui lòng thử lại.";
-                }
-
+                // ⚠️ KHÔNG TẠO VÉ Ở ĐÂY! Chỉ lưu thông tin vào session
+                // Vé sẽ được tạo ở case 'xacnhan' sau khi thanh toán thành công
             }
             
             // Prepare data for payment view
@@ -538,7 +542,18 @@ if(isset($_GET['act']) && $_GET['act']!=""){
 
         case "dangxuat"://Đăng xuất
             dang_xuat();
-            include "view/login/dangnhap.php";
+            // Redirect để load lại header với trạng thái mới
+            echo '<script>window.location.href="index.php";</script>';
+            exit;
+            break;
+
+        case "lich_su_diem": // Lịch sử tích điểm
+            if (!isset($_SESSION['user']) || $_SESSION['user']['vai_tro'] != 0) {
+                // Chỉ thành viên mới có quyền xem lịch sử điểm
+                echo '<script>alert("Bạn cần đăng nhập với tài khoản thành viên để xem lịch sử điểm!"); window.location.href="index.php?act=dangnhap";</script>';
+                exit;
+            }
+            include "view/lich_su_diem.php";
             break;
 
         case "doimk": //Đổi mật khẩu
@@ -604,15 +619,193 @@ if(isset($_GET['act']) && $_GET['act']!=""){
             include "view/ve.php";
             break;
 
-        case 'xacnhan': //Chưa xong
-            if (isset($_GET['message']) && ($_GET['message'] == 'Successful.')) {
+        case 'xacnhan': //Thanh toán thành công
+            // ============ TẠO VÉ VÀ HÓA ĐƠN SAU KHI THANH TOÁN ============
+            // Chỉ tạo nếu chưa có hoặc đã thanh toán mới
+            $da_tao_ve_key = 'da_tao_ve_' . session_id();
+            
+            if (!isset($_SESSION['id_hd']) || !isset($_SESSION[$da_tao_ve_key])) {
+                // Lấy thông tin từ session
+                $id_tk = isset($_SESSION['user']['id']) ? (int)$_SESSION['user']['id'] : 0;
+                
+                if ($id_tk == 0) {
+                    echo '<script>alert("Lỗi: Bạn cần đăng nhập để thanh toán!"); window.location.href="index.php";</script>';
+                    exit;
+                }
+                
+                // Lấy thông tin đặt vé
+                $ten_ghe_data = $_SESSION['tong']['ten_ghe'] ?? array();
+                $ten_ghe = isset($ten_ghe_data['ghe']) ? $ten_ghe_data['ghe'] : array();
+                $ghe = isset($_SESSION['tong']['ghe_string']) ? $_SESSION['tong']['ghe_string'] : implode(',', $ten_ghe);
+                
+                $combo = isset($_SESSION['tong']['combo_string']) ? $_SESSION['tong']['combo_string'] : '';
+                $ngay_tt = date('Y-m-d H:i:s');
+                $id_kgc = $_SESSION['tong']['id_gio'] ?? 0;
+                $id_lc = $_SESSION['tong']['id_lichchieu'] ?? 0;
+                $id_phim = $_SESSION['tong']['id_phim'] ?? 0;
+                $id_rap = $_SESSION['tong']['id_rap'] ?? 0;
+                
+                // Lấy giá cuối cùng
+                $gia_luu_db = isset($_SESSION['tong_tien']) ? (int)$_SESSION['tong_tien'] : 0;
+                
+                if (empty($ghe) || $id_kgc == 0 || $id_lc == 0 || $id_phim == 0) {
+                    echo '<script>alert("Lỗi: Thông tin đặt vé không đầy đủ!"); window.location.href="index.php";</script>';
+                    exit;
+                }
+                
+                // Tạo hóa đơn trước
+                require_once 'model/hoadon.php';
+                $id_hd = them_hoa_don($ngay_tt, $gia_luu_db);
+                
+                if ($id_hd) {
+                    $_SESSION['id_hd'] = $id_hd;
+                    
+                    // Tạo vé
+                    require_once 'model/ve.php';
+                    $id_ve = them_ve($gia_luu_db, $ngay_tt, $ghe, $id_tk, $id_kgc, $id_hd, $id_lc, $id_phim, $combo, $id_rap);
+                    
+                    if ($id_ve) {
+                        $_SESSION['id_ve'] = $id_ve;
+                        $_SESSION[$da_tao_ve_key] = true; // Đánh dấu đã tạo vé
+                        
+                        error_log("✅ Đã tạo vé #$id_ve và hóa đơn #$id_hd sau thanh toán");
+                    } else {
+                        echo '<script>alert("Lỗi khi tạo vé!"); window.location.href="index.php";</script>';
+                        exit;
+                    }
+                } else {
+                    echo '<script>alert("Lỗi khi tạo hóa đơn!"); window.location.href="index.php";</script>';
+                    exit;
+                }
+            }
+            
+            // Kiểm tra xem có thông tin hóa đơn không
+            if (isset($_SESSION['id_hd']) && $_SESSION['id_hd'] > 0) {
+                // Cập nhật trạng thái thanh toán (chuyển từ pending sang đã thanh toán)
                 trangthai_hd($_SESSION['id_hd']);
                 trangthai_ve($_SESSION['id_hd']);
+                
                 $load_ve_tt =  load_ve_tt($_SESSION['id_hd']);
+                
+                // ============ CỘNG ĐIỂM CHO KHÁCH HÀNG ============
+                if (isset($_SESSION['user']) && $_SESSION['user']) {
+                    $id_tk = (int)$_SESSION['user']['id'];
+                    $vai_tro = (int)$_SESSION['user']['vai_tro'];
+                    
+                    // Debug log
+                    error_log("=== CỘNG ĐIỂM DEBUG ===");
+                    error_log("ID tài khoản: " . $id_tk);
+                    error_log("Vai trò: " . $vai_tro);
+                    error_log("Load vé TT: " . ($load_ve_tt ? "Có" : "Không"));
+                    
+                    // Chỉ cộng điểm cho khách hàng thành viên (vai_tro = 0), không cộng cho guest (-1)
+                    // VÀ chỉ cộng nếu chưa cộng điểm cho đơn hàng này (kiểm tra session)
+                    $da_cong_diem_key = 'da_cong_diem_' . $_SESSION['id_hd'];
+                    
+                    if ($vai_tro == 0 && $load_ve_tt && !isset($_SESSION[$da_cong_diem_key])) {
+                        require_once 'model/diem.php';
+                        
+                        $id_ve = isset($load_ve_tt['id']) ? (int)$load_ve_tt['id'] : 0;
+                        $tong_tien = isset($load_ve_tt['thanh_tien']) ? (int)$load_ve_tt['thanh_tien'] : 0;
+                        
+                        error_log("ID vé: " . $id_ve);
+                        error_log("Tổng tiền: " . $tong_tien);
+                        
+                        if ($tong_tien <= 0) {
+                            error_log("KHÔNG CỘNG ĐIỂM vì tổng tiền = 0");
+                        } else {
+                            // Tính điểm từ vé
+                            $diem_ve = tinh_diem_tu_tien($tong_tien, 'dat_ve');
+                            
+                            error_log("Điểm từ vé: " . $diem_ve);
+                            
+                            // Tính điểm từ combo (nếu có)
+                            $diem_combo = 0;
+                            if (!empty($load_ve_tt['combo'])) {
+                                // Combo được lưu dạng text: "Combo Standard x2, Combo Premium x1"
+                                // Tạm tính điểm bonus cho combo = 5% giá vé
+                                $diem_combo = (int)($tong_tien * 0.005);
+                            }
+                            
+                            $tong_diem = $diem_ve + $diem_combo;
+                            
+                            error_log("Tổng điểm cần cộng: " . $tong_diem);
+                            
+                            // Cộng điểm
+                            if ($tong_diem > 0) {
+                                $diem_da_cong = cong_diem(
+                                    $id_tk, 
+                                    $tong_diem, 
+                                    "Tích điểm từ đơn hàng #" . $_SESSION['id_hd'], 
+                                    $id_ve, 
+                                    $_SESSION['id_hd']
+                                );
+                                
+                                error_log("Điểm đã cộng (sau khi nhân hệ số): " . $diem_da_cong);
+                                
+                                if ($diem_da_cong) {
+                                    // Lưu vào session để hiển thị thông báo
+                                    $_SESSION['diem_cong_moi'] = $diem_da_cong;
+                                    
+                                    // Kiểm tra có nâng hạng không
+                                    $hang_moi = kiem_tra_nang_hang($id_tk);
+                                    if ($hang_moi) {
+                                        $_SESSION['hang_moi'] = $hang_moi['ten_hang'];
+                                        error_log("Nâng hạng lên: " . $hang_moi['ten_hang']);
+                                    }
+                                    
+                                    // ============ TRỪ ĐIỂM ĐÃ ĐỔI (NẾU CÓ) ============
+                                    if (isset($_SESSION['tong']['diem_doi']) && $_SESSION['tong']['diem_doi'] > 0) {
+                                        $diem_tru = (int)$_SESSION['tong']['diem_doi'];
+                                        $giam_gia_diem = (int)($_SESSION['tong']['giam_gia_diem'] ?? 0);
+                                        
+                                        $diem_da_tru = tru_diem(
+                                            $id_tk,
+                                            $diem_tru,
+                                            "Đổi điểm giảm giá đơn hàng #" . $_SESSION['id_hd'] . " (-" . number_format($giam_gia_diem) . " VND)",
+                                            $id_ve,
+                                            $_SESSION['id_hd']
+                                        );
+                                        
+                                        if ($diem_da_tru) {
+                                            $_SESSION['diem_da_doi'] = $diem_tru;
+                                            error_log("Đã trừ " . $diem_tru . " điểm đổi voucher");
+                                        }
+                                        
+                                        // Xóa thông tin đổi điểm khỏi session
+                                        unset($_SESSION['tong']['diem_doi']);
+                                        unset($_SESSION['tong']['giam_gia_diem']);
+                                    }
+                                    
+                                    // Reload thông tin user để cập nhật điểm
+                                    $user_updated = pdo_query_one("SELECT * FROM taikhoan WHERE id = ?", $id_tk);
+                                    $_SESSION['user'] = $user_updated;
+                                    
+                                    // Đánh dấu đã cộng điểm cho đơn hàng này
+                                    $_SESSION[$da_cong_diem_key] = true;
+                                    
+                                    error_log("Điểm tích lũy sau khi cập nhật: " . $user_updated['diem_tich_luy']);
+                                }
+                            }
+                        }
+                    } else {
+                        if ($vai_tro != 0) {
+                            error_log("KHÔNG CỘNG ĐIỂM vì vai_tro=" . $vai_tro . " (không phải thành viên)");
+                        } elseif (!$load_ve_tt) {
+                            error_log("KHÔNG CỘNG ĐIỂM vì không có thông tin vé");
+                        } elseif (isset($_SESSION[$da_cong_diem_key])) {
+                            error_log("KHÔNG CỘNG ĐIỂM vì đã cộng rồi cho đơn hàng #" . $_SESSION['id_hd']);
+                        }
+                    }
+                }
+                
                 gui_mail_ve($load_ve_tt);
                 require_once "view/ve_tt.php";
-                break;
+            } else {
+                // Không có id_hd trong session
+                echo '<script>alert("Không tìm thấy thông tin đơn hàng!"); window.location.href="index.php";</script>';
             }
+            break;
 
         case "ctve": //xem chi tiết vé đã mua
             if (isset($_GET['id']) && ($_GET['id'] > 0)){
@@ -653,6 +846,65 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                 include "view/form_quetve.php";
             }
             break;
+
+        case "zalopay_callback":
+            // Xử lý callback từ ZaloPay (IPN - Instant Payment Notification)
+            // Đây là server-to-server notification khi thanh toán thành công
+            
+            // Lấy callback data từ POST request
+            $result = [];
+            
+            try {
+                // Đọc dữ liệu từ request body
+                $postdata = file_get_contents('php://input');
+                $postdatajson = json_decode($postdata, true);
+                
+                // Log để debug
+                error_log("ZaloPay Callback received: " . print_r($postdatajson, true));
+                
+                // Load ZaloPay config
+                require_once 'view/momo/xuly_zalopay.php';
+                
+                // Verify MAC signature để đảm bảo request từ ZaloPay
+                $reqMac = $postdatajson["mac"];
+                
+                $mac = hash_hmac("sha256", 
+                    $postdatajson["data"], 
+                    defined('ZALOPAY_KEY2') ? ZALOPAY_KEY2 : ''
+                );
+                
+                if (strcmp($mac, $reqMac) != 0) {
+                    // MAC không hợp lệ - request giả mạo
+                    $result["return_code"] = -1;
+                    $result["return_message"] = "mac not equal";
+                    error_log("ZaloPay callback MAC verification failed");
+                } else {
+                    // MAC hợp lệ - xử lý đơn hàng
+                    $dataJson = json_decode($postdatajson["data"], true);
+                    
+                    // Lấy thông tin đơn hàng
+                    $app_trans_id = $dataJson["app_trans_id"];
+                    $zp_trans_id = $dataJson["zp_trans_id"];
+                    $amount = $dataJson["amount"];
+                    
+                    error_log("ZaloPay payment successful - TransID: $app_trans_id, ZP_TransID: $zp_trans_id, Amount: $amount");
+                    
+                    // Cập nhật database nếu cần
+                    // (Ví dụ: cập nhật trạng thái đơn hàng, lưu zp_trans_id)
+                    
+                    $result["return_code"] = 1;
+                    $result["return_message"] = "success";
+                }
+            } catch (Exception $e) {
+                $result["return_code"] = 0; 
+                $result["return_message"] = $e->getMessage();
+                error_log("ZaloPay callback error: " . $e->getMessage());
+            }
+            
+            // Trả về JSON response cho ZaloPay
+            header('Content-Type: application/json');
+            echo json_encode($result);
+            exit; // Dừng execution sau khi trả response
 
     }
 }else{

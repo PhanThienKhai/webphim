@@ -58,7 +58,7 @@
     color: white;
     padding: 8px 20px;
     border-radius: 25px;
-    font-size: 0.95rem;
+    font-size: 12px;
     font-weight: 600;
     box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
 }
@@ -81,7 +81,7 @@
     align-items: center;
     gap: 12px;
     color: #555;
-    font-size: 0.95rem;
+    font-size: 15px;
 }
 
 .cinema-detail-icon {
@@ -101,7 +101,7 @@
 .cinema-detail-text strong {
     display: block;
     color: #2c3e50;
-    font-size: 0.85rem;
+    font-size: 14px;
     margin-bottom: 2px;
     font-weight: 600;
 }
@@ -138,7 +138,7 @@
 .section-header-text p {
     margin: 5px 0 0 0;
     color: #6c757d;
-    font-size: 0.9rem;
+    font-size: 13px;
 }
 
 /* Movies Grid */
@@ -260,7 +260,7 @@
     align-items: center;
     gap: 8px;
     margin-bottom: 7px;
-    font-size: 0.9rem;
+    font-size: 12px;
     color: #555;
 }
 
@@ -283,7 +283,7 @@
 }
 
 .showtimes-header {
-    font-size: 0.85rem;
+    font-size: 12px;
     color: #666;
     margin-bottom: 8px;
     font-weight: 600;
@@ -302,7 +302,7 @@
     background: white;
     padding: 5px 10px;
     border-radius: 6px;
-    font-size: 0.85rem;
+    font-size: 12px;
     border: 1px solid #dee2e6;
     white-space: nowrap;
     font-weight: 600;
@@ -311,7 +311,7 @@
 
 .showtime-more-text {
     color: #667eea;
-    font-size: 0.85rem;
+    font-size: 11px;
     font-weight: 600;
 }
 
@@ -326,7 +326,7 @@
     border: none;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 12px;
     text-decoration: none;
     text-align: center;
     transition: all 0.3s;

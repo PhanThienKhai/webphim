@@ -15,7 +15,27 @@
                     <option value="0" <?= $tt===0?'selected':'' ?>>Ẩn</option>
                 </select>
             </div>
-            <div class="col-12 col-md-6 mb-15"><label>Hình ảnh (để trống nếu giữ nguyên)</label><input class="form-control" type="file" name="hinh" accept="image/*"></div>
+            <div class="col-12 col-md-6 mb-15">
+                <label>Hình ảnh (để trống nếu giữ nguyên)</label>
+                <input class="form-control" type="file" name="hinh" accept="image/*">
+                <?php if (!empty($row['hinh_anh'])): 
+                    // Xác định đường dẫn ảnh hiện tại
+                    $current_img = $row['hinh_anh'];
+                    if (strpos($current_img, 'images/combo/') === 0) {
+                        $img_display = '../Trang-nguoi-dung/' . $current_img;
+                    } else {
+                        $img_display = '../Trang-nguoi-dung/images/combo/' . basename($current_img);
+                    }
+                ?>
+                    <div style="margin-top: 10px;">
+                        <img src="<?= htmlspecialchars($img_display) ?>" 
+                             alt="Current" 
+                             style="max-width: 200px; max-height: 150px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);"
+                             onerror="this.src='../Trang-nguoi-dung/imgavt/combo1.png'">
+                        <p style="font-size: 12px; color: #666; margin-top: 5px;">Ảnh hiện tại</p>
+                    </div>
+                <?php endif; ?>
+            </div>
             <div class="col-12 mb-15"><label>Mô tả</label><textarea class="form-control" name="mo_ta" rows="4"><?= htmlspecialchars($row['mo_ta'] ?? '') ?></textarea></div>
             <div class="col-12">
                 <button class="button button-primary" type="submit" name="capnhat" value="1">Lưu</button>

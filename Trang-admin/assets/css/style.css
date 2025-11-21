@@ -9067,11 +9067,19 @@ body.header-top-green .header-notification-area > li > a .user .name {
   margin-left: 0;
 }
 
+.side-header.hide ~ .content-body {
+  margin-left: 0;
+}
+
 .side-header.show {
   left: 0;
 }
 
 .side-header.show + .content-body, .side-header.show ~ .footer-section {
+  margin-left: 270px;
+}
+
+.side-header.show ~ .content-body {
   margin-left: 270px;
 }
 

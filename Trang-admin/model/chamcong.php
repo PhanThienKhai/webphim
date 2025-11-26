@@ -7,8 +7,14 @@ function cc_ensure_schema(){
         id_rap INT NOT NULL,
         ngay DATE NOT NULL,
         gio_vao TIME NOT NULL,
-        gio_ra TIME NOT NULL,
+        gio_ra TIME DEFAULT NULL,
         ghi_chu VARCHAR(255) DEFAULT NULL,
+        ghi_chu_ra VARCHAR(255) DEFAULT NULL,
+        location_checkin VARCHAR(100) DEFAULT NULL,
+        location_checkout VARCHAR(100) DEFAULT NULL,
+        auth_method_in VARCHAR(50) DEFAULT 'manual',
+        auth_method_out VARCHAR(50) DEFAULT 'manual',
+        break_duration INT DEFAULT 60,
         ngay_tao DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 }

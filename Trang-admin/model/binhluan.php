@@ -42,5 +42,28 @@ function delete_binhluan($id){
     pdo_execute($sql);
 }
 
+// Reply functions
+function add_reply_binhluan($id_binhluan, $id_user, $noidung){
+    $sql = "INSERT INTO tra_loi_binhluan (id_binhluan, id_user, noidung, ngay_tao) 
+            VALUES ('$id_binhluan', '$id_user', '$noidung', NOW())";
+    pdo_execute($sql);
+    return pdo_last_insert_id();
+}
+
+function load_replies_binhluan($id_binhluan){
+    $sql = "SELECT tra_loi_binhluan.id, tra_loi_binhluan.noidung, tra_loi_binhluan.ngay_tao, 
+            taikhoan.name, taikhoan.id as id_user
+            FROM tra_loi_binhluan
+            LEFT JOIN taikhoan ON tra_loi_binhluan.id_user = taikhoan.id
+            WHERE tra_loi_binhluan.id_binhluan = '$id_binhluan'
+            ORDER BY tra_loi_binhluan.ngay_tao ASC";
+    return pdo_query($sql);
+}
+
+function delete_reply_binhluan($id){
+    $sql = "DELETE FROM tra_loi_binhluan WHERE id = '$id'";
+    pdo_execute($sql);
+}
+
 
 ?>

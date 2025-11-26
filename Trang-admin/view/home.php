@@ -15,7 +15,7 @@ if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == ROL
 
     <!-- Page Headings Start -->
     <div class="row justify-content-between align-items-center mb-10">
-        <?php if ($_SESSION['user1']['vai_tro'] ==2){ ?>
+        <?php if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == 2): ?>
         <!-- Page Heading Start -->
         <div class="col-12 col-lg-auto mb-20">
             <div class="page-heading">
@@ -28,9 +28,10 @@ if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == ROL
         <div class="col-12 col-lg-auto mb-20">
             <h1 id="real-time-clock"></h1>
         </div><!-- Page Button Group End -->
-
+        <?php endif; ?>
     </div><!-- Page Headings End -->
 
+    <?php if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == 2): ?>
     <!-- Top Report Wrap Start -->
     <div class="row">
         <!-- Top Report Start -->
@@ -211,12 +212,58 @@ if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == ROL
             </div>
         </div><!-- Top Report End -->
 
-        <?php }else{
-            echo '<h1>Chào mừng '.$_SESSION['user1']['name'].' đến với trang làm việc của Galaxy Studio</h1>';
-        } ?>
     </div><!-- Top Report Wrap End -->
 
+    <!-- Revenue Chart Section -->
+    <?php if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == 2): ?>
+    <div class="row mt-30">
+        <div class="col-12 mb-30">
+            <div class="box">
+                <div class="head">
+                    <h4>📊 Biểu Đồ Doanh Thu 30 Ngày Qua</h4>
+                </div>
+                <div class="content" style="padding: 20px;">
+                    <canvas id="revenueChart" height="80"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xlg-6 col-md-6 col-12 mb-30">
+            <div class="box">
+                <div class="head">
+                    <h4>🎬 Phân Bổ Phim Theo Trạng Thái</h4>
+                </div>
+                <div class="content" style="padding: 20px;">
+                    <canvas id="movieStatusChart" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xlg-6 col-md-6 col-12 mb-30">
+            <div class="box">
+                <div class="head">
+                    <h4>💰 Doanh Thu Theo Loại Combo</h4>
+                </div>
+                <div class="content" style="padding: 20px;">
+                    <canvas id="comboChart" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <?php else: ?>
+        <div class="row">
+            <div class="col-12">
+                <h1>Chào mừng <?= htmlspecialchars($_SESSION['user1']['name'] ?? 'Người dùng') ?> đến với trang làm việc của Galaxy Studio</h1>
+            </div>
+        </div>
+    <?php endif; ?>
+
 </div><!-- Content Body End -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
 <script>
     function updateClock() {
         var currentTime = new Date();
@@ -242,5 +289,149 @@ if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == ROL
     // Bắt đầu cập nhật thời gian khi DOM đã sẵn sàng
     document.addEventListener('DOMContentLoaded', function() {
         updateClock();
+        
+        // Initialize Revenue Chart
+        initRevenueChart();
+        initMovieStatusChart();
+        initComboChart();
     });
+
+    // Revenue Chart - 30 days
+    function initRevenueChart() {
+        var ctx = document.getElementById('revenueChart');
+        if (!ctx) return;
+        
+        // Generate last 30 days data
+        var labels = [];
+        var data = [];
+        var today = new Date();
+        
+        for (var i = 29; i >= 0; i--) {
+            var date = new Date(today);
+            date.setDate(date.getDate() - i);
+            labels.push((date.getDate()) + '/' + (date.getMonth() + 1));
+            
+            // Generate random revenue data (replace with real data from server)
+            data.push(Math.floor(Math.random() * 50) + 20);
+        }
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh Thu (Triệu VNĐ)',
+                    data: data,
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#667eea',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + 'M';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Movie Status Chart - Pie
+    function initMovieStatusChart() {
+        var ctx = document.getElementById('movieStatusChart');
+        if (!ctx) return;
+        
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Đang Chiếu', 'Sắp Chiếu', 'Kết Thúc'],
+                datasets: [{
+                    data: [12, 8, 5],
+                    backgroundColor: [
+                        '#10b981',
+                        '#f59e0b',
+                        '#ef4444'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    }
+
+    // Combo Revenue Chart - Bar
+    function initComboChart() {
+        var ctx = document.getElementById('comboChart');
+        if (!ctx) return;
+        
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Combo A', 'Combo B', 'Combo C', 'Combo D'],
+                datasets: [{
+                    label: 'Doanh Thu (Triệu VNĐ)',
+                    data: [35, 28, 42, 31],
+                    backgroundColor: [
+                        '#667eea',
+                        '#764ba2',
+                        '#f093fb',
+                        '#4facfe'
+                    ],
+                    borderRadius: 4,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value + 'M';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
 </script>

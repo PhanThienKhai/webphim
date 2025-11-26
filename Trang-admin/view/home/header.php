@@ -43,11 +43,11 @@
 <link rel="stylesheet" href="assets/css/helper.css">
 
 <!-- Main Style CSS -->
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=<?php echo time(); ?>">
 
 <!-- Custom Style CSS Only For Demo Purpose -->
 <link id="cus-style" rel="stylesheet" href="assets/css/style-primary.css">
-<link rel="stylesheet" href="assets/css/admin-custom.css">
+<link rel="stylesheet" href="assets/css/admin-custom.css?v=<?php echo time(); ?>">
 
 <!-- Admin Header Improvements CSS -->
 <link rel="stylesheet" href="assets/css/admin-header-improved.css?v=<?php echo time(); ?>">

@@ -76,6 +76,11 @@ $sideHeaderToggle.on('click', function(){
 $sideHeaderClose.on('click', function(){
     $sideHeader.removeClass('show').addClass('hide');
 });
+
+/*Alternative Event Handler using body delegation for dynamic pages*/
+$body.on('click', '.side-header-close', function(){
+    $('.side-header').removeClass('show').addClass('hide');
+});
     
 /*--
     Side Header Menu

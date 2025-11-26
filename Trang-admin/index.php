@@ -4,6 +4,251 @@ session_start();
 // Set timezone to Vietnam
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
+// Handle AJAX Thêm Phòng POST requests FIRST
+if (isset($_GET['act']) && $_GET['act'] === 'ajax_them_phong' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    header('Content-Type: application/json; charset=utf-8');
+    
+    // Check session
+    if (!isset($_SESSION['user1'])) {
+        echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+        exit;
+    }
+    
+    // Include required files
+    include "./model/pdo.php";
+    include "./model/phong.php";
+    include "./model/phong_ghe.php";
+    include "./helpers/quyen.php";
+    
+    // Check permissions
+    $currentRole = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+    if (!allowed_act('themphong', $currentRole)) {
+        echo json_encode(['success' => false, 'message' => 'Không có quyền']);
+        exit;
+    }
+    
+    $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+    if (!$id_rap) {
+        echo json_encode(['success' => false, 'message' => 'Không tìm thấy rạp']);
+        exit;
+    }
+    
+    // Get JSON data
+    $input = json_decode(file_get_contents('php://input'), true);
+    
+    if (!$input) {
+        echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ']);
+        exit;
+    }
+    
+    // Validate input
+    $name = trim($input['name'] ?? '');
+    $so_ghe = (int)($input['so_ghe'] ?? 0);
+    $dien_tich = (float)($input['dien_tich'] ?? 0);
+    $loai_phong = trim($input['loai_phong'] ?? 'medium');
+    $custom_rows = $input['custom_rows'] ?? null;
+    $custom_cols = $input['custom_cols'] ?? null;
+    
+    if (empty($name)) {
+        echo json_encode(['success' => false, 'message' => 'Vui lòng nhập tên phòng']);
+        exit;
+    }
+    
+    if (!$so_ghe) {
+        echo json_encode(['success' => false, 'message' => 'Số ghế phải lớn hơn 0']);
+        exit;
+    }
+    
+    // Add room to database
+    try {
+        them_phong($name, $id_rap, $so_ghe, $dien_tich);
+        
+        // Get newly created room
+        $id_phong_moi = pdo_query_one("SELECT id FROM phongchieu WHERE name = ? AND id_rap = ? ORDER BY id DESC LIMIT 1", $name, $id_rap);
+        
+        if ($id_phong_moi && isset($id_phong_moi['id'])) {
+            // Auto generate seating plan
+            pg_generate_by_template($id_phong_moi['id'], $loai_phong, $custom_rows, $custom_cols);
+            
+            echo json_encode([
+                'success' => true,
+                'message' => '✅ Thêm phòng và tạo sơ đồ ghế thành công!',
+                'phong' => [
+                    'id' => $id_phong_moi['id'],
+                    'name' => $name,
+                    'so_ghe' => $so_ghe
+                ]
+            ]);
+        } else {
+            echo json_encode([
+                'success' => true,
+                'message' => '✅ Thêm phòng thành công',
+                'phong' => [
+                    'id' => 0,
+                    'name' => $name,
+                    'so_ghe' => $so_ghe
+                ]
+            ]);
+        }
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Lỗi: ' . $e->getMessage()]);
+    }
+    
+    exit;
+}
+
+// Handle AJAX Thêm Thiết Bị POST requests
+if (isset($_POST['act']) && $_POST['act'] === 'ajax_them_thiet_bi' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    header('Content-Type: application/json; charset=utf-8');
+    
+    if (!isset($_SESSION['user1'])) {
+        echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+        exit;
+    }
+    
+    include "./model/pdo.php";
+    include "./model/thietbi.php";
+    
+    $id_phong = (int)($_POST['id_phong'] ?? 0);
+    $ten = trim($_POST['ten'] ?? '');
+    $so_luong = (int)($_POST['so_luong'] ?? 1);
+    $tinh_trang = trim($_POST['tinh_trang'] ?? 'tot');
+    $ghi_chu = trim($_POST['ghi_chu'] ?? null) ?: null;
+    
+    if (!$id_phong || !$ten || !$so_luong) {
+        echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ']);
+        exit;
+    }
+    
+    try {
+        tb_insert($id_phong, $ten, $so_luong, $tinh_trang, $ghi_chu);
+        echo json_encode(['success' => true, 'message' => 'Thêm thiết bị thành công']);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Lỗi: ' . $e->getMessage()]);
+    }
+    
+    exit;
+}
+
+// Handle AJAX Sửa Thiết Bị POST requests
+if (isset($_POST['act']) && $_POST['act'] === 'ajax_sua_thiet_bi' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    header('Content-Type: application/json; charset=utf-8');
+    
+    if (!isset($_SESSION['user1'])) {
+        echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+        exit;
+    }
+    
+    include "./model/pdo.php";
+    include "./model/thietbi.php";
+    
+    $id = (int)($_POST['id'] ?? 0);
+    $ten = trim($_POST['ten'] ?? '');
+    $so_luong = (int)($_POST['so_luong'] ?? 1);
+    $tinh_trang = trim($_POST['tinh_trang'] ?? 'tot');
+    $ghi_chu = trim($_POST['ghi_chu'] ?? null) ?: null;
+    
+    if (!$id || !$ten || !$so_luong) {
+        echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ']);
+        exit;
+    }
+    
+    try {
+        tb_update($id, $ten, $so_luong, $tinh_trang, $ghi_chu);
+        echo json_encode(['success' => true, 'message' => 'Cập nhật thiết bị thành công']);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Lỗi: ' . $e->getMessage()]);
+    }
+    
+    exit;
+}
+
+// Handle AJAX Xóa Thiết Bị POST requests
+if (isset($_POST['act']) && $_POST['act'] === 'ajax_xoa_thiet_bi' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    header('Content-Type: application/json; charset=utf-8');
+    
+    if (!isset($_SESSION['user1'])) {
+        echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+        exit;
+    }
+    
+    include "./model/pdo.php";
+    include "./model/thietbi.php";
+    
+    $id = (int)($_POST['id'] ?? 0);
+    
+    if (!$id) {
+        echo json_encode(['success' => false, 'message' => 'ID không hợp lệ']);
+        exit;
+    }
+    
+    try {
+        tb_delete($id);
+        echo json_encode(['success' => true, 'message' => 'Xóa thiết bị thành công']);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Lỗi: ' . $e->getMessage()]);
+    }
+    
+    exit;
+}
+
+// AJAX Reply to comment
+if (isset($_POST['act']) && $_POST['act'] === 'ajax_them_tra_loi' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    while (ob_get_level()) {
+        ob_end_clean();
+    }
+    
+    header('Content-Type: application/json; charset=utf-8');
+    
+    if (!isset($_SESSION['user1'])) {
+        echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']);
+        exit;
+    }
+    
+    include "./model/pdo.php";
+    include "./model/binhluan.php";
+    
+    $id_binhluan = (int)($_POST['id_binhluan'] ?? 0);
+    $noidung = trim($_POST['noidung'] ?? '');
+    $id_user = (int)($_SESSION['user1']['id'] ?? 0);
+    
+    if (!$id_binhluan || !$noidung) {
+        echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ']);
+        exit;
+    }
+    
+    if (strlen($noidung) > 1000) {
+        echo json_encode(['success' => false, 'message' => 'Nội dung quá dài (tối đa 1000 ký tự)']);
+        exit;
+    }
+    
+    try {
+        add_reply_binhluan($id_binhluan, $id_user, $noidung);
+        echo json_encode(['success' => true, 'message' => 'Trả lời thành công']);
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Lỗi: ' . $e->getMessage()]);
+    }
+    
+    exit;
+}
+
+
 // Handle Enhanced Calendar POST requests FIRST (before any includes or output)
 if (isset($_GET['act']) && $_GET['act'] === 'ql_lichlamviec_calendar' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     // Clear any output buffer
@@ -2255,8 +2500,9 @@ if(isset($_SESSION['user1'])) {
             case "xoaphong":
                 enforce_act_or_403('xoaphong'); // Kiểm tra quyền
                 if (isset($_GET['idxoa'])) {
-                    xoa_phon($_GET['idxoa']);
-                    $loadphongg = load_phong();
+                    xoa_phong($_GET['idxoa']);
+                    $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                    $loadphong = $id_rap ? load_phong_by_rap($id_rap) : load_phong();
                     include "./view/phong/phong.php";
                 }
                 break;
@@ -2639,6 +2885,62 @@ if(isset($_SESSION['user1'])) {
                 }
                 include "view/vephim/ct_ve.php";
                 break;
+            
+            case "cancelTicket":
+                header('Content-Type: application/json');
+                
+                // Kiểm tra quyền (chỉ admin, quản lý cụm, quản lý rạp được hủy vé)
+                $user_role = (int)($_SESSION['user1']['vai_tro'] ?? -1);
+                $user_id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                
+                if ($user_role < 2) { // Chỉ role 2 (admin), 3 (cinema manager), 4 (cluster manager)
+                    echo json_encode(['success' => false, 'message' => 'Bạn không có quyền hủy vé']);
+                    exit;
+                }
+                
+                if (!isset($_POST['ticket_id']) || empty($_POST['ticket_id'])) {
+                    echo json_encode(['success' => false, 'message' => 'Mã vé không hợp lệ']);
+                    exit;
+                }
+                
+                $ticket_id = (int)$_POST['ticket_id'];
+                
+                // Load thông tin vé
+                $ticket = loadone_vephim($ticket_id);
+                if (!$ticket) {
+                    echo json_encode(['success' => false, 'message' => 'Vé không tồn tại']);
+                    exit;
+                }
+                
+                // Kiểm tra nếu là cinema manager, chỉ có thể hủy vé của rạp mình
+                if ($user_role == 3 && (int)$ticket['id_rap'] != $user_id_rap) {
+                    echo json_encode(['success' => false, 'message' => 'Bạn chỉ có thể hủy vé của rạp mình']);
+                    exit;
+                }
+                
+                // Kiểm tra trạng thái vé (chỉ hủy được vé đã thanh toán - trang_thai = 1)
+                if ((int)$ticket['trang_thai'] != 1) {
+                    echo json_encode(['success' => false, 'message' => 'Chỉ có thể hủy vé đã thanh toán']);
+                    exit;
+                }
+                
+                // Thực hiện hủy vé
+                try {
+                    // Cập nhật trạng thái vé thành hủy (3)
+                    $sql = "UPDATE ve SET trang_thai = 3, ngay_huy = NOW() WHERE id = ?";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([$ticket_id]);
+                    
+                    // Xử lý hoàn tiền (nếu cần)
+                    // $refund_amount = (float)$ticket['price'];
+                    
+                    echo json_encode(['success' => true, 'message' => 'Vé đã được hủy thành công']);
+                } catch (Exception $e) {
+                    echo json_encode(['success' => false, 'message' => 'Lỗi hệ thống: ' . $e->getMessage()]);
+                }
+                exit;
+                break;
+            
             case "capnhat_tt_ve":
                 if(isset($_POST['tk'])&&($_POST['tk'])){
                 $searchName = $_POST['ten'];

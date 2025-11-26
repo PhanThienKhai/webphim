@@ -1,5 +1,7 @@
 <?php include __DIR__ . '/../home/sideheader.php'; ?>
 
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+
 <div class="content-body">
     <div class="row justify-content-between align-items-center mb-10">
         <div class="col-12 col-lg-auto mb-20">
@@ -84,23 +86,45 @@
     });
 
     // Charts using Google Charts
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawCumCharts);
+    if (typeof google !== 'undefined' && google.charts) {
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawCumCharts);
+    } else {
+        console.error('Google Charts library not loaded');
+    }
+    
     function drawCumCharts(){
-        var revDate = [['Ngày','Doanh thu']];
-        var rowsDate = <?= json_encode($rev_by_date_rows ?? []) ?>;
-        rowsDate.forEach(function(r){ revDate.push([r[0], Number(r[1])]); });
-        var dataDate = google.visualization.arrayToDataTable(revDate);
-        var optDate = { legend:{position:'none'}, areaOpacity:0.05, colors:['#3b82f6'], chartArea:{left:60,top:20,width:'85%',height:'75%'}, vAxis:{format:'short'} };
-        var chartDate = new google.visualization.AreaChart(document.getElementById('chart_rev_date'));
-        chartDate.draw(dataDate, optDate);
+        try {
+            var rowsDate = <?= json_encode($rev_by_date_rows ?? []) ?>;
+            var rowsRap = <?= json_encode($rev_by_rap_rows ?? []) ?>;
+            
+            // Chart 1: Doanh thu theo ngày
+            if (rowsDate && rowsDate.length > 0) {
+                var revDate = [['Ngày','Doanh thu']];
+                rowsDate.forEach(function(r){ revDate.push([r[0], Number(r[1])]); });
+                var dataDate = google.visualization.arrayToDataTable(revDate);
+                var optDate = { legend:{position:'none'}, areaOpacity:0.05, colors:['#3b82f6'], chartArea:{left:60,top:20,width:'85%',height:'75%'}, vAxis:{format:'short'} };
+                var chartDate = new google.visualization.AreaChart(document.getElementById('chart_rev_date'));
+                chartDate.draw(dataDate, optDate);
+            } else {
+                document.getElementById('chart_rev_date').innerHTML = '<div style="padding:40px; text-align:center; color:#999;">Không có dữ liệu</div>';
+            }
 
-        var revRap = [['Rạp','Doanh thu']];
-        var rowsRap = <?= json_encode($rev_by_rap_rows ?? []) ?>;
-        rowsRap.forEach(function(r){ revRap.push([r[0], Number(r[1])]); });
-        var dataRap = google.visualization.arrayToDataTable(revRap);
-        var optRap = { legend:{position:'none'}, colors:['#10b981'], chartArea:{left:140,top:20,width:'70%',height:'75%'}, vAxis:{format:'short'} };
-        var chartRap = new google.visualization.BarChart(document.getElementById('chart_rev_rap'));
-        chartRap.draw(dataRap, optRap);
+            // Chart 2: Doanh thu theo rạp
+            if (rowsRap && rowsRap.length > 0) {
+                var revRap = [['Rạp','Doanh thu']];
+                rowsRap.forEach(function(r){ revRap.push([r[0], Number(r[1])]); });
+                var dataRap = google.visualization.arrayToDataTable(revRap);
+                var optRap = { legend:{position:'none'}, colors:['#10b981'], chartArea:{left:140,top:20,width:'70%',height:'75%'}, vAxis:{format:'short'} };
+                var chartRap = new google.visualization.BarChart(document.getElementById('chart_rev_rap'));
+                chartRap.draw(dataRap, optRap);
+            } else {
+                document.getElementById('chart_rev_rap').innerHTML = '<div style="padding:40px; text-align:center; color:#999;">Không có dữ liệu</div>';
+            }
+        } catch (error) {
+            console.error('Error drawing charts:', error);
+            document.getElementById('chart_rev_date').innerHTML = '<div style="padding:40px; text-align:center; color:#d32f2f;">Lỗi: ' + error.message + '</div>';
+            document.getElementById('chart_rev_rap').innerHTML = '<div style="padding:40px; text-align:center; color:#d32f2f;">Lỗi: ' + error.message + '</div>';
+        }
     }
 </script>

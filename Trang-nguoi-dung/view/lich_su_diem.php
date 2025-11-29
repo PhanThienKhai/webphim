@@ -5,10 +5,16 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['vai_tro'] != 0) {
     exit;
 }
 
+require_once 'model/pdo.php';
 require_once 'model/diem.php';
 
 $id_tk = $_SESSION['user']['id'];
-$user_info = $_SESSION['user'];
+
+// Load user info từ database để lấy dữ liệu mới nhất (điểm vừa được cộng)
+$user_info = pdo_query_one("SELECT * FROM taikhoan WHERE id = ?", $id_tk);
+if (!$user_info) {
+    $user_info = $_SESSION['user']; // Fallback nếu load DB thất bại
+}
 
 // Lấy thông tin hạng hiện tại
 $hang_hien_tai = get_thong_tin_hang($user_info['hang_thanh_vien']);

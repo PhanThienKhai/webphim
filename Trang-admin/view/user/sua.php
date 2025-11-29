@@ -10,60 +10,79 @@ if (is_array($loadtk)) {
 
     <!-- Page Headings Start -->
     <div class="row justify-content-between align-items-center mb-10">
-
-        <!-- Page Heading Start -->
         <div class="col-12 col-lg-auto mb-20">
             <div class="page-heading">
-                <h3>Quản Lý Tài Khoản<span>/ Sửa User<tg/span></h3>
+                <h3>Quản Lý Tài Khoản / <span>Chỉnh Sửa Tài Khoản</span></h3>
             </div>
-        </div><!-- Page Heading End -->
-
-        <!-- Page Button Group Start -->
-
+        </div>
     </div><!-- Page Headings End -->
+
+    <!-- Alert Messages -->
+    <?php if(isset($error) && $error != ""): ?>
+        <div class="alert alert-danger mb-20" style="padding: 15px; border-radius: 6px; background: #ffebee; border-left: 4px solid #f44336; color: #c62828;">
+            ✕ <?= htmlspecialchars($error) ?>
+        </div>
+    <?php endif; ?>
 
     <!-- Add or Edit Product Start -->
     <form action="index.php?act=updateuser" method="POST" enctype="multipart/form-data">
-        <div class="add-edit-product-wrap col-12">
-
-            <div class="add-edit-product-form">
-
-                <h4 class="title">Sửa User</h4>
-
-                <div class="row">
-                <input  type="hidden" name="id" value="<?=$id?>">
-                <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text"   value="<?=$name?>"  name="name"></div>
-                        <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text" value="<?=$user?>" name="user"></div>
-                        <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text"  value="<?=$pass?>"  name="pass"></div>
-                        <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text"  value="<?=$email?>"  name="email"></div>
-                        <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="number_format"  value="<?=$phone?>"  name="phone"></div>
-                        <div class="col-lg-6 col-12 mb-30"><input class="form-control" type="text" value="<?=$dia_chi?>"   name="dia_chi"></div>
-                </div>
-                  
-                  
-
-
-                </div>
-
-                <h4 class="title">Thao tác</h4>
-
-                <div class="product-upload-gallery row flex-wrap">
-
-
-                    <!-- Button Group Start -->
-                    <div class="row">
-                        <div class="d-flex flex-wrap justify-content-end col mbn-10">
-                            <button class="button button-outline button-primary mb-10 ml-10 mr-0" type="submit" name="capnhat">Cập Nhật</button>
-                            <a href="index.php?act=thoigian"><button class="button button-outline button-info mb-10 ml-10 mr-0">Danh sách</button></a>
+        <div class="row">
+            <div class="col-12 mb-30">
+                <div class="news-item">
+                    <div class="content">
+                        <h4 style="margin-top: 0; color: #333; font-size: 16px; margin-bottom: 20px;">Chỉnh Sửa Thông Tin Tài Khoản</h4>
+                        
+                        <input type="hidden" name="id" value="<?= htmlspecialchars($id) ?>">
+                        
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-20">
+                                <label style="font-weight: 600; color: #495057; margin-bottom: 8px; display: block; font-size: 13px;">Tên</label>
+                                <input class="form-control" type="text" value="<?= htmlspecialchars($name) ?>" name="name" style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; font-size: 13px;">
+                            </div>
+                            <div class="col-12 col-md-6 mb-20">
+                                <label style="font-weight: 600; color: #495057; margin-bottom: 8px; display: block; font-size: 13px;">Tài Khoản</label>
+                                <input class="form-control" type="text" value="<?= htmlspecialchars($user) ?>" name="user" style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; font-size: 13px;">
+                            </div>
+                            <div class="col-12 col-md-6 mb-20">
+                                <label style="font-weight: 600; color: #495057; margin-bottom: 8px; display: block; font-size: 13px;">Mật Khẩu</label>
+                                <input class="form-control" type="text" value="<?= htmlspecialchars($pass) ?>" name="pass" style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; font-size: 13px;">
+                            </div>
+                            <div class="col-12 col-md-6 mb-20">
+                                <label style="font-weight: 600; color: #495057; margin-bottom: 8px; display: block; font-size: 13px;">Email</label>
+                                <input class="form-control" type="text" value="<?= htmlspecialchars($email) ?>" name="email" style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; font-size: 13px;">
+                            </div>
+                            <div class="col-12 col-md-6 mb-20">
+                                <label style="font-weight: 600; color: #495057; margin-bottom: 8px; display: block; font-size: 13px;">Số Điện Thoại</label>
+                                <input class="form-control" type="text" value="<?= htmlspecialchars($phone) ?>" name="phone" style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; font-size: 13px;">
+                            </div>
+                            <div class="col-12 col-md-6 mb-20">
+                                <label style="font-weight: 600; color: #495057; margin-bottom: 8px; display: block; font-size: 13px;">Địa Chỉ</label>
+                                <input class="form-control" type="text" value="<?= htmlspecialchars($dia_chi) ?>" name="dia_chi" style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; font-size: 13px;">
+                            </div>
                         </div>
-                    </div><!-- Button Group End -->
-
+                    </div>
                 </div>
+            </div>
+        </div>
 
-            </div><!-- Add or Edit Product End -->   <?php if(isset($error)&&$error !=""){
-                echo '<p  style="color: red; text-align: center;"
-                > '.$error.' </p>';
-            } ?>
- </div>
+        <!-- Action Buttons -->
+        <div class="row">
+            <div class="col-12 mb-30">
+                <div class="news-item">
+                    <div class="content">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="button button-primary" type="submit" name="capnhat" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 30px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                                <i class="zmdi zmdi-check"></i> Cập Nhật
+                            </button>
+                            <a class="button button-outline" href="index.php?act=QTvien" style="border: 1px solid #ddd; color: #666; padding: 12px 30px; border-radius: 6px; font-weight: 600; text-decoration: none; display: inline-block;">
+                                <i class="zmdi zmdi-list"></i> Danh Sách
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
+
+</div><!-- Content Body End -->
 </div><!-- Content Body End -->

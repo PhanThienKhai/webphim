@@ -190,7 +190,7 @@ body {
   margin: 0 0 1.5rem 0 !important;
   background: linear-gradient(135deg, #000000 0%, #e2e8f0 100%) !important;
   -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
+  /* -webkit-text-fill-color: transparent !important; */
   background-clip: text !important;
   text-shadow: 0 4px 20px rgba(255, 255, 255, 0.5) !important;
   animation: glow 2s ease-in-out infinite alternate !important;

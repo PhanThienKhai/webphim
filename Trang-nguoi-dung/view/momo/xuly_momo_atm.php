@@ -1,274 +1,246 @@
 <?php
 session_start();
-header('Content-Type: text/html; charset=utf-8');
+header('Content-type: text/html; charset=utf-8');
 
-// ====================================================
-// CẤU HÌNH THANH TOÁN MOMO
-// ====================================================
-// Đổi MODE để chuyển giữa DEMO và THẬT:
-// - 'DEMO': Thanh toán giả lập, không cần credentials MoMo
-// - 'PRODUCTION': Thanh toán thật qua MoMo API
-
-define('MOMO_MODE', 'DEMO'); // Đổi thành 'PRODUCTION' khi có tài khoản MoMo Business
-
-// ====================================================
-// THÔNG TIN TÀI KHOẢN MOMO (CHỈ CẦN KHI MODE = PRODUCTION)
-// ====================================================
-// Đăng ký tại: https://business.momo.vn
-// Sau khi đăng ký, lấy thông tin này từ MoMo Business Portal
-
-if (MOMO_MODE === 'PRODUCTION') {
-    // ⚠️ THAY BẰNG THÔNG TIN TÀI KHOẢN THẬT CỦA BẠN
-    $MOMO_ENDPOINT = "https://payment.momo.vn/v2/gateway/api/create"; // Production endpoint
-    $MOMO_PARTNER_CODE = 'MOMOXXXXXXXXXXX'; // Partner Code từ MoMo Business
-    $MOMO_ACCESS_KEY = 'XXXXXXXXXXXXXXXX'; // Access Key từ MoMo Business
-    $MOMO_SECRET_KEY = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'; // Secret Key từ MoMo Business
-} else {
-    // Tài khoản TEST (chỉ cho demo)
-    $MOMO_ENDPOINT = "https://test-payment.momo.vn/v2/gateway/api/create";
-    $MOMO_PARTNER_CODE = 'MOMOBKUN20180529';
-    $MOMO_ACCESS_KEY = 'klm05TvNBzhg7h7j';
-    $MOMO_SECRET_KEY = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+function execPostRequest($url, $data)
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt(
+        $ch,
+        CURLOPT_HTTPHEADER,
+        array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data)
+        )
+    );
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    //execute post
+    $result = curl_exec($ch);
+    //close connection
+    curl_close($ch);
+    return $result;
 }
 
-$movieTitle = isset($_SESSION['tong']['tieu_de']) ? $_SESSION['tong']['tieu_de'] : 'Vé phim';
+// MoMo API Endpoint
+$endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
 
-// Lấy số tiền thanh toán
+// MoMo Credentials
+$partnerCode = 'MOMOBKUN20180529';
+$accessKey = 'klm05TvNBzhg7h7j';
+$secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+
+// Lấy thông tin từ session
+$orderInfo = "Thanh toán vé phim";
+if (isset($_SESSION['tong']['tieu_de'])) {
+    $orderInfo = "Thanh toán vé phim " . $_SESSION['tong']['tieu_de'];
+}
+
+// Lấy giá từ session - ưu tiên lấy giá sau giảm
+$amount = 0;
 if (isset($_SESSION['tong']['gia_sau_giam']) && $_SESSION['tong']['gia_sau_giam'] > 0) {
     $amount = (int)$_SESSION['tong']['gia_sau_giam'];
-} else {
-    $amount = isset($_SESSION['tong']['gia_ghe']) ? (int)$_SESSION['tong']['gia_ghe'] : 0;
+} elseif (isset($_SESSION['tong']['gia_ghe']) && $_SESSION['tong']['gia_ghe'] > 0) {
+    $amount = (int)$_SESSION['tong']['gia_ghe'];
 }
 
-// Validate số tiền
-if ($amount < 10000) {
-    die("Lỗi: Số tiền thanh toán phải tối thiểu 10,000 VND");
+// Nếu không có amount thì dừng
+if ($amount <= 0) {
+    die("Lỗi: Số tiền không hợp lệ");
 }
 
-// Lưu số tiền vào session để dùng sau khi thanh toán
-$_SESSION['tong_tien'] = $amount;
+// ============ TẠO VÉ TRONG DATABASE NGAY ============
+// Fix đường dẫn để load PDO
+$pdo_path = dirname(dirname(dirname(__FILE__))) . '/Trang-admin/model/pdo.php';
+if (!file_exists($pdo_path)) {
+    $pdo_path = __DIR__ . '/../../model/pdo.php';
+}
 
-?>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thanh toán MoMo</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .payment-container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 500px;
-            width: 100%;
-            padding: 40px;
-            text-align: center;
-            animation: slideUp 0.5s ease-out;
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .momo-logo {
-            width: 100px;
-            height: 100px;
-            background: #A50064;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: white;
-            font-weight: bold;
-        }
-        
-        h2 {
-            color: #2c3e50;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        
-        .movie-title {
-            color: #7f8c8d;
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
-        
-        .amount {
-            font-size: 48px;
-            font-weight: bold;
-            color: #A50064;
-            margin: 30px 0;
-        }
-        
-        .info-box {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: left;
-        }
-        
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #e9ecef;
-        }
-        
-        .info-item:last-child {
-            border-bottom: none;
-        }
-        
-        .info-label {
-            color: #6c757d;
-            font-size: 14px;
-        }
-        
-        .info-value {
-            color: #2c3e50;
-            font-weight: 600;
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .btn {
-            flex: 1;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-pay {
-            background: linear-gradient(135deg, #A50064, #d60055);
-            color: white;
-        }
-        
-        .btn-pay:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(165, 0, 100, 0.4);
-        }
-        
-        .btn-cancel {
-            background: #e9ecef;
-            color: #6c757d;
-        }
-        
-        .btn-cancel:hover {
-            background: #dee2e6;
-        }
-        
-        .notice {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #856404;
-        }
-    </style>
-</head>
-<body>
-    <div class="payment-container">
-        <div class="momo-logo">M</div>
-        <h2>Thanh toán qua MoMo</h2>
-        <p class="movie-title"><?= htmlspecialchars($movieTitle) ?></p>
-        
-        <div class="amount"><?= number_format($amount) ?> ₫</div>
-        
-        <div class="info-box">
-            <div class="info-item">
-                <span class="info-label">🎬 Phim</span>
-                <span class="info-value"><?= htmlspecialchars($movieTitle) ?></span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">🪑 Ghế</span>
-                <span class="info-value"><?= isset($_SESSION['tong']['ghe']) ? implode(', ', $_SESSION['tong']['ghe']) : 'N/A' ?></span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">📅 Ngày chiếu</span>
-                <span class="info-value"><?= isset($_SESSION['tong']['ngay_chieu']) ? $_SESSION['tong']['ngay_chieu'] : 'N/A' ?></span>
-            </div>
-            <div class="info-item">
-                <span class="info-label">⏰ Giờ chiếu</span>
-                <span class="info-value"><?= isset($_SESSION['tong']['thoi_gian_chieu']) ? $_SESSION['tong']['thoi_gian_chieu'] : 'N/A' ?></span>
-            </div>
-        </div>
-        
-        <div class="notice">
-            <?php if (MOMO_MODE === 'DEMO'): ?>
-                ⚠️ <strong>Chế độ Demo:</strong> Đây là thanh toán giả lập. Nhấn "Thanh toán" để hoàn tất đặt vé và nhận điểm tích lũy.
-            <?php else: ?>
-                🔒 <strong>Thanh toán bảo mật:</strong> Bạn sẽ được chuyển đến cổng thanh toán MoMo chính thức.
-            <?php endif; ?>
-        </div>
-        
-        <div class="btn-group">
-            <button class="btn btn-cancel" onclick="window.location.href='../../index.php?act=thanhtoan'">
-                Hủy
-            </button>
-            <button class="btn btn-pay" onclick="processPayment()">
-                Thanh toán
-            </button>
-        </div>
-    </div>
+require_once $pdo_path;
+
+// Lấy connection PDO
+$pdo = pdo_get_connection();
+
+// Load hàm điểm
+require_once __DIR__ . '/../../model/diem.php';
+
+try {
+    // Lấy thông tin vé từ session
+    $id_ngay_chieu = $_SESSION['tong']['id_lichchieu'] ?? $_SESSION['tong'][3] ?? null;
+    $id_tk = $_SESSION['user']['id'] ?? null;
     
-    <script>
-        function processPayment() {
-            const mode = '<?= MOMO_MODE ?>';
-            
-            if (mode === 'DEMO') {
-                // Chế độ DEMO: Redirect trực tiếp
-                document.querySelector('.btn-pay').textContent = 'Đang xử lý...';
-                document.querySelector('.btn-pay').disabled = true;
-                
-                setTimeout(() => {
-                    window.location.href = '../../index.php?act=xacnhan&message=Successful.';
-                }, 1500);
-            } else {
-                // Chế độ PRODUCTION: Gọi API MoMo thật
-                document.querySelector('.btn-pay').textContent = 'Đang kết nối MoMo...';
-                document.querySelector('.btn-pay').disabled = true;
-                
-                // Chuyển sang trang xử lý API
-                window.location.href = 'xuly_momo_api.php';
-            }
+    // Lấy ghế - có thể nằm ở nhiều chỗ
+    $ghe_list = [];
+    if (isset($_SESSION['tong']['ten_ghe']['ghe']) && is_array($_SESSION['tong']['ten_ghe']['ghe'])) {
+        $ghe_list = $_SESSION['tong']['ten_ghe']['ghe'];
+    } elseif (isset($_SESSION['tong']['ghe']) && is_array($_SESSION['tong']['ghe'])) {
+        $ghe_list = $_SESSION['tong']['ghe'];
+    } elseif (isset($_SESSION['tong'][0]) && is_array($_SESSION['tong'][0])) {
+        $ghe_list = $_SESSION['tong'][0];
+    } elseif (isset($_SESSION['tong']['ghe_string']) && !empty($_SESSION['tong']['ghe_string'])) {
+        $ghe_list = [$_SESSION['tong']['ghe_string']];
+    }
+    
+    $id_phong = $_SESSION['tong']['id_phong'] ?? null;
+    $id_phim = $_SESSION['tong']['id_phim'] ?? $_SESSION['tong'][1] ?? null;
+    $id_rap = $_SESSION['tong']['id_rap'] ?? null;
+    $price = $amount;
+    $combo = $_SESSION['tong']['combo'] ?? $_SESSION['tong'][2] ?? '';
+    $id_gio = $_SESSION['tong']['id_gio'] ?? null;
+    
+    // Debug: Log session info
+    $debug_log = "Session Debug:\n";
+    $debug_log .= "id_ngay_chieu: " . ($id_ngay_chieu ?? "NULL") . "\n";
+    $debug_log .= "id_tk: " . ($id_tk ?? "NULL") . "\n";
+    $debug_log .= "ghe_list: " . json_encode($ghe_list) . "\n";
+    $debug_log .= "Full session tong: " . json_encode($_SESSION['tong'] ?? []) . "\n";
+    
+    file_put_contents(__DIR__ . '/momo_debug.log', date('Y-m-d H:i:s') . " - " . $debug_log . "\n", FILE_APPEND);
+    
+    // Kiểm tra thông tin tối thiểu
+    if (!$id_tk) {
+        die("Lỗi: Không tìm thấy user ID. Bạn đã đăng nhập chưa?");
+    }
+    
+    if (!$id_ngay_chieu) {
+        die("Lỗi: Không tìm thấy lịch chiếu. id_lichchieu: " . ($id_ngay_chieu ?? "NULL"));
+    }
+    
+    if (empty($ghe_list)) {
+        die("Lỗi: Không tìm thấy ghế. ghe_list: " . json_encode($ghe_list) . ", Session: " . json_encode($_SESSION['tong'] ?? []));
+    }
+    
+    // ✅ Gộp tất cả các ghế thành 1 vé duy nhất
+    $ma_ve = 'VE' . time() . rand(1000, 9999);
+    $ghe_string = implode(',', $ghe_list); // Gộp ghế: "L12,L11,L10,L9,L8,L7,L6,L5"
+    
+    $sql = "INSERT INTO ve (id_tk, id_phim, id_ngay_chieu, id_thoi_gian_chieu, id_rap, ghe, price, combo, trang_thai, ma_ve, ngay_dat) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, NOW())";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $result = $stmt->execute([
+        $id_tk, 
+        $id_phim ?? null, 
+        $id_ngay_chieu, 
+        $id_gio ?? null,
+        $id_rap ?? null, 
+        $ghe_string,  // Lưu tất cả ghế làm 1 string
+        $price, 
+        $combo, 
+        $ma_ve
+    ]);
+    
+    if (!$result) {
+        $error_info = $stmt->errorInfo();
+        throw new Exception("Không thể tạo vé - " . $error_info[2]);
+    }
+    
+    file_put_contents(__DIR__ . '/momo_debug.log', date('Y-m-d H:i:s') . " - ✅ Vé tạo thành công! Số ghế: " . count($ghe_list) . ", Ghế: " . $ghe_string . "\n", FILE_APPEND);
+    
+    // DEBUG: Log session tong để xem có diem_doi không
+    file_put_contents(__DIR__ . '/momo_debug.log', date('Y-m-d H:i:s') . " - DEBUG SESSION TONG: " . json_encode($_SESSION['tong'] ?? []) . "\n", FILE_APPEND);
+    
+    // ============ TRỪ ĐIỂM NẾU DÙNG ĐIỂM ĐỂ GIẢM GIÁ ============
+    if (isset($_SESSION['tong']['diem_doi']) && $_SESSION['tong']['diem_doi'] > 0) {
+        $diem_doi = (int)$_SESSION['tong']['diem_doi'];
+        if ($id_tk && $diem_doi > 0) {
+            // Trừ điểm từ database
+            $result_tru = tru_diem($id_tk, $diem_doi, 'Sử dụng điểm để giảm giá vé phim');
+            file_put_contents(__DIR__ . '/momo_debug.log', date('Y-m-d H:i:s') . " - 💸 Trừ điểm: -" . $diem_doi . " (lý do: Sử dụng giảm giá, kết quả: " . ($result_tru ? "OK" : "FAIL") . ")\n", FILE_APPEND);
         }
-    </script>
-</body>
-</html>
+    } else {
+        file_put_contents(__DIR__ . '/momo_debug.log', date('Y-m-d H:i:s') . " - ℹ️ Không dùng điểm để giảm giá (diem_doi không tồn tại hoặc = 0)\n", FILE_APPEND);
+    }
+    
+    // ============ CỘNG ĐIỂM TÍCH LŨY ============
+    // Tỷ lệ: Mỗi 100 VND = 1 điểm
+    if ($id_tk && $price > 0) {
+        // Tính điểm từ giá thanh toán thực tế
+        $diem_tang = intval($price / 100);  // Mỗi 100 VND = 1 điểm
+        
+        file_put_contents(__DIR__ . '/momo_debug.log', date('Y-m-d H:i:s') . " - 💰 Tính điểm: Price=" . $price . ", Diem_tang=" . $diem_tang . " (mỗi 100 VND = 1 điểm)\n", FILE_APPEND);
+        
+        if ($diem_tang > 0) {
+            // Dùng hàm cong_diem để ghi lịch sử
+            $result = cong_diem($id_tk, $diem_tang, 'Thanh toán vé phim qua MoMo');
+            file_put_contents(__DIR__ . '/momo_debug.log', date('Y-m-d H:i:s') . " - ✅ Điểm cộng: +" . $diem_tang . " (kết quả: " . ($result ? "OK" : "FAIL") . ")\n", FILE_APPEND);
+        }
+    }
+    
+    // ✅ VÉ ĐÃ ĐƯỢC TẠO VÀ THANH TOÁN THÀNH CÔNG
+    $_SESSION['thanh_toan_thanh_cong'] = true;
+    $_SESSION['tong_tien_thanh_toan'] = $amount;
+    
+    // ============ RELOAD SESSION USER ============
+    // Reload thông tin user từ database để cập nhật điểm trên giao diện
+    $user_updated = pdo_query_one("SELECT * FROM taikhoan WHERE id = ?", $id_tk);
+    if ($user_updated) {
+        $_SESSION['user'] = $user_updated;
+        file_put_contents(__DIR__ . '/momo_debug.log', date('Y-m-d H:i:s') . " - ✅ Session user reload: điểm = " . $user_updated['diem_tich_luy'] . "\n", FILE_APPEND);
+    }
+    
+    // Clear session giỏ hàng
+    unset($_SESSION['tong']);
+    
+} catch (Exception $e) {
+    file_put_contents(__DIR__ . '/momo_debug.log', date('Y-m-d H:i:s') . " - ❌ Lỗi: " . $e->getMessage() . "\n", FILE_APPEND);
+    die("Lỗi tạo vé: " . $e->getMessage());
+}
+
+// ============ REDIRECT ĐẾN TRANG MoMo ============
+// Tạo order ID
+$orderId = time() . "";
+$requestId = time() . "";
+
+// URLs
+$currentHost = $_SERVER['HTTP_HOST'];
+$baseUrl = "http://" . $currentHost . "/webphim/Trang-nguoi-dung";
+$redirectUrl = $baseUrl . "/index.php?act=ve";
+$ipnUrl = $baseUrl . "/view/momo/xuly_callback_momo.php";
+$extraData = "";
+
+// Request Type
+$requestType = "payWithATM";
+
+// Tạo signature
+$rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+
+$signature = hash_hmac("sha256", $rawHash, $secretKey);
+
+// Chuẩn bị data
+$data = array(
+    'partnerCode' => $partnerCode,
+    'partnerName' => "CinePass Cinema",
+    'storeId' => "CinePassStore",
+    'requestId' => $requestId,
+    'amount' => $amount,
+    'orderId' => $orderId,
+    'orderInfo' => $orderInfo,
+    'redirectUrl' => $redirectUrl,
+    'ipnUrl' => $ipnUrl,
+    'lang' => 'vi',
+    'extraData' => $extraData,
+    'requestType' => $requestType,
+    'signature' => $signature
+);
+
+// Gửi request
+$result = execPostRequest($endpoint, json_encode($data));
+$jsonResult = json_decode($result, true);
+
+// Lưu order info vào session
+$_SESSION['momo_order_id'] = $orderId;
+$_SESSION['momo_amount'] = $amount;
+
+// Redirect đến URL thanh toán
+if (isset($jsonResult['payUrl']) && !empty($jsonResult['payUrl'])) {
+    header('Location: ' . $jsonResult['payUrl']);
+} else {
+    // Nếu lỗi kết nối MoMo, vẫn redirect về trang vé (vé đã được tạo)
+    header('Location: ' . $redirectUrl . '?thanh_toan=ok');
+}
+?>

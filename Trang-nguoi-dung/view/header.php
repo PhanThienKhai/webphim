@@ -133,6 +133,10 @@
                     $id_user = isset($user_data['id']) ? (int)$user_data['id'] : 0;
                     $vai_tro_user = isset($user_data['vai_tro']) ? (int)$user_data['vai_tro'] : 0;
                     $diem_user = isset($user_data['diem_tich_luy']) ? (int)$user_data['diem_tich_luy'] : 0;
+                    
+                    // DEBUG: Log dữ liệu session
+                    // error_log("DEBUG header - diem_user: $diem_user, vai_tro: $vai_tro_user, all_user_data: " . json_encode($user_data));
+
                     $hang_user = isset($user_data['hang_thanh_vien']) ? $user_data['hang_thanh_vien'] : 'dong';
                     
                     // Chỉ load thông tin hạng nếu là thành viên

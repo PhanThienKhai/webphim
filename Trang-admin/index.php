@@ -4,6 +4,151 @@ session_start();
 // Set timezone to Vietnam
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
+// ============================================
+// API GET ENDPOINTS (JSON Response)
+// ============================================
+
+// API: Lấy tất cả khuyến mãi
+if (isset($_GET['act']) && $_GET['act'] === 'api_khuyenmai' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    header('Content-Type: application/json; charset=utf-8');
+    include "./model/pdo.php";
+    include "./model/khuyenmai.php";
+    
+    try {
+        $data = km_all();
+        echo json_encode([
+            'success' => true,
+            'data' => $data,
+            'count' => count($data)
+        ]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    }
+    exit;
+}
+
+// API: Lấy tất cả phim
+if (isset($_GET['act']) && $_GET['act'] === 'api_phim' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    header('Content-Type: application/json; charset=utf-8');
+    include "./model/pdo.php";
+    include "./model/phim.php";
+    
+    try {
+        $loai = isset($_GET['loai']) ? (int)$_GET['loai'] : 0;
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+        
+        if ($loai > 0) {
+            $data = loadall_phim($search, $loai);
+        } elseif (!empty($search)) {
+            $data = loadall_phim($search);
+        } else {
+            $data = loadall_phim();
+        }
+        
+        echo json_encode([
+            'success' => true,
+            'data' => $data,
+            'count' => count($data)
+        ]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    }
+    exit;
+}
+
+// API: Lấy thông tin rạp
+if (isset($_GET['act']) && $_GET['act'] === 'api_rap' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    header('Content-Type: application/json; charset=utf-8');
+    include "./model/pdo.php";
+    include "./model/rap.php";
+    
+    try {
+        $id_rap = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        
+        if ($id_rap > 0) {
+            $data = rap_one($id_rap);
+            echo json_encode([
+                'success' => true,
+                'data' => $data
+            ]);
+        } else {
+            $data = rap_all();
+            echo json_encode([
+                'success' => true,
+                'data' => $data,
+                'count' => count($data)
+            ]);
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    }
+    exit;
+}
+
+// API: Lấy combo theo rạp
+if (isset($_GET['act']) && $_GET['act'] === 'api_combo' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    header('Content-Type: application/json; charset=utf-8');
+    include "./model/pdo.php";
+    include "./model/combo.php";
+    
+    try {
+        $id_rap = isset($_GET['id_rap']) ? (int)$_GET['id_rap'] : 0;
+        
+        if ($id_rap > 0) {
+            $data = combo_all_by_rap($id_rap);
+        } else {
+            $data = combo_all();
+        }
+        
+        echo json_encode([
+            'success' => true,
+            'data' => $data,
+            'count' => count($data)
+        ]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    }
+    exit;
+}
+
+// API: Lấy lịch chiếu
+if (isset($_GET['act']) && $_GET['act'] === 'api_lichchieu' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    header('Content-Type: application/json; charset=utf-8');
+    include "./model/pdo.php";
+    include "./model/lichchieu.php";
+    
+    try {
+        $id_rap = isset($_GET['id_rap']) ? (int)$_GET['id_rap'] : 0;
+        $id_phim = isset($_GET['id_phim']) ? (int)$_GET['id_phim'] : 0;
+        $from_date = isset($_GET['from']) ? trim($_GET['from']) : null;
+        $to_date = isset($_GET['to']) ? trim($_GET['to']) : null;
+        
+        if ($id_rap > 0 && !empty($from_date) && !empty($to_date)) {
+            $data = lc_list_by_rap_and_date_range($id_rap, $from_date, $to_date);
+        } elseif ($id_rap > 0) {
+            $data = loadall_lichchieu_by_rap($id_rap);
+        } elseif ($id_phim > 0) {
+            $data = pdo_query("SELECT * FROM lichchieu WHERE id_phim = ? ORDER BY ngay_chieu", $id_phim);
+        } else {
+            $data = loadall_lichchieu();
+        }
+        
+        echo json_encode([
+            'success' => true,
+            'data' => $data,
+            'count' => count($data)
+        ]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    }
+    exit;
+}
+
 // Handle AJAX Thêm Phòng POST requests FIRST
 if (isset($_GET['act']) && $_GET['act'] === 'ajax_them_phong' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     while (ob_get_level()) {
@@ -919,7 +1064,8 @@ if(isset($_SESSION['user1'])) {
                         'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
                         'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
                         'room_name' => htmlspecialchars($ticket['tenphong']),
-                        'seat' => htmlspecialchars($ticket['ghe'])
+                        'seat' => htmlspecialchars($ticket['ghe']),
+                        'trang_thai' => (int)$ticket['trang_thai']
                     ]
                 ]);
             }
@@ -936,7 +1082,8 @@ if(isset($_SESSION['user1'])) {
                 'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
                 'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
                 'room_name' => htmlspecialchars($ticket['tenphong']),
-                'seat' => htmlspecialchars($ticket['ghe'])
+                'seat' => htmlspecialchars($ticket['ghe']),
+                'trang_thai' => (int)$ticket['trang_thai']
             ]
         ]);
         exit;
@@ -2818,7 +2965,7 @@ if(isset($_SESSION['user1'])) {
                     foreach ($rows as $r) { $rev_by_date_rows[] = [$r['ngay'], (int)$r['revenue']]; }
                     $rowsR = tk_revenue_by_rap($from, $to);
                     $rev_by_rap_rows = [];
-                    foreach ($rowsR as $r) { $rev_by_rap_rows[] = [$r['ten_rap'], (int)$r['revenue']]; }
+                    foreach ($rowsR as $r) { $rev_by_rap_rows[] = ['id_rap' => (int)$r['id_rap'] ?? 0, 0 => $r['ten_rap'], 1 => (int)$r['revenue']]; }
                     include "./view/cum/home_cum.php";
                 } else {
                     // Mặc định: dashboard Admin hệ thống
@@ -2958,6 +3105,75 @@ if(isset($_SESSION['user1'])) {
                 gui_mail_ve($load_ve_tt);
                 include "./view/user/QTvien.php";
                 break;
+            case "ajax_get_ve":
+                header('Content-Type: application/json');
+                $id_ve = (int)($_GET['id'] ?? 0);
+                if ($id_ve > 0) {
+                    $ve = pdo_query_one("SELECT * FROM ve WHERE id = ?", $id_ve);
+                    if ($ve) {
+                        // Lấy thông tin phim
+                        $phim = pdo_query_one("SELECT tieu_de FROM phim WHERE id = ?", $ve['id_phim']);
+                        // Lấy thông tin lịch chiếu
+                        $lich = pdo_query_one("SELECT ngay_chieu FROM lichchieu WHERE id_phim = ?", $ve['id_phim']);
+                        // Lấy thông tin khung giờ
+                        $khung = pdo_query_one("SELECT thoi_gian_chieu FROM khung_gio_chieu WHERE id = ?", $ve['id_thoi_gian_chieu']);
+                        // Lấy thông tin tài khoản khách
+                        $khach = pdo_query_one("SELECT name, email, phone FROM taikhoan WHERE id = ?", $ve['id_tk']);
+                        
+                        echo json_encode([
+                            'success' => true,
+                            've' => [
+                                'id' => $ve['id'],
+                                'ghe' => $ve['ghe'],
+                                'price' => $ve['price'],
+                                'ngay_dat' => $ve['ngay_dat'],
+                                'trang_thai' => $ve['trang_thai'],
+                                'ten_phim' => $phim['tieu_de'] ?? 'N/A',
+                                'ngay_chieu' => $lich['ngay_chieu'] ?? 'N/A',
+                                'thoi_gian_chieu' => $khung['thoi_gian_chieu'] ?? 'N/A',
+                                'ten_khach' => $khach['name'] ?? 'N/A',
+                                'email' => $khach['email'] ?? 'N/A',
+                                'phone' => $khach['phone'] ?? 'N/A'
+                            ]
+                        ]);
+                    } else {
+                        echo json_encode(['success' => false, 'message' => 'Không tìm thấy vé']);
+                    }
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'ID vé không hợp lệ']);
+                }
+                exit;
+
+            case "tao_don_hoan":
+                header('Content-Type: application/json');
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                $id_ve = (int)($_POST['id_ve'] ?? 0);
+                $ly_do = trim($_POST['ly_do'] ?? '');
+                $so_tien = trim($_POST['so_tien'] ?? '');
+                
+                if ($id_ve > 0 && $id_rap > 0 && !empty($ly_do)) {
+                    dh_tao($id_ve, $id_rap, 'hoan', $ly_do);
+                    echo json_encode(['success' => true, 'message' => 'Tạo yêu cầu hoàn vé thành công']);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ']);
+                }
+                exit;
+
+            case "tao_don_doi":
+                header('Content-Type: application/json');
+                $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
+                $id_ve = (int)($_POST['id_ve'] ?? 0);
+                $ly_do = trim($_POST['ly_do'] ?? '');
+                $id_ve_moi = (int)($_POST['id_ve_moi'] ?? 0);
+                
+                if ($id_ve > 0 && $id_rap > 0 && !empty($ly_do) && $id_ve_moi > 0) {
+                    dh_tao($id_ve, $id_rap, 'doi', $ly_do);
+                    echo json_encode(['success' => true, 'message' => 'Tạo yêu cầu đổi vé thành công']);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ']);
+                }
+                exit;
+
             case "doi_hoan_ve":
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
                 if (isset($_POST['tao'])) {

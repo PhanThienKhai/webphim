@@ -1,0 +1,205 @@
+2025-11-26 16:59:25 [TEST] Order: CINEMA_1764151165_9315 | Amount: 100000
+2025-11-29 16:56:49 - Session Debug:
+id_lichchieu: 843
+id_khachhang: 17
+ghe_list: []
+id_phong: 28
+Session keys: ["id_phim","tieu_de","img","thoi_luong_phim","ngay_chieu","id_lichchieu","thoi_gian_chieu","id_gio","ten_phong","id_phong","loai_phong","ten_rap","id_rap","dia_chi_rap","sdt_rap","gia_ghe","ten_ghe","ten_doan","ghe_string","combo_string","gia_sau_giam","diem_doi","giam_gia_diem"]
+
+2025-11-29 16:58:10 - Session Debug:
+id_lichchieu: 843
+id_khachhang: 17
+ghe_list: []
+id_phong: 1
+Session keys: ["id_phim","tieu_de","img","thoi_luong_phim","ngay_chieu","id_lichchieu","thoi_gian_chieu","id_gio","ten_phong","id_phong","loai_phong","ten_rap","id_rap","dia_chi_rap","sdt_rap","gia_ghe","ten_ghe","ten_doan","ghe_string","combo_string","gia_sau_giam","diem_doi","giam_gia_diem"]
+
+2025-11-29 16:58:10 - ❌ Lỗi: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_lichchieu' in 'field list'
+2025-11-29 17:01:24 - Session Debug:
+id_ngay_chieu: 739
+id_tk: 17
+ghe_list: []
+Session keys: ["id_phim","tieu_de","img","thoi_luong_phim","ngay_chieu","id_lichchieu","thoi_gian_chieu","id_gio","ten_phong","id_phong","loai_phong","ten_rap","id_rap","dia_chi_rap","sdt_rap","gia_ghe","ten_ghe","ten_doan","ghe_string","combo_string","gia_sau_giam","diem_doi","giam_gia_diem"]
+
+2025-11-29 17:01:24 - ❌ Lỗi: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'id_thoi_gian_chieu' cannot be null
+2025-11-29 17:02:53 - Session Debug:
+Session tong: {
+    "id_phim": 37,
+    "tieu_de": "L\u1eadt m\u1eb7t",
+    "img": "Latmat8.png",
+    "thoi_luong_phim": 150,
+    "ngay_chieu": "2025-11-30",
+    "id_lichchieu": 843,
+    "thoi_gian_chieu": "00:00:00",
+    "id_gio": 1826,
+    "ten_phong": "P104(VIP)",
+    "id_phong": 28,
+    "loai_phong": "2D",
+    "ten_rap": "Galaxy Studio Qu\u1eadn 1",
+    "id_rap": 1,
+    "dia_chi_rap": "123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM",
+    "sdt_rap": "028 1234 5678",
+    "gia_ghe": "600000",
+    "ten_ghe": {
+        "ghe": [
+            "J10",
+            "J9",
+            "J8",
+            "J7",
+            "J6",
+            "J5"
+        ]
+    },
+    "ten_doan": {
+        "doan": []
+    },
+    "ghe_string": "J10,J9,J8,J7,J6,J5",
+    "combo_string": null,
+    "gia_sau_giam": 600000
+}
+id_ngay_chieu: 843
+id_tk: 17
+ghe_list: []
+
+2025-11-29 17:03:37 - Session Debug:
+Session tong: {
+    "id_phim": 6,
+    "tieu_de": "B\u00fap b\u00ea",
+    "img": "N\u0103m \u0111\u00eam kinh ho\u00e0ng.jpg",
+    "thoi_luong_phim": 123,
+    "ngay_chieu": "2025-11-30",
+    "id_lichchieu": 739,
+    "thoi_gian_chieu": "00:00:00",
+    "id_gio": 1410,
+    "ten_phong": "P104(VIP)",
+    "id_phong": 28,
+    "loai_phong": "2D",
+    "ten_rap": "Galaxy Studio Qu\u1eadn 1",
+    "id_rap": 1,
+    "dia_chi_rap": "123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM",
+    "sdt_rap": "028 1234 5678",
+    "gia_ghe": "100000",
+    "ten_ghe": {
+        "ghe": [
+            "J9"
+        ]
+    },
+    "ten_doan": {
+        "doan": []
+    },
+    "ghe_string": "J9",
+    "combo_string": null,
+    "gia_sau_giam": 100000
+}
+id_ngay_chieu: 739
+id_tk: 17
+ghe_list: []
+
+2025-11-29 17:05:24 - Session Debug:
+id_ngay_chieu: 739
+id_tk: 17
+ghe_list: ["J9"]
+Full session tong: {"id_phim":6,"tieu_de":"B\u00fap b\u00ea","img":"N\u0103m \u0111\u00eam kinh ho\u00e0ng.jpg","thoi_luong_phim":123,"ngay_chieu":"2025-11-30","id_lichchieu":739,"thoi_gian_chieu":"00:00:00","id_gio":1410,"ten_phong":"P104(VIP)","id_phong":28,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"100000","ten_ghe":{"ghe":["J9"]},"ten_doan":{"doan":[]},"ghe_string":"J9","combo_string":null,"gia_sau_giam":100000}
+
+2025-11-29 17:05:24 - ✅ Vé tạo thành công! Số ghế: 1, Ghế: ["J9"]
+2025-11-29 17:05:24 - ✅ Điểm cập nhật: 10
+2025-11-29 17:06:23 - Session Debug:
+id_ngay_chieu: 843
+id_tk: 17
+ghe_list: ["L12","L11","L10","L9","L8","L7","L6","L5"]
+Full session tong: {"id_phim":37,"tieu_de":"L\u1eadt m\u1eb7t","img":"Latmat8.png","thoi_luong_phim":150,"ngay_chieu":"2025-11-30","id_lichchieu":843,"thoi_gian_chieu":"18:00:00","id_gio":1823,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"1600000","ten_ghe":{"ghe":["L12","L11","L10","L9","L8","L7","L6","L5"]},"ten_doan":{"doan":[]},"ghe_string":"L12,L11,L10,L9,L8,L7,L6,L5","combo_string":null,"gia_sau_giam":1370000,"diem_doi":23000,"giam_gia_diem":230000}
+
+2025-11-29 17:06:23 - ✅ Vé tạo thành công! Số ghế: 8, Ghế: ["L12","L11","L10","L9","L8","L7","L6","L5"]
+2025-11-29 17:06:23 - ✅ Điểm cập nhật: -22863
+2025-11-29 17:10:24 - Session Debug:
+id_ngay_chieu: 869
+id_tk: 17
+ghe_list: ["J10","J9","J8","J7","J6","J5"]
+Full session tong: {"id_phim":33,"tieu_de":"NG\u01af\u1edcI M\u1eb6T TR\u1edcI","img":"406x600-nmt.jpg","thoi_luong_phim":145,"ngay_chieu":"2025-11-30","id_lichchieu":869,"thoi_gian_chieu":"00:00:00","id_gio":1930,"ten_phong":"P104(VIP)","id_phong":28,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"600000","ten_ghe":{"ghe":["J10","J9","J8","J7","J6","J5"]},"ten_doan":{"doan":[]},"ghe_string":"J10,J9,J8,J7,J6,J5","combo_string":null,"gia_sau_giam":600000}
+
+2025-11-29 17:10:24 - ✅ Vé tạo thành công! Số ghế: 6, Ghế: J10,J9,J8,J7,J6,J5
+2025-11-29 17:10:24 - 💰 Tính điểm: Price=600000, Diem_tang=60, Diem_doi=0, Diem_net=60
+2025-11-29 17:10:24 - ✅ Điểm cập nhật: 60
+2025-11-29 17:12:43 - Session Debug:
+id_ngay_chieu: 947
+id_tk: 17
+ghe_list: ["J10","J9","J7","J8","J6","J5"]
+Full session tong: {"id_phim":38,"tieu_de":"PHIM IUH OK","img":"nen.jpg","thoi_luong_phim":128,"ngay_chieu":"2025-11-30","id_lichchieu":947,"thoi_gian_chieu":"00:00:00","id_gio":2242,"ten_phong":"P104(VIP)","id_phong":28,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"1110000","ten_ghe":{"ghe":["J10","J9","J7","J8","J6","J5"]},"ten_doan":{"doan":["Combo Premium","Combo Premium","Combo Premium","Combo Premium","Combo Premium","Combo Premium"]},"ghe_string":"J10,J9,J7,J8,J6,J5","combo_string":"Combo Premium, Combo Premium, Combo Premium, Combo Premium, Combo Premium, Combo Premium","gia_sau_giam":1110000}
+
+2025-11-29 17:12:43 - ✅ Vé tạo thành công! Số ghế: 6, Ghế: J10,J9,J7,J8,J6,J5
+2025-11-29 17:12:43 - 💰 Tính điểm: Price=1110000, Diem_tang=111, Diem_doi=0, Diem_net=111
+2025-11-29 17:12:43 - ✅ Điểm cập nhật: 111
+2025-11-29 17:17:31 - Session Debug:
+id_ngay_chieu: 817
+id_tk: 17
+ghe_list: ["L11","L12","L10","L9","L8","L7","L6","L5"]
+Full session tong: {"id_phim":5,"tieu_de":"K\u1ef3 \u00e1n tr\u00ean b\u0103ng","img":"K\u1ef3 \u00e1n tr\u00ean \u0111\u1ed3i tuy\u1ebft.jpg","thoi_luong_phim":87,"ngay_chieu":"2025-11-30","id_lichchieu":817,"thoi_gian_chieu":"18:00:00","id_gio":1719,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"1600000","ten_ghe":{"ghe":["L11","L12","L10","L9","L8","L7","L6","L5"]},"ten_doan":{"doan":[]},"ghe_string":"L11,L12,L10,L9,L8,L7,L6,L5","combo_string":null,"gia_sau_giam":1600000}
+
+2025-11-29 17:17:31 - ✅ Vé tạo thành công! Số ghế: 8, Ghế: L11,L12,L10,L9,L8,L7,L6,L5
+2025-11-29 17:17:31 - 💰 Tính điểm: Price=1600000, Diem_tang=16000 (mỗi 100 VND = 1 điểm)
+2025-11-29 17:17:31 - ✅ Điểm cộng: +16000
+2025-11-29 17:23:38 - Session Debug:
+id_ngay_chieu: 713
+id_tk: 17
+ghe_list: ["J10","J9","J8","J7","J6","J5"]
+Full session tong: {"id_phim":29,"tieu_de":"B\u1ea3y Vi\u00ean Ng\u1ecdc R\u1ed3ng Si\u00eau C\u1ea5p: Si\u00eau Anh H\u00f9ng","img":"poster.jpg","thoi_luong_phim":128,"ngay_chieu":"2025-11-30","id_lichchieu":713,"thoi_gian_chieu":"00:00:00","id_gio":1306,"ten_phong":"P104(VIP)","id_phong":28,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"600000","ten_ghe":{"ghe":["J10","J9","J8","J7","J6","J5"]},"ten_doan":{"doan":[]},"ghe_string":"J10,J9,J8,J7,J6,J5","combo_string":null,"gia_sau_giam":600000}
+
+2025-11-29 17:23:38 - ✅ Vé tạo thành công! Số ghế: 6, Ghế: J10,J9,J8,J7,J6,J5
+2025-11-29 17:23:38 - 💰 Tính điểm: Price=600000, Diem_tang=6000 (mỗi 100 VND = 1 điểm)
+2025-11-29 17:23:38 - ✅ Điểm cộng: +6000 (kết quả: OK)
+2025-11-29 17:35:36 - Session Debug:
+id_ngay_chieu: 843
+id_tk: 17
+ghe_list: ["L9","L8","L7","L6"]
+Full session tong: {"id_phim":37,"tieu_de":"L\u1eadt m\u1eb7t","img":"Latmat8.png","thoi_luong_phim":150,"ngay_chieu":"2025-11-30","id_lichchieu":843,"thoi_gian_chieu":"18:00:00","id_gio":1823,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"800000","ten_ghe":{"ghe":["L9","L8","L7","L6"]},"ten_doan":{"doan":[]},"ghe_string":"L9,L8,L7,L6","combo_string":null,"gia_sau_giam":740000,"diem_doi":6000,"giam_gia_diem":60000}
+
+2025-11-29 17:35:36 - ✅ Vé tạo thành công! Số ghế: 4, Ghế: L9,L8,L7,L6
+2025-11-29 17:35:36 - 💰 Tính điểm: Price=740000, Diem_tang=7400 (mỗi 100 VND = 1 điểm)
+2025-11-29 17:35:36 - ✅ Điểm cộng: +7400 (kết quả: OK)
+2025-11-29 17:35:36 - ✅ Session user reload: điểm = 17100
+2025-11-29 17:38:35 - Session Debug:
+id_ngay_chieu: 791
+id_tk: 17
+ghe_list: ["L12","L11","L10","L9","L8","L7","L6","L5"]
+Full session tong: {"id_phim":26,"tieu_de":"K\u1eba \u0102N H\u1ed2N","img":"anhon.jpg","thoi_luong_phim":135,"ngay_chieu":"2025-11-30","id_lichchieu":791,"thoi_gian_chieu":"18:00:00","id_gio":1615,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"1600000","ten_ghe":{"ghe":["L12","L11","L10","L9","L8","L7","L6","L5"]},"ten_doan":{"doan":[]},"ghe_string":"L12,L11,L10,L9,L8,L7,L6,L5","combo_string":null,"gia_sau_giam":1430000,"diem_doi":17000,"giam_gia_diem":170000}
+
+2025-11-29 17:38:35 - ✅ Vé tạo thành công! Số ghế: 8, Ghế: L12,L11,L10,L9,L8,L7,L6,L5
+2025-11-29 17:38:35 - 💸 Trừ điểm: -17000 (lý do: Sử dụng giảm giá, kết quả: OK)
+2025-11-29 17:38:35 - 💰 Tính điểm: Price=1430000, Diem_tang=14300 (mỗi 100 VND = 1 điểm)
+2025-11-29 17:38:35 - ✅ Điểm cộng: +14300 (kết quả: OK)
+2025-11-29 17:38:35 - ✅ Session user reload: điểm = 28700
+2025-11-29 17:43:11 - Session Debug:
+id_ngay_chieu: 713
+id_tk: 17
+ghe_list: ["J10","J9","J8","J7","J6","J5"]
+Full session tong: {"id_phim":29,"tieu_de":"B\u1ea3y Vi\u00ean Ng\u1ecdc R\u1ed3ng Si\u00eau C\u1ea5p: Si\u00eau Anh H\u00f9ng","img":"poster.jpg","thoi_luong_phim":128,"ngay_chieu":"2025-11-30","id_lichchieu":713,"thoi_gian_chieu":"00:00:00","id_gio":1306,"ten_phong":"P104(VIP)","id_phong":28,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"700000","ten_ghe":{"ghe":["J10","J9","J8","J7","J6","J5"]},"ten_doan":{"doan":["B\u1eafp rang b\u01a1","B\u1eafp rang b\u01a1"]},"ghe_string":"J10,J9,J8,J7,J6,J5","combo_string":"B\u1eafp rang b\u01a1, B\u1eafp rang b\u01a1","gia_sau_giam":700000}
+
+2025-11-29 17:43:11 - ✅ Vé tạo thành công! Số ghế: 6, Ghế: J10,J9,J8,J7,J6,J5
+2025-11-29 17:43:11 - DEBUG SESSION TONG: {"id_phim":29,"tieu_de":"B\u1ea3y Vi\u00ean Ng\u1ecdc R\u1ed3ng Si\u00eau C\u1ea5p: Si\u00eau Anh H\u00f9ng","img":"poster.jpg","thoi_luong_phim":128,"ngay_chieu":"2025-11-30","id_lichchieu":713,"thoi_gian_chieu":"00:00:00","id_gio":1306,"ten_phong":"P104(VIP)","id_phong":28,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"700000","ten_ghe":{"ghe":["J10","J9","J8","J7","J6","J5"]},"ten_doan":{"doan":["B\u1eafp rang b\u01a1","B\u1eafp rang b\u01a1"]},"ghe_string":"J10,J9,J8,J7,J6,J5","combo_string":"B\u1eafp rang b\u01a1, B\u1eafp rang b\u01a1","gia_sau_giam":700000}
+2025-11-29 17:43:11 - ℹ️ Không dùng điểm để giảm giá (diem_doi không tồn tại hoặc = 0)
+2025-11-29 17:43:11 - 💰 Tính điểm: Price=700000, Diem_tang=7000 (mỗi 100 VND = 1 điểm)
+2025-11-29 17:43:11 - ✅ Điểm cộng: +7000 (kết quả: OK)
+2025-11-29 17:43:11 - ✅ Session user reload: điểm = 14000
+2025-11-29 17:45:11 - Session Debug:
+id_ngay_chieu: 739
+id_tk: 17
+ghe_list: ["J10","J9","J8","J7","J6","J5"]
+Full session tong: {"id_phim":6,"tieu_de":"B\u00fap b\u00ea","img":"N\u0103m \u0111\u00eam kinh ho\u00e0ng.jpg","thoi_luong_phim":123,"ngay_chieu":"2025-11-30","id_lichchieu":739,"thoi_gian_chieu":"00:00:00","id_gio":1410,"ten_phong":"P104(VIP)","id_phong":28,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"600000","ten_ghe":{"ghe":["J10","J9","J8","J7","J6","J5"]},"ten_doan":{"doan":[]},"ghe_string":"J10,J9,J8,J7,J6,J5","combo_string":null,"gia_sau_giam":500000,"diem_doi":1000,"giam_gia_diem":100000}
+
+2025-11-29 17:45:11 - ✅ Vé tạo thành công! Số ghế: 6, Ghế: J10,J9,J8,J7,J6,J5
+2025-11-29 17:45:11 - DEBUG SESSION TONG: {"id_phim":6,"tieu_de":"B\u00fap b\u00ea","img":"N\u0103m \u0111\u00eam kinh ho\u00e0ng.jpg","thoi_luong_phim":123,"ngay_chieu":"2025-11-30","id_lichchieu":739,"thoi_gian_chieu":"00:00:00","id_gio":1410,"ten_phong":"P104(VIP)","id_phong":28,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"600000","ten_ghe":{"ghe":["J10","J9","J8","J7","J6","J5"]},"ten_doan":{"doan":[]},"ghe_string":"J10,J9,J8,J7,J6,J5","combo_string":null,"gia_sau_giam":500000,"diem_doi":1000,"giam_gia_diem":100000}
+2025-11-29 17:45:11 - 💸 Trừ điểm: -1000 (lý do: Sử dụng giảm giá, kết quả: OK)
+2025-11-29 17:45:11 - 💰 Tính điểm: Price=500000, Diem_tang=5000 (mỗi 100 VND = 1 điểm)
+2025-11-29 17:45:11 - ✅ Điểm cộng: +5000 (kết quả: OK)
+2025-11-29 17:45:11 - ✅ Session user reload: điểm = 20500
+2025-11-29 17:46:45 - Session Debug:
+id_ngay_chieu: 765
+id_tk: 17
+ghe_list: ["L12","L11","L9","L10","L8","L7","L6","L5"]
+Full session tong: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-11-30","id_lichchieu":765,"thoi_gian_chieu":"18:00:00","id_gio":1511,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"1600000","ten_ghe":{"ghe":["L12","L11","L9","L10","L8","L7","L6","L5"]},"ten_doan":{"doan":[]},"ghe_string":"L12,L11,L9,L10,L8,L7,L6,L5","combo_string":null,"gia_sau_giam":600000,"diem_doi":10000,"giam_gia_diem":1000000}
+
+2025-11-29 17:46:45 - ✅ Vé tạo thành công! Số ghế: 8, Ghế: L12,L11,L9,L10,L8,L7,L6,L5
+2025-11-29 17:46:45 - DEBUG SESSION TONG: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-11-30","id_lichchieu":765,"thoi_gian_chieu":"18:00:00","id_gio":1511,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"1600000","ten_ghe":{"ghe":["L12","L11","L9","L10","L8","L7","L6","L5"]},"ten_doan":{"doan":[]},"ghe_string":"L12,L11,L9,L10,L8,L7,L6,L5","combo_string":null,"gia_sau_giam":600000,"diem_doi":10000,"giam_gia_diem":1000000}
+2025-11-29 17:46:45 - 💸 Trừ điểm: -10000 (lý do: Sử dụng giảm giá, kết quả: OK)
+2025-11-29 17:46:45 - 💰 Tính điểm: Price=600000, Diem_tang=6000 (mỗi 100 VND = 1 điểm)
+2025-11-29 17:46:45 - ✅ Điểm cộng: +6000 (kết quả: OK)
+2025-11-29 17:46:45 - ✅ Session user reload: điểm = 22500

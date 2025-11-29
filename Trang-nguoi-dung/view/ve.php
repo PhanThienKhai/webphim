@@ -1,5 +1,17 @@
 <!-- Main content -->
-<?php include "view/search.php"; ?>
+<?php 
+// Reload session user nếu vừa thanh toán thành công
+if (isset($_GET['thanh_toan']) && $_GET['thanh_toan'] == 'ok') {
+    if (isset($_SESSION['user'])) {
+        $user_updated = pdo_query_one("SELECT * FROM taikhoan WHERE id = ?", $_SESSION['user']['id']);
+        if ($user_updated) {
+            $_SESSION['user'] = $user_updated;
+        }
+    }
+}
+
+include "view/search.php"; 
+?>
 <form action="index.php?act=huy_ve" method="post">
 <section class="container">
     <div class="order-container">
@@ -53,8 +65,8 @@
                                     <span class="ticket__item ticket__price" style="margin-top: 5px">💰 Giá: <strong class="ticket__cost">' . number_format($price) . ' vnđ</strong></span>
                                 </div>
                                 <div class="ticket-primery" style="position: relative;">
-                                    <div style="position: absolute; top: 68px; right: 41px; width: 67px; height: 68px; background: #fff; border: 1px solid #e5e7eb; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                                        <img src="view/qr.php?data=' . urlencode("http://" . ($_SERVER['HTTP_HOST'] ?? 'localhost') . "/webphim/Trang-nguoi-dung/index.php?act=quetve&id=" . $id) . '" alt="QR Code" style="width: 80px; height: 80px; object-fit: contain;" />
+                                    <div style="position: absolute; top: 40px; right: 20px; width: 150px; height: 150px; background: #fff; border: 2px solid #e5e7eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                        <img src="view/qr.php?data=' . urlencode("http://" . $_SERVER['HTTP_HOST'] . "/webphim/Trang-nguoi-dung/quete.php?id=" . $id) . '&t=' . time() . '" alt="QR Code" style="width: 145px; height: 145px; object-fit: contain;" />
                                     </div>
 <span class="ticket__item ticket__item--primery ticket__film" style="display:flex;"> <strong class="ticket__movie" >PHIM : ' . $tieu_de . '</strong></span>                                    <span class="ticket__item ticket__item--primery">🪑 Ghế: <span class="ticket__place">' . $ghe . '</span></span>
                                     <span class="ticket__item ticket__item--primery">🍿 Combo: <span class="ticket__place">' . $combo . '</span></span>

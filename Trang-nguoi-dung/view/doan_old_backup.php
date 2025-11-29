@@ -13,7 +13,6 @@
 
     .prodoan {
         display: flex;
-        justify-content: space-between;
         flex-wrap: wrap; /* Cho phép các phần tử xuống dòng khi không đủ không gian */
         margin-top: 20px;
     }

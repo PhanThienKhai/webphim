@@ -647,7 +647,7 @@ function tk_revenue_by_date($from_date, $to_date, $id_rap = null){
 
 // Doanh thu theo rạp trong khoảng
 function tk_revenue_by_rap($from_date, $to_date){
-    $sql = "SELECT r.ten_rap,
+    $sql = "SELECT r.id as id_rap, r.ten_rap,
                    COALESCE(SUM(CASE WHEN v.trang_thai IN (1,2,4)
                         AND DATE(COALESCE(hd.ngay_tt, v.ngay_dat)) BETWEEN ? AND ?
                         THEN COALESCE(hd.thanh_tien, v.price) ELSE 0 END),0) AS revenue
@@ -660,3 +660,64 @@ function tk_revenue_by_rap($from_date, $to_date){
             ORDER BY revenue DESC";
     return pdo_query($sql, $from_date, $to_date);
 }
+
+// Top 5 phim bán chạy nhất (theo số vé đã bán)
+function get_top_movies($limit = 5, $from_date = null, $to_date = null, $id_rap = null) {
+    $limit = (int)$limit;
+    $params = [];
+    $where_clauses = ["v.trang_thai IN (1,2,4)"];
+    
+    if ($from_date && $to_date) {
+        $where_clauses[] = "DATE(v.ngay_dat) BETWEEN ? AND ?";
+        $params[] = $from_date;
+        $params[] = $to_date;
+    }
+    
+    if ($id_rap) {
+        $where_clauses[] = "lc.id_rap = ?";
+        $params[] = $id_rap;
+    }
+    
+    $where = "WHERE " . implode(" AND ", $where_clauses);
+    
+    $sql = "SELECT p.id, p.tieu_de, COUNT(v.id) as ticket_count
+            FROM phim p
+            LEFT JOIN lichchieu lc ON lc.id_phim = p.id
+            LEFT JOIN khung_gio_chieu kg ON kg.id_lich_chieu = lc.id
+            LEFT JOIN ve v ON v.id_thoi_gian_chieu = kg.id
+            " . $where . "
+            GROUP BY p.id, p.tieu_de
+            ORDER BY ticket_count DESC
+            LIMIT " . $limit;
+    
+    return empty($params) ? pdo_query($sql) : pdo_query($sql, ...$params);
+}
+
+// Tỉ lệ ghế đã bán vs còn trống
+function get_seat_occupancy($from_date = null, $to_date = null, $id_rap = null) {
+    $params = [];
+    $where_clauses = [];
+    
+    if ($from_date && $to_date) {
+        $where_clauses[] = "DATE(v.ngay_dat) BETWEEN ? AND ?";
+        $params[] = $from_date;
+        $params[] = $to_date;
+    }
+    
+    if ($id_rap) {
+        $where_clauses[] = "p.id_rap = ?";
+        $params[] = $id_rap;
+    }
+    
+    $where = !empty($where_clauses) ? "AND " . implode(" AND ", $where_clauses) : "";
+    
+    $sql = "SELECT 
+            COUNT(DISTINCT pg.id) as total_seats,
+            COUNT(DISTINCT CASE WHEN v.trang_thai IN (1,2,4) " . $where . " THEN v.id END) as sold_seats
+            FROM phongchieu p
+            LEFT JOIN phong_ghe pg ON pg.id_phong = p.id
+            LEFT JOIN ve v ON v.id_phim IS NOT NULL";
+    
+    return empty($params) ? pdo_query_one($sql) : pdo_query_one($sql, ...$params);
+}
+

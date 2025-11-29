@@ -8,6 +8,20 @@ if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == ROL
     include "./view/home/footer.php";
     exit;
 }
+
+if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == ROLE_QUAN_LY_CUM) {
+    // Dashboard cho Quản lý cụm
+    include "./view/home/dashboard_quan_ly_cum.php";
+    include "./view/home/footer.php";
+    exit;
+}
+
+if (isset($_SESSION['user1']['vai_tro']) && $_SESSION['user1']['vai_tro'] == ROLE_NHAN_VIEN) {
+    // Dashboard cho Nhân viên
+    include "./view/home/dashboard_nhan_vien.php";
+    include "./view/home/footer.php";
+    exit;
+}
 ?>
 
 <!-- Content Body Start -->

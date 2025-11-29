@@ -1,92 +1,85 @@
-<?php
-include "./view/home/sideheader.php";
-?>
-<!-- Content Body Start -->
+<?php include "./view/home/sideheader.php"; ?>
+
 <div class="content-body">
-    
-    <!-- Page Headings Start -->
     <div class="row justify-content-between align-items-center mb-10">
-
-        <!-- Page Heading Start -->
         <div class="col-12 col-lg-auto mb-20">
-            <div class="page-heading">
-                <h3>Quản Lý Tài Khoản / <span>Tài Khoản Khách Hàng</span></h3>
-            </div>
-        </div><!-- Page Heading End -->
+            <div class="page-heading"><h3>Quản Lý Tài Khoản / <span>👥 Khách Hàng</span></h3></div>
+        </div>
+    </div>
 
-    </div><!-- Page Headings End -->
-    <?php if(isset($suatc)&&($suatc)!= ""){
-        echo'<p  style="color: red; text-align: center;">' .$suatc. '</p>';
-    }
-    ?>
+    <!-- Table Section -->
     <div class="row">
-
-        <!--Order List Start-->
         <div class="col-12 mb-30">
             <div class="news-item">
                 <div class="content">
-            <div class="table-responsive">
-                <table class="table table-vertical-middle">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên khách hàng </th>
-                        <th>Tài Khoản </th>
-                        <th>Mật khẩu </th>
-                        <th>Email</th>
-                        <th>Số Điện Thoại</th>
-                        <th>Địa Chỉ</th>
-                        <th>Rạp</th>
-                        <th>Vai Trò</th>
-                        <th>Số Vé Đã Mua</th>
-                        <th>Thao Tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach($loadall_kh1 as $kh):?>
-                        <?php extract($kh);
-                        $linksua= "index.php?act=suatk&idsua=".$id;
-                        $linkxoa= "index.php?act=xoatk&idxoa=".$id;?>
-                        <tr>
-                            <td>#<?=$kh['id']?></td>
-                            <td><?=$kh['name']?></td>
-                            <td><?=$kh['user']?></td>
-                            <td><?=$kh['pass']?></td>
-                            <td><?=$kh['email']?></td>
-                            <td><?=$kh['phone']?></td>
-                            <td><?=$kh['dia_chi']?></td>
-                            <td><?= isset($kh['ten_rap']) && $kh['ten_rap'] !== '' ? htmlspecialchars($kh['ten_rap']) : '—' ?></td>
-                            <td>
-                                <?php
-                                if ($vai_tro == '1') {
-                                    echo '<span class="badge badge-danger">Nhân Viên</span>';
-                                } elseif ($vai_tro == '2') {
-                                    echo '<span class="badge badge-primary">Chủ</span>';
-                                } else {
-                                    echo '<span class="badge badge-success">Khách Hàng</span>';
-                                }
-                                ?>
-                            </td>
-
-                            <td><?=$so_ve?></td>
-                            <td class="action h4">
-                                <div class="table-action-buttons">
-                                    <a class="edit button button-box button-xs button-info" href="<?=$linksua?>"><i class="zmdi zmdi-edit"></i></a>
-                                    <a class="delete button button-box button-xs button-danger" href="<?=$linkxoa?>"><i class="zmdi zmdi-delete"></i></a>
-
-                                </div>
-                            </td>
-                        </tr>
-                    <?php endforeach ?>
-
-                    </tbody>
-                </table>
+                    <div class="table-responsive">
+                        <?php if(!empty($loadall_kh1)): ?>
+                            <table class="table table-vertical-middle">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px;">ID</th>
+                                        <th>Tên Khách Hàng</th>
+                                        <th>Tài Khoản</th>
+                                        <th>Email</th>
+                                        <th>Điện Thoại</th>
+                                        <th>Rạp Yêu Thích</th>
+                                        <th>Vai Trò</th>
+                                        <th style="width: 100px;">Vé Đã Mua</th>
+                                        <th style="width: 90px;">Thao Tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach($loadall_kh1 as $kh):?>
+                                    <?php 
+                                        $linksua = "index.php?act=suatk&idsua=" . (int)$kh['id'];
+                                        $linkxoa = "index.php?act=xoatk&idxoa=" . (int)$kh['id'];
+                                        $vai_tro = $kh['vai_tro'] ?? 0;
+                                    ?>
+                                    <tr>
+                                        <td><span class="user-id">#<?= (int)$kh['id'] ?></span></td>
+                                        <td><?= htmlspecialchars($kh['name'] ?? '') ?></td>
+                                        <td><code><?= htmlspecialchars($kh['user'] ?? '') ?></code></td>
+                                        <td><?= htmlspecialchars($kh['email'] ?? '') ?></td>
+                                        <td><?= htmlspecialchars($kh['phone'] ?? '') ?></td>
+                                        <td><?= !empty($kh['ten_rap']) ? htmlspecialchars($kh['ten_rap']) : '—' ?></td>
+                                        <td>
+                                            <?php
+                                            if ($vai_tro == '1') {
+                                                echo '<span class="badge badge-danger">Nhân Viên</span>';
+                                            } elseif ($vai_tro == '2') {
+                                                echo '<span class="badge badge-primary">Chủ Rạp</span>';
+                                            } else {
+                                                echo '<span class="badge badge-success">Khách Hàng</span>';
+                                            }
+                                            ?>
+                                        </td>
+                                        <td><strong><?= (int)($kh['so_ve'] ?? 0) ?></strong></td>
+                                        <td>
+                                            <div class="table-action-buttons">
+                                                <a class="edit button button-box button-xs button-info" href="<?= $linksua ?>" title="Chỉnh sửa">
+                                                    <i class="zmdi zmdi-edit"></i>
+                                                </a>
+                                                <a class="delete button button-box button-xs button-danger" href="<?= $linkxoa ?>" onclick="return confirm('Xóa tài khoản này?')" title="Xóa">
+                                                    <i class="zmdi zmdi-delete"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        <?php else: ?>
+                            <div style="text-align: center; padding: 40px; color: #999;">
+                                <p style="font-size: 40px; margin: 0;">📭</p>
+                                <p style="margin-top: 10px;">Không có khách hàng nào trong hệ thống</p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
             </div>
         </div>
-        <!--Order List End-->
-
     </div>
 
-</div><!-- Content Body End -->
+</div>
 
        

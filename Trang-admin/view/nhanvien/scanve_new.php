@@ -158,10 +158,15 @@
         <div class="scanner-container">
             <h5>📷 Quét Mã QR từ Camera</h5>
             <video id="qr-scanner"></video>
+            <canvas id="debug-canvas" style="display:none;"></canvas>
             <div id="camera-status" style="text-align: center; padding: 20px;">
                 <button class="button" onclick="startCamera()">▶️ Bắt đầu Quét</button>
             </div>
             <div id="camera-error" style="display:none; color:red; text-align:center; margin-top:10px;"></div>
+            <div id="debug-info" style="display:none; background:#f0f0f0; padding:10px; margin-top:10px; border-radius:4px; font-size:12px; color:#666;">
+                <strong>🔍 Debug Info:</strong>
+                <div id="debug-text">Chưa bắt đầu quét</div>
+            </div>
         </div>
     </div>
 
@@ -197,11 +202,12 @@
     <div id="status-container"></div>
 </div>
 
-<script src="/webphim/Trang-admin/js/jsqr.min.js"></script>
 <script>
     let currentTicket = null;
     let cameraStream = null;
     let scanning = false;
+    let scanInterval = null;
+    let barcodeDetector = null;
 
     // Update current time
     function updateTime() {
@@ -227,17 +233,30 @@
         }
     }
 
-    // Start camera
+    // Start camera with BarcodeDetector API
     async function startCamera() {
         if (scanning) return;
+        
+        // Khởi tạo BarcodeDetector
+        try {
+            barcodeDetector = new BarcodeDetector({ formats: ['qr_code'] });
+        } catch (e) {
+            console.warn('BarcodeDetector không hỗ trợ, dùng fallback');
+        }
         
         const video = document.getElementById('qr-scanner');
         const errorDiv = document.getElementById('camera-error');
         const statusDiv = document.getElementById('camera-status');
+        const debugDiv = document.getElementById('debug-info');
+        const debugText = document.getElementById('debug-text');
         
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: 'environment' }
+                video: { 
+                    facingMode: 'environment',
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }
             });
             
             cameraStream = stream;
@@ -245,23 +264,33 @@
             video.style.display = 'block';
             statusDiv.innerHTML = '<button class="button" onclick="stopCamera()">⏹️ Dừng Quét</button>';
             errorDiv.style.display = 'none';
+            if (debugDiv) debugDiv.style.display = 'block';
+            if (debugText) debugText.innerHTML = '⏳ Đang khởi động camera...';
             
             // Wait for video to load before scanning
             video.onloadedmetadata = () => {
                 video.play();
                 scanning = true;
+                if (debugText) debugText.innerHTML = `✅ Camera bật thành công<br>Độ phân giải: ${video.videoWidth}x${video.videoHeight}px<br>⏳ Đang quét QR code...`;
+                console.log('✅ Camera started:', video.videoWidth, 'x', video.videoHeight);
                 scanQRCode();
             };
         } catch (err) {
-            console.error('Camera error:', err);
+            console.error('❌ Camera error:', err);
             errorDiv.style.display = 'block';
             errorDiv.textContent = '❌ Lỗi: ' + err.message + '. Vui lòng cho phép truy cập camera.';
+            if (debugDiv) debugDiv.style.display = 'block';
+            if (debugText) debugText.innerHTML = '❌ Lỗi camera: ' + err.message;
         }
     }
 
     // Stop camera
     function stopCamera() {
         scanning = false;
+        if (scanInterval) {
+            clearInterval(scanInterval);
+            scanInterval = null;
+        }
         if (cameraStream) {
             cameraStream.getTracks().forEach(track => track.stop());
             cameraStream = null;
@@ -270,80 +299,164 @@
         document.getElementById('camera-status').innerHTML = '<button class="button" onclick="startCamera()">▶️ Bắt đầu Quét</button>';
     }
 
-    // Scan QR code from video
+    // Scan QR code from video using BarcodeDetector API
     function scanQRCode() {
         if (!scanning) return;
         
         const video = document.getElementById('qr-scanner');
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
         
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(video, 0, 0);
-        
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        
-        try {
-            const code = jsQR(imageData.data, imageData.width, imageData.height);
-            if (code) {
-                console.log('✅ QR detected:', code.data);
-                checkTicket(code.data);
-                stopCamera();
-                return;
+        // Quét mỗi 100ms
+        scanInterval = setInterval(async () => {
+            if (!scanning || !video) return;
+            
+            // Kiểm tra video đã ready chưa
+            if (video.videoWidth === 0 || video.videoHeight === 0) {
+                return; // Video chưa ready, bỏ qua frame này
             }
-        } catch (err) {
-            console.error('QR scan error:', err);
-        }
-        
-        if (scanning) {
-            requestAnimationFrame(scanQRCode);
-        }
+            
+            try {
+                if (barcodeDetector) {
+                    // Dùng BarcodeDetector API (tốt nhất, built-in browser)
+                    const barcodes = await barcodeDetector.detect(video);
+                    if (barcodes && barcodes.length > 0) {
+                        const qrData = barcodes[0].rawValue;
+                        console.log('✅ QR detected (BarcodeDetector):', qrData);
+                        stopCamera();
+                        checkTicket(qrData);
+                        return;
+                    }
+                } else {
+                    // Fallback: Dùng Canvas + jsQR
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    
+                    if (canvas.width === 0 || canvas.height === 0) {
+                        return; // Canvas không có size, bỏ qua
+                    }
+                    
+                    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+                    
+                    if (!ctx) return;
+                    
+                    ctx.drawImage(video, 0, 0);
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    
+                    // Thử decode bằng toàn bộ ảnh
+                    let code = null;
+                    
+                    // Cố gắng 1: Bình thường
+                    if (typeof jsQR !== 'undefined') {
+                        code = jsQR(imageData.data, imageData.width, imageData.height, {
+                            inversionAttempts: 'attemptBoth'
+                        });
+                    }
+                    
+                    // Cố gắng 2: Crop phần giữa
+                    if (!code && typeof jsQR !== 'undefined') {
+                        const cropSize = Math.min(canvas.width, canvas.height) * 0.7;
+                        const startX = (canvas.width - cropSize) / 2;
+                        const startY = (canvas.height - cropSize) / 2;
+                        
+                        const croppedData = ctx.getImageData(startX, startY, cropSize, cropSize);
+                        code = jsQR(croppedData.data, cropSize, cropSize, {
+                            inversionAttempts: 'attemptBoth'
+                        });
+                    }
+                    
+                    if (code && code.data) {
+                        console.log('✅ QR detected (Canvas/jsQR):', code.data);
+                        stopCamera();
+                        checkTicket(code.data);
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.error('Scan error:', err);
+            }
+        }, 100);
     }
 
     // Check ticket (STEP 1)
     function checkTicket(maVe) {
+        if (!maVe || maVe.trim() === '') {
+            displayError('Vui lòng nhập hoặc quét mã vé');
+            return;
+        }
+
+        // Nếu QR code chứa URL, trích xuất ID
+        let ticketCode = maVe.trim();
+        if (ticketCode.includes('?id=') || ticketCode.includes('&id=')) {
+            try {
+                const urlParams = new URLSearchParams(new URL(ticketCode).search);
+                const id = urlParams.get('id');
+                if (id) ticketCode = id;
+            } catch (e) {
+                console.warn('⚠️ Không parse URL được, dùng toàn bộ data:', maVe);
+            }
+        }
+
         const statusContainer = document.getElementById('status-container');
-        statusContainer.innerHTML = '<div style="text-align:center;"><p>⏳ Đang kiểm tra...</p></div>';
+        statusContainer.innerHTML = '<div style="text-align:center;"><p>⏳ Đang kiểm tra vé...</p></div>';
+        
+        console.log('📤 Gửi request check-in với mã:', ticketCode);
         
         fetch('/webphim/Trang-admin/index.php?act=scanve_check', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ma_ve: maVe.trim() })
+            body: JSON.stringify({ ma_ve: ticketCode })
         })
-        .then(res => res.json())
+        .then(res => {
+            console.log('📥 Response status:', res.status, res.ok);
+            if (!res.ok) throw new Error('Lỗi kết nối: ' + res.status);
+            return res.text().then(text => {
+                console.log('📥 Raw response:', text);
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error('❌ JSON parse error:', e);
+                    throw new Error('Response không phải JSON: ' + text.substring(0, 100));
+                }
+            });
+        })
         .then(data => {
-            console.log('Response:', data);
-            if (data.success) {
+            console.log('✅ Kiểm tra vé:', data);
+            if (data.success && data.ticket) {
                 currentTicket = data.ticket;
                 // Check if ticket is already checked in (trang_thai == 4)
                 if (data.ticket.trang_thai == 4) {
+                    console.log('⏱️ Vé đã check-in');
                     displayAlreadyCheckedIn(data.ticket);
                 } else {
+                    console.log('✅ Vé hợp lệ, hiển thị check-in button');
                     displayCheckResult(data.ticket);
                 }
             } else {
-                displayError(data.message || 'Vé không hợp lệ');
+                console.error('❌ Response không success:', data);
+                displayError(data.message || 'Vé không hợp lệ hoặc không tồn tại');
             }
         })
-        .catch(err => displayError('Lỗi: ' + err.message));
+        .catch(err => {
+            console.error('❌ Lỗi:', err);
+            displayError('Lỗi kết nối: ' + err.message);
+        });
     }
 
     // Display check result with button
     function displayCheckResult(ticket) {
         const html = `
             <div class="status-card status-success">
-                <div class="status-title">VÉ HỢP LỆ</div>
-                <div class="status-subtitle">Nhấn CHECK-IN để xác nhận</div>
+                <div class="status-title">✅ VÉ HỢP LỆ</div>
+                <div class="status-subtitle">Nhấn CHECK-IN để xác nhận khách vào</div>
                 <div class="ticket-info">
-                    <p><strong>🎬 Phim:</strong> ${ticket.movie_title || 'N/A'}</p>
-                    <p><strong>📅 Ngày:</strong> ${ticket.screening_date || 'N/A'}</p>
-                    <p><strong>⏰ Giờ:</strong> ${ticket.screening_time || 'N/A'}</p>
-                    <p><strong>🚪 Phòng:</strong> ${ticket.room_name || 'N/A'}</p>
-                    <p><strong>💺 Ghế:</strong> ${ticket.seat || 'N/A'}</p>
+                    <p><strong>🎬 Phim:</strong> ${escapeHtml(ticket.movie_title || 'N/A')}</p>
+                    <p><strong>📅 Ngày:</strong> ${escapeHtml(ticket.screening_date || 'N/A')}</p>
+                    <p><strong>⏰ Giờ:</strong> ${escapeHtml(ticket.screening_time || 'N/A')}</p>
+                    <p><strong>🚪 Phòng:</strong> ${escapeHtml(ticket.room_name || 'N/A')}</p>
+                    <p><strong>💺 Ghế:</strong> ${escapeHtml(ticket.seat || 'N/A')}</p>
                 </div>
-                <button class="button" onclick="confirmCheckin()" style="width:100%; margin-top:15px; padding:15px; font-size:16px;">
-                    ✅ CHECK-IN
+                <button class="button" onclick="confirmCheckin()" style="width:100%; margin-top:15px; padding:15px; font-size:16px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    ✅ CHECK-IN NGAY
                 </button>
             </div>
         `;
@@ -353,85 +466,123 @@
     // Display if already checked in
     function displayAlreadyCheckedIn(ticket) {
         const html = `
-            <div class="status-card" style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); border: 2px solid #ffc107;">
-                <div class="status-title" style="color: #856404;">✓ ĐÃ CHECK-IN RỒI</div>
+            <div class="status-card" style="background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); border: 2px solid #ffc107; color: #856404;">
+                <div class="status-title" style="color: #856404;">⏱️ ĐÃ CHECK-IN RỒI</div>
                 <div class="status-subtitle" style="color: #856404;">Vé này đã được sử dụng</div>
-                <div class="ticket-info" style="background: rgba(0,0,0,0.05);">
-                    <p><strong>🎬 Phim:</strong> ${ticket.movie_title || 'N/A'}</p>
-                    <p><strong>📅 Ngày:</strong> ${ticket.screening_date || 'N/A'}</p>
-                    <p><strong>⏰ Giờ:</strong> ${ticket.screening_time || 'N/A'}</p>
-                    <p><strong>🚪 Phòng:</strong> ${ticket.room_name || 'N/A'}</p>
-                    <p><strong>💺 Ghế:</strong> ${ticket.seat || 'N/A'}</p>
-                    <p style="margin-top: 15px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 10px;"><strong>✓ Check-in lúc:</strong> ${ticket.check_in_luc || 'N/A'}</p>
+                <div class="ticket-info" style="background: rgba(0,0,0,0.05); color: inherit;">
+                    <p><strong>🎬 Phim:</strong> ${escapeHtml(ticket.movie_title || 'N/A')}</p>
+                    <p><strong>📅 Ngày:</strong> ${escapeHtml(ticket.screening_date || 'N/A')}</p>
+                    <p><strong>⏰ Giờ:</strong> ${escapeHtml(ticket.screening_time || 'N/A')}</p>
+                    <p><strong>🚪 Phòng:</strong> ${escapeHtml(ticket.room_name || 'N/A')}</p>
+                    <p><strong>💺 Ghế:</strong> ${escapeHtml(ticket.seat || 'N/A')}</p>
+                    <p style="margin-top: 15px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 10px;"><strong>✓ Check-in lúc:</strong> ${escapeHtml(ticket.check_in_luc || 'N/A')}</p>
                 </div>
             </div>
         `;
         document.getElementById('status-container').innerHTML = html;
     }
 
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+        if (!text) return '';
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return String(text).replace(/[&<>"']/g, m => map[m]);
+    }
+
     // Confirm check-in (STEP 2)
     function confirmCheckin() {
-        if (!currentTicket) {
+        if (!currentTicket || !currentTicket.id) {
             displayError('Lỗi: Không tìm thấy vé');
             return;
         }
         
         const statusContainer = document.getElementById('status-container');
-        statusContainer.innerHTML = '<div style="text-align:center;"><p>⏳ Đang xác nhận...</p></div>';
+        statusContainer.innerHTML = '<div style="text-align:center;"><p>⏳ Đang xác nhận check-in...</p></div>';
+        
+        console.log('📤 Gửi check-in với ID:', currentTicket.id);
         
         fetch('/webphim/Trang-admin/index.php?act=scanve_new', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_ve: currentTicket.id })
         })
-        .then(res => res.json())
+        .then(res => {
+            console.log('📥 Check-in response status:', res.status);
+            if (!res.ok) throw new Error('Lỗi kết nối: ' + res.status);
+            return res.text().then(text => {
+                console.log('📥 Raw response:', text.substring(0, 200));
+                try {
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error('❌ JSON parse error:', e);
+                    throw new Error('Response không phải JSON');
+                }
+            });
+        })
         .then(data => {
-            if (data.success) {
+            console.log('✅ Check-in response:', data);
+            if (data.success && data.ticket) {
+                console.log('✅ Check-in thành công, hiển thị success');
                 displaySuccess(data.ticket);
                 currentTicket = null;
             } else {
+                console.error('❌ Check-in không thành công:', data);
                 displayError(data.message || 'Check-in thất bại');
             }
         })
-        .catch(err => displayError('Lỗi: ' + err.message));
+        .catch(err => {
+            console.error('❌ Check-in error:', err);
+            displayError('Lỗi: ' + err.message);
+        });
     }
 
     // Display success
     function displaySuccess(ticket) {
         const html = `
             <div class="status-card status-success">
-                <div class="status-title">CHECK-IN THÀNH CÔNG</div>
+                <div class="status-title">🎉 CHECK-IN THÀNH CÔNG</div>
                 <div class="status-subtitle">Khách được vào phòng chiếu</div>
                 <div class="ticket-info">
-                    <p><strong>🎬 Phim:</strong> ${ticket.movie_title || 'N/A'}</p>
-                    <p><strong>📅 Ngày:</strong> ${ticket.screening_date || 'N/A'}</p>
-                    <p><strong>⏰ Giờ:</strong> ${ticket.screening_time || 'N/A'}</p>
-                    <p><strong>🚪 Phòng:</strong> ${ticket.room_name || 'N/A'}</p>
-                    <p><strong>💺 Ghế:</strong> ${ticket.seat || 'N/A'}</p>
+                    <p><strong>🎬 Phim:</strong> ${escapeHtml(ticket.movie_title || 'N/A')}</p>
+                    <p><strong>📅 Ngày:</strong> ${escapeHtml(ticket.screening_date || 'N/A')}</p>
+                    <p><strong>⏰ Giờ:</strong> ${escapeHtml(ticket.screening_time || 'N/A')}</p>
+                    <p><strong>🚪 Phòng:</strong> ${escapeHtml(ticket.room_name || 'N/A')}</p>
+                    <p><strong>💺 Ghế:</strong> ${escapeHtml(ticket.seat || 'N/A')}</p>
                 </div>
             </div>
         `;
         document.getElementById('status-container').innerHTML = html;
         
-        // Clear result after 2 seconds
+        // Clear result after 3 seconds and reset camera
         setTimeout(() => {
             document.getElementById('status-container').innerHTML = '';
-            // Switch back to camera tab
+            // Tự động quay lại tab camera để quét tiếp
             document.getElementById('tab-camera').classList.add('active');
             document.getElementById('tab-manual').classList.remove('active');
             document.getElementById('tab-history').classList.remove('active');
             document.querySelectorAll('.tab-btn')[0].classList.add('active');
             document.querySelectorAll('.tab-btn')[1].classList.remove('active');
             document.querySelectorAll('.tab-btn')[2].classList.remove('active');
-        }, 2000);
+            
+            // Tự động bắt đầu quét lại
+            if (!scanning) {
+                startCamera();
+            }
+        }, 3000);
     }
 
     // Display error
     function displayError(msg) {
         const html = `
             <div class="status-card status-error">
-                <div class="status-title">LỖI</div>
-                <p>${msg}</p>
+                <div class="status-title">❌ LỖI</div>
+                <p>${escapeHtml(msg)}</p>
             </div>
         `;
         document.getElementById('status-container').innerHTML = html;
@@ -552,4 +703,7 @@
         }
     }, 1000);
 </script>
+
+<!-- jsQR Local Library (Không phụ thuộc CDN) -->
+<script src="/webphim/js/jsqr-local.js"></script>
 

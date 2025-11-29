@@ -5,6 +5,16 @@ session_start();
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 include "model/pdo.php";
+
+// Luôn reload session user từ database để lấy dữ liệu mới nhất (điểm vừa được cộng)
+if (isset($_SESSION['user']) && isset($_SESSION['user']['id'])) {
+    $user_updated = pdo_query_one("SELECT * FROM taikhoan WHERE id = ?", $_SESSION['user']['id']);
+    if ($user_updated) {
+        $_SESSION['user'] = $user_updated;
+    }
+}
+
+
 include "model/loai_phim.php";
 include "model/phim.php";
 include "model/taikhoan.php";
@@ -29,7 +39,7 @@ include "view/header.php";
   (function () {
     const script = document.createElement('script');
     script.async = true;
-    script.src = `http://localhost:3000/bot.js?webhookUrl=https://aidemo.membee.app/webhook/54764430-2511-4013-8d8e-ad94171f4680/chat&title=Galaxy 
+    script.src = `http://localhost:3000/bot.js?webhookUrl=https://aidemo.workai.vn/webhook/bc6301f8-91ae-4357-be1f-4a99696fcd65/chat&title=Galaxy 
     Studio&subtitle=&messageBot=Chúng tôi hỗ trợ được gì cho anh chị.&welcomeBot=Chatbot hỗ trợ thông tin phim Galaxy studio.`;
     document.body.appendChild(script);
   })();

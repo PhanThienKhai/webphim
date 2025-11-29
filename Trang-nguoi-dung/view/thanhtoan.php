@@ -34,8 +34,8 @@ $diem_doi = 0;
 $giam_gia_diem = 0;
 $error_diem = '';
 
-// Tỷ lệ quy đổi: 1000 điểm = 10,000 VND
-define('TI_LE_DOI_DIEM', 10); // 1 điểm = 10 VND
+// Tỷ lệ quy đổi: 100,000 điểm = 10,000,000 VND (tức 100 VND = 1 điểm - nhất quán với cộng điểm)
+define('TI_LE_DOI_DIEM', 100); // 1 điểm = 100 VND
 
 // Xử lý hủy đổi điểm
 if (isset($_POST['huy_diem'])) {
@@ -377,7 +377,7 @@ $gia = number_format($gia_total, 0, ',', '.');
                         </span>
                     </div>
                     <div style="color: white; font-size: 13px; margin-bottom: 10px;">
-                        💡 Tỷ lệ đổi: <strong>1,000 điểm = 10,000 VND</strong> | Tối thiểu: 1,000 điểm
+                        💡 Tỷ lệ đổi: <strong>100,000 điểm = 10,000,000 VND</strong> (100 VND = 1 điểm) | Tối thiểu: 1,000 điểm
                     </div>
                     <div class="promo-input-group">
                         <input type="number" 
@@ -453,38 +453,167 @@ $gia = number_format($gia_total, 0, ',', '.');
                     <input type="hidden" name="giam_gia_applied" value="<?php echo $giam_gia; ?>">
                 <?php endif; ?>
                 
-            <div class="payment">
-                <ul style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-                    <li style="flex: 0 1 auto;">
-                        <a href="view/momo/xuly_vietqr.php" class="payment__item" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; padding: 20px; border: 2px solid #eee; border-radius: 12px; transition: all 0.3s;">
-                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #1e40af, #3b82f6); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; font-weight: bold;">₫</div>
-                            <label class="tt" style="margin-top: 10px; font-weight: 600; color: #1e40af; cursor: pointer;">VietQR</label>
-                        </a>
-                    </li>
-                    
-                    <li style="flex: 0 1 auto;">
-                        <a href="view/momo/xuly_momo_atm.php" class="payment__item" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; padding: 20px; border: 2px solid #eee; border-radius: 12px; transition: all 0.3s;">
-                            <img alt='MoMo' src="images/payment/momo.jpg" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover;">
-                            <label class="tt" style="margin-top: 10px; font-weight: 600; color: #A50064; cursor: pointer;">MoMo</label>
-                        </a>
-                    </li>
-                    
-                    <li style="flex: 0 1 auto;">
-                        <a href="view/momo/xuly_zalopay.php" class="payment__item" style="display: flex; flex-direction: column; align-items: center; text-decoration: none; padding: 20px; border: 2px solid #eee; border-radius: 12px; transition: all 0.3s;">
-                            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #0068FF, #00A7FF); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 36px; color: white; font-weight: bold;">Z</div>
-                            <label class="tt" style="margin-top: 10px; font-weight: 600; color: #0068FF; cursor: pointer;">ZaloPay</label>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            
-            <style>
-                .payment__item:hover {
-                    border-color: #667eea !important;
-                    transform: translateY(-5px);
-                    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-                }
-            </style>
+                <style>
+                    .payment-methods-container {
+                        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+                        padding: 30px;
+                        border-radius: 12px;
+                        margin: 20px 0;
+                    }
+
+                    .payment-methods-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                        gap: 20px;
+                        margin-top: 20px;
+                    }
+
+                    .payment-method-card {
+                        background: white;
+                        border: 2px solid #e5e7eb;
+                        border-radius: 12px;
+                        padding: 20px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        text-decoration: none;
+                        color: inherit;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .payment-method-card:hover {
+                        border-color: #667eea;
+                        transform: translateY(-8px);
+                        box-shadow: 0 12px 30px rgba(102, 126, 234, 0.25);
+                    }
+
+                    .payment-method-icon {
+                        width: 80px;
+                        height: 80px;
+                        border-radius: 12px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 40px;
+                        font-weight: bold;
+                        margin-bottom: 12px;
+                    }
+
+                    .payment-method-name {
+                        font-weight: 700;
+                        font-size: 16px;
+                        margin-bottom: 6px;
+                    }
+
+                    .payment-method-desc {
+                        font-size: 12px;
+                        color: #9ca3af;
+                    }
+
+                    /* Zalopay */
+                    .payment-zalopay .payment-method-icon {
+                        background: linear-gradient(135deg, #0068FF 0%, #00A7FF 100%);
+                        color: white;
+                    }
+
+                    .payment-zalopay .payment-method-name {
+                        color: #0068FF;
+                    }
+
+                    .payment-zalopay:hover {
+                        background: linear-gradient(135deg, #0068FF10 0%, #00A7FF10 100%);
+                    }
+
+                    /* MoMo */
+                    .payment-momo .payment-method-icon {
+                        background: linear-gradient(135deg, #C41E3A 0%, #A50064 100%);
+                        color: white;
+                    }
+
+                    .payment-momo .payment-method-name {
+                        color: #A50064;
+                    }
+
+                    .payment-momo:hover {
+                        background: linear-gradient(135deg, #A5006415 0%, #C41E3A15 100%);
+                    }
+
+                    /* VietQR */
+                    .payment-vietqr .payment-method-icon {
+                        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+                        color: white;
+                    }
+
+                    .payment-vietqr .payment-method-name {
+                        color: #1e40af;
+                    }
+
+                    .payment-vietqr:hover {
+                        background: linear-gradient(135deg, #1e40af15 0%, #3b82f615 100%);
+                    }
+
+                    /* PayOS */
+                    .payment-payos .payment-method-icon {
+                        background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
+                        color: white;
+                    }
+
+                    .payment-payos .payment-method-name {
+                        color: #00D4FF;
+                    }
+
+                    /* MoMo QR */
+                    .payment-momo .payment-method-icon {
+                        background: linear-gradient(135deg, #e91e63 0%, #c2185b 100%);
+                    }
+
+                    .payment-momo .payment-method-name {
+                        color: #e91e63;
+                    }
+
+                    .payment-momo:hover {
+                        background: linear-gradient(135deg, #e91e6315 0%, #c2185b15 100%);
+                    }
+
+                    .payment-info {
+                        background: #f0f4ff;
+                        border-left: 4px solid #667eea;
+                        padding: 15px;
+                        border-radius: 6px;
+                        margin-bottom: 20px;
+                        font-size: 14px;
+                        color: #333;
+                    }
+
+                    .payment-info strong {
+                        color: #667eea;
+                    }
+                </style>
+
+                <div class="payment-info">
+                    ℹ️ <strong>Lưu ý:</strong> Chọn phương thức thanh toán bên dưới để tiếp tục
+                </div>
+
+                <div class="payment-methods-container">
+                    <div class="payment-methods-grid">
+                        <!-- MoMo QR -->
+                        <button type="button" onclick="initiateMoMoPayment()" class="payment-method-card payment-momo" style="cursor: pointer; border: none; background: none; padding: 0; text-align: center;">
+                            <div class="payment-method-icon">📱</div>
+                            <div class="payment-method-name">MoMo QR</div>
+                            <div class="payment-method-desc">Quét mã QR</div>
+                        </button>
+
+                        <!-- VietQR -->
+                        <button type="button" onclick="initiateVietQRPayment()" class="payment-method-card payment-vietqr" style="cursor: pointer; border: none; background: none; padding: 0; text-align: center;">
+                            <div class="payment-method-icon">🏦</div>
+                            <div class="payment-method-name">VietQR</div>
+                            <div class="payment-method-desc">Chuyển tiền</div>
+                        </button>
+                    </div>
+                </div>
             </form>
 
         </div>
@@ -499,3 +628,86 @@ $gia = number_format($gia_total, 0, ',', '.');
 
 <div class="clearfix"></div>
 
+<script>
+/**
+ * Xử lý thanh toán MoMo ATM (Redirect trực tiếp)
+ */
+function initiateMoMoPayment() {
+    const amount = <?php echo (int)$gia_total; ?>;
+    
+    console.log('🔍 MoMo Amount:', amount);
+    
+    if (amount <= 0) {
+        alert('❌ Số tiền không hợp lệ! Vui lòng kiểm tra đơn đặt hàng của bạn.');
+        console.error('❌ Invalid amount:', amount);
+        return;
+    }
+    
+    console.log('✅ Redirecting to MoMo payment...');
+    // Redirect trực tiếp tới xử lý MoMo ATM
+    window.location.href = '/webphim/Trang-nguoi-dung/view/momo/xuly_momo_atm.php';
+}
+
+/**
+ * Xử lý thanh toán VietQR bằng AJAX
+ * Redirect tới trang checkout
+ */
+function initiateVietQRPayment() {
+    const amount = <?php echo $gia_total; ?>;
+    
+    if (amount < 10000) {
+        alert('Số tiền thanh toán phải tối thiểu 10,000 VND');
+        return;
+    }
+    
+    const btn = event.target.closest('button');
+    const originalText = btn.innerText;
+    btn.disabled = true;
+    btn.innerText = '⏳ Đang tạo QR...';
+    
+    fetch('/webphim/Trang-nguoi-dung/api_create_vietqr_payment.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            amount: amount,
+            description: 'Ve phim CinePass'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        btn.disabled = false;
+        btn.innerText = originalText;
+        
+        if (data.error === 0 && data.data) {
+            console.log('✅ VietQR created:', data.data);
+            
+            // Build checkout URL with all parameters
+            const params = new URLSearchParams({
+                orderId: data.data.orderId,
+                amount: data.data.amount,
+                bankName: data.data.bankName,
+                bankCode: data.data.bankCode,
+                accountNumber: data.data.accountNumber,
+                accountName: data.data.accountName,
+                description: data.data.description,
+                qrCode: data.data.qrCode || ''
+            });
+            
+            // Redirect tới trang checkout
+            window.location.href = '/webphim/Trang-nguoi-dung/vietqr_checkout.php?' + params.toString();
+        } else {
+            const errorMsg = data.message || 'Không thể tạo QR VietQR';
+            console.error('❌ Error:', data);
+            alert('Lỗi: ' + errorMsg);
+        }
+    })
+    .catch(error => {
+        btn.disabled = false;
+        btn.innerText = originalText;
+        console.error('❌ Fetch error:', error);
+        alert('Lỗi kết nối: ' + error.message);
+    });
+}
+</script>

@@ -12,7 +12,6 @@
 
     .prodoan {
         display: flex;
-        justify-content: space-between;
         flex-wrap: wrap;
         margin-top: 20px;
     }
@@ -21,7 +20,7 @@
         width: 23%;
         margin-bottom: 20px;
         border: 1px solid #ddd;
-        padding: 10px;
+        padding: 0px;
         text-align: center;
         border-radius: 10px;
         transition: all 0.3s ease;

@@ -371,15 +371,20 @@ function cc_quick_checkin($id_nv, $id_rap){
     $now_time = date('H:i:s');
     $checkout_time = date('H:i:s', strtotime('+8 hours')); // Mặc định 8h
     
+    // Get GPS data from POST
+    $latitude = $_POST['latitude'] ?? null;
+    $longitude = $_POST['longitude'] ?? null;
+    $location_accuracy = $_POST['location_accuracy'] ?? null;
+    
     // Kiểm tra đã check-in chưa
     $status = cc_check_today_status($id_nv, $id_rap);
     if ($status['status'] !== 'not_checked_in') {
         throw new Exception('Bạn đã check-in hôm nay rồi');
     }
     
-    // Insert record
-    pdo_execute("INSERT INTO cham_cong(id_nv, id_rap, ngay, gio_vao, gio_ra, ghi_chu) VALUES(?,?,?,?,?,?)",
-                $id_nv, $id_rap, $today, $now_time, $checkout_time, 'Self check-in');
+    // Insert record with GPS data
+    pdo_execute("INSERT INTO cham_cong(id_nv, id_rap, ngay, gio_vao, gio_ra, ghi_chu, latitude, longitude, location_accuracy) VALUES(?,?,?,?,?,?,?,?,?)",
+                $id_nv, $id_rap, $today, $now_time, $checkout_time, 'Self check-in', $latitude, $longitude, $location_accuracy);
     
     return ['success' => true, 'time' => $now_time, 'message' => 'Check-in thành công lúc ' . date('H:i')];
 }
@@ -389,6 +394,11 @@ function cc_quick_checkout($id_nv, $id_rap){
     cc_ensure_schema();
     $today = date('Y-m-d');
     $now_time = date('H:i:s');
+    
+    // Get GPS data from POST
+    $latitude = $_POST['latitude'] ?? null;
+    $longitude = $_POST['longitude'] ?? null;
+    $location_accuracy = $_POST['location_accuracy'] ?? null;
     
     // Kiểm tra trạng thái
     $status = cc_check_today_status($id_nv, $id_rap);
@@ -409,9 +419,9 @@ function cc_quick_checkout($id_nv, $id_rap){
         throw new Exception('Giờ check-out phải sau giờ check-in ít nhất 1 tiếng');
     }
     
-    // Update giờ ra
-    pdo_execute("UPDATE cham_cong SET gio_ra = ?, ghi_chu = 'Self check-out' WHERE id = ?",
-                $now_time, $status['record']['id']);
+    // Update giờ ra with GPS data
+    pdo_execute("UPDATE cham_cong SET gio_ra = ?, ghi_chu = 'Self check-out', latitude = ?, longitude = ?, location_accuracy = ? WHERE id = ?",
+                $now_time, $latitude, $longitude, $location_accuracy, $status['record']['id']);
     
     $total_hours = round($diff_hours, 1);
     return ['success' => true, 'time' => $now_time, 'total_hours' => $total_hours, 'message' => 'Check-out thành công. Tổng: ' . $total_hours . ' giờ'];

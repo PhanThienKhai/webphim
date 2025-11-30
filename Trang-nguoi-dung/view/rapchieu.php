@@ -7,7 +7,7 @@ $placeholderImg = 'login-ui2/login-ui2/assets/galaxygovap.jpg';
 
 <style>
 .cinema-page-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #a5abc6ff 0%, #764ba2 100%);
     color: white;
     padding: 50px 0;
     margin-bottom: 40px;
@@ -117,7 +117,7 @@ $placeholderImg = 'login-ui2/login-ui2/assets/galaxygovap.jpg';
     align-items: flex-start;
     margin-bottom: 10px;
     color: #555;
-    font-size: 1rem;
+    font-size: 13px;
 }
 
 .cinema-info-item i {
@@ -167,8 +167,9 @@ $placeholderImg = 'login-ui2/login-ui2/assets/galaxygovap.jpg';
 }
 
 .btn-primary-cinema {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #a7aeceff 0%, #764ba2 100%);
     color: white;
+    font-size: 13px;
 }
 
 .btn-primary-cinema:hover {
@@ -177,8 +178,9 @@ $placeholderImg = 'login-ui2/login-ui2/assets/galaxygovap.jpg';
 }
 
 .btn-success-cinema {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background: linear-gradient(135deg, #9db6b4ff 0%, #6d927bff 100%);
     color: white;
+    font-size: 13px;
 }
 
 .btn-success-cinema:hover {

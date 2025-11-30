@@ -148,13 +148,13 @@
 
     <!-- Tabs -->
     <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('camera')">📷 Quét QR (Camera)</button>
-        <button class="tab-btn" onclick="switchTab('manual')">⌨️ Nhập Mã Vé</button>
+        <button class="tab-btn" onclick="switchTab('camera')">📷 Quét QR (Camera)</button>
+        <button class="tab-btn active" onclick="switchTab('manual')">⌨️ Nhập Mã Vé</button>
         <button class="tab-btn" onclick="switchTab('history')">📋 Lịch Sử Check-in</button>
     </div>
 
     <!-- Camera Tab -->
-    <div class="tab-content active" id="tab-camera">
+    <div class="tab-content" id="tab-camera">
         <div class="scanner-container">
             <h5>📷 Quét Mã QR từ Camera</h5>
             <video id="qr-scanner"></video>
@@ -171,9 +171,12 @@
     </div>
 
     <!-- Manual Input Tab -->
-    <div class="tab-content" id="tab-manual">
+    <div class="tab-content active" id="tab-manual">
         <div class="scanner-container">
             <h5>⌨️ Nhập Mã Vé</h5>
+            <p style="color: #666; margin-bottom: 15px; font-size: 14px;">
+                💡 Nhập ID vé hoặc paste URL vé để kiểm tra. Ví dụ: <code>434</code> hoặc <code>https://localhost/webphim/Trang-nguoi-dung/quete.php?id=434</code>
+            </p>
             <form id="form-manual" style="display: flex; gap: 10px;">
                 <input 
                     type="text" 
@@ -704,6 +707,6 @@
     }, 1000);
 </script>
 
-<!-- jsQR Local Library (Không phụ thuộc CDN) -->
-<script src="/webphim/js/jsqr-local.js"></script>
+<!-- jsQR Library from Local (không cần CDN) -->
+<script src="/webphim/js/jsQR.min.js"></script>
 

@@ -1,33 +1,39 @@
 <?php
-// Định nghĩa vai trò (giữ nguyên số cũ và mở rộng)
-// 0: Khách hàng (thành viên)
-// 1: Nhân viên rạp
-// 2: Admin hệ thống (quản trị toàn bộ hệ thống)
-// 3: Quản lí rạp (manager 1 rạp cụ thể)
-// 4: Quản lí cụm rạp (quản lí nhiều rạp)
+// Prevent redeclaration
+if (!defined('ROLE_KHACH_HANG')) {
+    // Định nghĩa vai trò (giữ nguyên số cũ và mở rộng)
+    // 0: Khách hàng (thành viên)
+    // 1: Nhân viên rạp
+    // 2: Admin hệ thống (quản trị toàn bộ hệ thống)
+    // 3: Quản lí rạp (manager 1 rạp cụ thể)
+    // 4: Quản lí cụm rạp (quản lí nhiều rạp)
 
-define('ROLE_KHACH_HANG', 0);
-define('ROLE_NHAN_VIEN', 1);
-define('ROLE_ADMIN_HE_THONG', 2);
-define('ROLE_QUAN_LY_RAP', 3);
-define('ROLE_QUAN_LY_CUM', 4);
+    define('ROLE_KHACH_HANG', 0);
+    define('ROLE_NHAN_VIEN', 1);
+    define('ROLE_ADMIN_HE_THONG', 2);
+    define('ROLE_QUAN_LY_RAP', 3);
+    define('ROLE_QUAN_LY_CUM', 4);
+}
 
-function role_label($vai_tro)
-{
-    switch ((int)$vai_tro) {
-        case ROLE_ADMIN_HE_THONG: return 'Admin hệ thống';
-        case ROLE_QUAN_LY_CUM: return 'Quản lí cụm rạp';
-        case ROLE_QUAN_LY_RAP: return 'Quản lí rạp';
-        case ROLE_NHAN_VIEN: return 'Nhân viên rạp';
-        case ROLE_KHACH_HANG: return 'Khách hàng';
-        default: return 'Khác';
+if (!function_exists('role_label')) {
+    function role_label($vai_tro)
+    {
+        switch ((int)$vai_tro) {
+            case ROLE_ADMIN_HE_THONG: return 'Admin hệ thống';
+            case ROLE_QUAN_LY_CUM: return 'Quản lí cụm rạp';
+            case ROLE_QUAN_LY_RAP: return 'Quản lí rạp';
+            case ROLE_NHAN_VIEN: return 'Nhân viên rạp';
+            case ROLE_KHACH_HANG: return 'Khách hàng';
+            default: return 'Khác';
+        }
     }
 }
 
-// Bản đồ quyền theo action (act)
-function permission_map()
-{
-    return [
+if (!function_exists('permission_map')) {
+    // Bản đồ quyền theo action (act)
+    function permission_map()
+    {
+        return [
         // Trang chủ admin (dashboard)
         'home' => [ROLE_ADMIN_HE_THONG, ROLE_QUAN_LY_CUM, ROLE_QUAN_LY_RAP, ROLE_NHAN_VIEN],
 
@@ -86,6 +92,7 @@ function permission_map()
         // Nhân viên: lịch làm, xin nghỉ, scan vé
         'nv_lichlamviec' => [ROLE_NHAN_VIEN],
         'nv_chamcong'    => [ROLE_NHAN_VIEN], // Self-service attendance check-in/out
+        'nv_chamcong_face' => [ROLE_NHAN_VIEN], // Face recognition attendance check-in/out
         'xinnghi'        => [ROLE_NHAN_VIEN],
         'scanve_new'     => [ROLE_NHAN_VIEN, ROLE_QUAN_LY_RAP], // Modern QR scanner
         'scanve_simple'  => [ROLE_NHAN_VIEN, ROLE_QUAN_LY_RAP], // Simple native camera QR scanner
@@ -153,24 +160,28 @@ function permission_map()
         'TKrap'           => [ROLE_ADMIN_HE_THONG, ROLE_QUAN_LY_CUM, ROLE_QUAN_LY_RAP],
         'DTphim_rap'      => [ROLE_ADMIN_HE_THONG, ROLE_QUAN_LY_CUM, ROLE_QUAN_LY_RAP],
     ];
+    }
 }
 
-function allowed_act($act, $vai_tro)
-{
-    $map = permission_map();
-    // Deny-by-default: nếu action không được khai báo trong map thì từ chối
-    if (!isset($map[$act])) return false;
-    return in_array((int)$vai_tro, $map[$act], true);
+if (!function_exists('allowed_act')) {
+    function allowed_act($act, $vai_tro)
+    {
+        $map = permission_map();
+        // Deny-by-default: nếu action không được khai báo trong map thì từ chối
+        if (!isset($map[$act])) return false;
+        return in_array((int)$vai_tro, $map[$act], true);
+    }
 }
 
 // Helper: enforce permission for current session user; call at controller entry points
-function enforce_act_or_403($act)
-{
-    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-    $user = $_SESSION['user1'] ?? $_SESSION['user'] ?? null;
-    $vai_tro = $user['vai_tro'] ?? null;
-    if (!allowed_act($act, $vai_tro)) {
-        // send 403 and optionally render a friendly page
+if (!function_exists('enforce_act_or_403')) {
+    function enforce_act_or_403($act)
+    {
+        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+        $user = $_SESSION['user1'] ?? $_SESSION['user'] ?? null;
+        $vai_tro = $user['vai_tro'] ?? null;
+        if (!allowed_act($act, $vai_tro)) {
+            // send 403 and optionally render a friendly page
         header('HTTP/1.1 403 Forbidden');
         
         // Tạo thông báo lỗi đẹp hơn
@@ -229,5 +240,6 @@ function enforce_act_or_403($act)
         exit;
     }
 }
+} // End if (!function_exists('enforce_act_or_403'))
 
 ?>

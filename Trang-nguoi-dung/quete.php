@@ -12,21 +12,21 @@ $error = null;
 
 if ($id > 0) {
     // Include database functions
-    include __DIR__ . '/Trang-admin/model/pdo.php';
+    include __DIR__ . '/model/pdo.php';
     
     // Query ticket info
     $sql = "SELECT v.id, v.ma_ve, v.trang_thai, v.ghe, v.check_in_luc,
-                   p.tieu_de, p.poster, 
+                   p.tieu_de, p.img, 
                    lc.ngay_chieu, 
                    kgc.thoi_gian_chieu, 
-                   pgc.name as tenphong,
-                   r.ten_rap, r.dia_chi
+                   pc.name as tenphong,
+                   rc.ten_rap, rc.dia_chi
             FROM ve v
             JOIN phim p ON p.id = v.id_phim
             JOIN lichchieu lc ON lc.id = v.id_ngay_chieu
             JOIN khung_gio_chieu kgc ON kgc.id = v.id_thoi_gian_chieu
-            JOIN phongchieu pgc ON pgc.id = kgc.id_phong
-            JOIN rap r ON r.id = lc.id_rap
+            JOIN phongchieu pc ON pc.id = kgc.id_phong
+            JOIN rap_chieu rc ON rc.id = lc.id_rap
             WHERE v.id = ?
             LIMIT 1";
     
@@ -55,6 +55,10 @@ switch ($ticket['trang_thai'] ?? 0) {
         $status_info = ['color' => '#2196f3', 'text' => 'Đã check-in', 'icon' => '🎬'];
         break;
 }
+
+// Generate QR code URL for printing on ticket
+$qr_data = urlencode("http://" . $_SERVER['HTTP_HOST'] . "/webphim/Trang-nguoi-dung/quete.php?id=" . $id);
+$qr_code_url = "view/qr.php?data=" . $qr_data . "&t=" . time();
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -71,7 +75,6 @@ switch ($ticket['trang_thai'] ?? 0) {
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -125,7 +128,7 @@ switch ($ticket['trang_thai'] ?? 0) {
         .poster-section {
             position: relative;
             height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #52576eff 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -235,12 +238,74 @@ switch ($ticket['trang_thai'] ?? 0) {
         /* Seat Info */
         .seat-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #717480ff 0%, #764ba2 100%);
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
             font-weight: bold;
             margin-top: 5px;
+        }
+        
+        /* QR Code Section */
+        .qr-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #eee;
+            text-align: center;
+        }
+        
+        .qr-container {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .qr-code {
+            width: 180px;
+            height: 180px;
+            /* border: 3px solid #667eea; */
+            border-radius: 8px;
+            padding: 0px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .qr-note {
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        /* Download Section */
+        .download-section {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px 0;
+            border-top: 2px dashed #eee;
+            border-bottom: 2px dashed #eee;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #484a54ff 0%, #4c3d5cff 100%);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
         }
         
         /* Footer */
@@ -275,7 +340,7 @@ switch ($ticket['trang_thai'] ?? 0) {
         
         /* Cinema Info */
         .cinema-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4e5056ff 0%, #764ba2 100%);
             color: white;
             padding: 15px 25px;
             border-bottom: 1px solid #eee;
@@ -303,14 +368,25 @@ switch ($ticket['trang_thai'] ?? 0) {
             <div class="ticket-card">
                 <!-- Poster -->
                 <div class="poster-section">
-                    <?php if (!empty($ticket['poster'])): ?>
-                        <img src="<?= htmlspecialchars($ticket['poster']) ?>" alt="<?= htmlspecialchars($ticket['tieu_de']) ?>">
-                    <?php else: ?>
+                    <?php 
+                    // Fix image path - convert relative path to full URL
+                    $img_url = $ticket['img'] ?? '';
+                    if (!empty($img_url)) {
+                        // If it's a relative path, make it full URL
+                        if (strpos($img_url, 'http') !== 0) {
+                            // If path doesn't start with /, add it
+                            if (strpos($img_url, '/') !== 0) {
+                                $img_url = '/webphim/Trang-nguoi-dung/imgavt/' . $img_url;
+                            }
+                        }
+                    }
+                    ?>
+                    <?php if (!empty($img_url)): ?>
+                        <img src="<?= htmlspecialchars($img_url) ?>" alt="<?= htmlspecialchars($ticket['tieu_de']) ?>" onerror="this.style.display='none'">
+                    <?php endif; ?>
+                    <?php if (empty($img_url)): ?>
                         <div class="no-poster">🎬</div>
                     <?php endif; ?>
-                    <div class="status-badge">
-                        <?= $status_info['icon'] ?> <?= htmlspecialchars($status_info['text']) ?>
-                    </div>
                 </div>
                 
                 <!-- Cinema Info -->
@@ -322,7 +398,7 @@ switch ($ticket['trang_thai'] ?? 0) {
                 <!-- Ticket Info -->
                 <div class="info-section">
                     <h1><?= htmlspecialchars($ticket['tieu_de'] ?? 'N/A') ?></h1>
-                    <div class="ticket-code">Mã vé: <?= htmlspecialchars($ticket['ma_ve'] ?? 'N/A') ?></div>
+                    <div class="ticket-code">Mã vé: <?= htmlspecialchars($ticket['id'] ?? 'N/A') ?></div>
                     
                     <!-- Status -->
                     <div class="status-line">
@@ -384,6 +460,22 @@ switch ($ticket['trang_thai'] ?? 0) {
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- QR Code -->
+                    <div class="qr-section">
+                        <div class="info-label">Mã QR Vé</div>
+                        <div class="qr-container">
+                            <img src="<?= htmlspecialchars($qr_code_url) ?>" alt="QR Code" class="qr-code">
+                        </div>
+                        <p class="qr-note">Quét mã QR này để xem thông tin vé</p>
+                    </div>
+                </div>
+                
+                <!-- Download PDF Button -->
+                <div class="download-section">
+                    <a href="download_ticket_pdf.php?id=<?= $id ?>" class="download-btn" target="_blank">
+                        Tải Vé PDF
+                    </a>
                 </div>
                 
                 <!-- Footer -->

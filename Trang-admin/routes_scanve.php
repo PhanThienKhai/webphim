@@ -1,69 +1,15 @@
 <?php
 /**
- * Routes xử lý cho scanve_new
- * Thêm vào Trang-admin/index.php phần switch($act)
+ * DEPRECATED: This file has been merged into index.php
+ * 
+ * The following cases are now handled directly in index.php switch statement:
+ * - case "scanve_new": Displays QR scanner interface and handles POST check-in requests
+ * - case "scanve_check": API endpoint to check ticket from QR code
+ * - case "scanve_history": API endpoint to get check-in history
+ * 
+ * Do not use or include this file anymore - it's kept only for reference.
  */
-
-// Ở phần đầu của index.php, thêm:
-
-case "scanve_new":
-    include "./model/pdo.php";
-    include "./model/scanve_api.php";
-    include "./helpers/quyen.php";
-
-    // Kiểm tra quyền
-    if (!allowed_act('scanve', (int)$_SESSION['user1']['vai_tro'])) {
-        http_response_code(403);
-        echo json_encode(['success' => false, 'message' => 'Không có quyền']);
-        exit;
-    }
-
-    // Handle AJAX JSON requests
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
-        header('Content-Type: application/json');
-        $input = json_decode(file_get_contents('php://input'), true);
-        $ma_ve = trim($input['ma_ve'] ?? '');
-
-        if (empty($ma_ve)) {
-            echo json_encode(['success' => false, 'message' => 'Vui lòng nhập mã vé']);
-            exit;
-        }
-
-        // Tìm vé
-        $ticket = check_ticket_by_code($ma_ve);
-        if (!$ticket) {
-            echo json_encode([
-                'success' => false, 
-                'message' => 'Vé không tồn tại',
-                'details' => 'Không tìm thấy vé với mã: ' . htmlspecialchars($ma_ve)
-            ]);
-            exit;
-        }
-
-        // Validate vé
-        $errors = validate_ticket($ticket);
-        if (!empty($errors)) {
-            echo json_encode([
-                'success' => false,
-                'message' => $errors[0],
-                'details' => implode('<br>', array_map('htmlspecialchars', $errors)),
-                'ticket' => [
-                    'movie_title' => htmlspecialchars($ticket['tieu_de']),
-                    'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
-                    'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
-                    'room_name' => htmlspecialchars($ticket['tenphong']),
-                    'seat' => htmlspecialchars($ticket['ghe'])
-                ]
-            ]);
-            exit;
-        }
-
-        // Thực hiện check-in
-        update_ticket_checkin($ticket['id'], $_SESSION['user1']['id']);
-        
-        echo json_encode([
-            'success' => true,
-            'message' => 'Check-in thành công!',
+?>
             'ticket' => [
                 'movie_title' => htmlspecialchars($ticket['tieu_de']),
                 'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
@@ -98,11 +44,111 @@ case "scanve_new":
     include "./view/nhanvien/scanve_new.php";
     break;
 
-case "scanve_history":
-    include "./model/pdo.php";
-    include "./model/scanve_api.php";
-    include "./helpers/quyen.php";
+    // Handle regular form POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['kiemtra'])) {
+        $ma_ve = trim($_POST['ma_ve'] ?? '');
+        
+        $ticket = check_ticket_by_code($ma_ve);
+        if (!$ticket) {
+            $err = 'Vé không tồn tại!';
+        } else {
+            $errors = validate_ticket($ticket);
+            if (!empty($errors)) {
+                $err = implode(' | ', $errors);
+            } else {
+                update_ticket_checkin($ticket['id'], $_SESSION['user1']['id']);
+                $msg = 'Check-in thành công! Khách được vào phòng chiếu.';
+                $ve_chi_tiet = $ticket;
+            }
+        }
+    }
 
+    include "./view/nhanvien/scanve_new.php";
+    break;
+
+case "scanve_check":
+    header('Content-Type: application/json');
+
+    // Kiểm tra quyền
+    if (!allowed_act('scanve', (int)$_SESSION['user1']['vai_tro'])) {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Không có quyền']);
+        exit;
+    }
+
+    // Handle AJAX JSON POST request
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        http_response_code(405);
+        echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+        exit;
+    }
+
+    // Get JSON input
+    $input = json_decode(file_get_contents('php://input'), true);
+    if (!$input) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'Invalid JSON']);
+        exit;
+    }
+
+    $ma_ve = trim($input['ma_ve'] ?? '');
+
+    if (empty($ma_ve)) {
+        echo json_encode(['success' => false, 'message' => 'Vui lòng nhập mã vé']);
+        exit;
+    }
+
+    // Tìm vé theo mã hoặc ID
+    $ticket = check_ticket_by_code($ma_ve);
+    
+    if (!$ticket) {
+        echo json_encode([
+            'success' => false, 
+            'message' => 'Vé không tồn tại',
+            'details' => 'Không tìm thấy vé với mã: ' . htmlspecialchars($ma_ve)
+        ]);
+        exit;
+    }
+
+    // Validate vé
+    $errors = validate_ticket($ticket);
+    if (!empty($errors)) {
+        echo json_encode([
+            'success' => false,
+            'message' => $errors[0],
+            'details' => implode('<br>', array_map('htmlspecialchars', $errors)),
+            'ticket' => [
+                'id' => (int)$ticket['id'],
+                'movie_title' => htmlspecialchars($ticket['tieu_de']),
+                'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
+                'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
+                'room_name' => htmlspecialchars($ticket['tenphong']),
+                'seat' => htmlspecialchars($ticket['ghe']),
+                'trang_thai' => (int)$ticket['trang_thai'],
+                'check_in_luc' => htmlspecialchars($ticket['check_in_luc'] ?? '')
+            ]
+        ]);
+        exit;
+    }
+
+    // Vé hợp lệ - trả về thông tin để hiển thị
+    echo json_encode([
+        'success' => true,
+        'message' => 'Vé hợp lệ',
+        'ticket' => [
+            'id' => (int)$ticket['id'],
+            'movie_title' => htmlspecialchars($ticket['tieu_de']),
+            'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
+            'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
+            'room_name' => htmlspecialchars($ticket['tenphong']),
+            'seat' => htmlspecialchars($ticket['ghe']),
+            'trang_thai' => (int)$ticket['trang_thai'],
+            'check_in_luc' => htmlspecialchars($ticket['check_in_luc'] ?? '')
+        ]
+    ]);
+    exit;
+
+case "scanve_history":
     header('Content-Type: application/json');
 
     if (!allowed_act('scanve', (int)$_SESSION['user1']['vai_tro'])) {

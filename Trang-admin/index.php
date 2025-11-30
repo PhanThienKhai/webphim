@@ -1298,6 +1298,43 @@ if(isset($_SESSION['user1'])) {
 
             // Modern QR scanner interface
             case "scanve_new":
+                include "./model/pdo.php";
+                include "./model/scanve_api.php";
+                include "./helpers/quyen.php";
+                
+                // Handle AJAX JSON requests
+                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+                    header('Content-Type: application/json');
+                    $input = json_decode(file_get_contents('php://input'), true);
+                    
+                    // Kiểm tra xem là check-in (id_ve) hay kiểm tra vé (ma_ve)
+                    $id_ve = isset($input['id_ve']) ? (int)$input['id_ve'] : 0;
+                    $ma_ve = trim($input['ma_ve'] ?? '');
+
+                    // CASE 1: Check-in vé (xác nhận check-in sau khi kiểm tra)
+                    if ($id_ve > 0) {
+                        $ticket = check_ticket_by_id($id_ve);
+                        if (!$ticket) {
+                            echo json_encode(['success' => false, 'message' => 'Vé không tồn tại']);
+                            exit;
+                        }
+                        update_ticket_checkin($ticket['id'], $_SESSION['user1']['id']);
+                        echo json_encode([
+                            'success' => true,
+                            'message' => 'Check-in thành công!',
+                            'ticket' => [
+                                'id' => (int)$ticket['id'],
+                                'movie_title' => htmlspecialchars($ticket['tieu_de']),
+                                'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
+                                'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
+                                'room_name' => htmlspecialchars($ticket['tenphong']),
+                                'seat' => htmlspecialchars($ticket['ghe'])
+                            ]
+                        ]);
+                        exit;
+                    }
+                }
+                
                 include "./view/nhanvien/scanve_new.php";
                 break;
 
@@ -1306,7 +1343,109 @@ if(isset($_SESSION['user1'])) {
                 include "./view/nhanvien/scanve_simple.php";
                 break;
 
+            // API endpoint for check-in
+            case "scanve_check":
+                include "./model/pdo.php";
+                include "./model/scanve_api.php";
+                include "./helpers/quyen.php";
+                
+                header('Content-Type: application/json');
+                
+                if (!allowed_act('scanve', (int)$_SESSION['user1']['vai_tro'])) {
+                    http_response_code(403);
+                    echo json_encode(['success' => false, 'message' => 'Không có quyền']);
+                    exit;
+                }
+
+                if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                    http_response_code(405);
+                    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+                    exit;
+                }
+
+                $input = json_decode(file_get_contents('php://input'), true);
+                if (!$input) {
+                    http_response_code(400);
+                    echo json_encode(['success' => false, 'message' => 'Invalid JSON']);
+                    exit;
+                }
+
+                $ma_ve = trim($input['ma_ve'] ?? '');
+                if (empty($ma_ve)) {
+                    echo json_encode(['success' => false, 'message' => 'Vui lòng nhập mã vé']);
+                    exit;
+                }
+
+                $ticket = check_ticket_by_code($ma_ve);
+                if (!$ticket) {
+                    echo json_encode(['success' => false, 'message' => 'Vé không tồn tại']);
+                    exit;
+                }
+
+                $errors = validate_ticket($ticket);
+                if (!empty($errors)) {
+                    echo json_encode([
+                        'success' => false,
+                        'message' => $errors[0],
+                        'ticket' => [
+                            'id' => (int)$ticket['id'],
+                            'movie_title' => htmlspecialchars($ticket['tieu_de']),
+                            'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
+                            'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
+                            'room_name' => htmlspecialchars($ticket['tenphong']),
+                            'seat' => htmlspecialchars($ticket['ghe']),
+                            'trang_thai' => (int)$ticket['trang_thai'],
+                            'check_in_luc' => htmlspecialchars($ticket['check_in_luc'] ?? '')
+                        ]
+                    ]);
+                    exit;
+                }
+
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Vé hợp lệ',
+                    'ticket' => [
+                        'id' => (int)$ticket['id'],
+                        'movie_title' => htmlspecialchars($ticket['tieu_de']),
+                        'screening_date' => htmlspecialchars($ticket['ngay_chieu']),
+                        'screening_time' => htmlspecialchars($ticket['thoi_gian_chieu']),
+                        'room_name' => htmlspecialchars($ticket['tenphong']),
+                        'seat' => htmlspecialchars($ticket['ghe']),
+                        'trang_thai' => (int)$ticket['trang_thai'],
+                        'check_in_luc' => htmlspecialchars($ticket['check_in_luc'] ?? '')
+                    ]
+                ]);
+                exit;
+
             // API endpoint for check-in history
+            case "scanve_history":
+                include "./model/pdo.php";
+                include "./model/scanve_api.php";
+                include "./helpers/quyen.php";
+                
+                header('Content-Type: application/json');
+
+                if (!allowed_act('scanve', (int)$_SESSION['user1']['vai_tro'])) {
+                    echo json_encode(['success' => false, 'message' => 'Không có quyền']);
+                    exit;
+                }
+
+                $id_rap = (int)$_SESSION['user1']['id_rap'];
+                $history = get_checkin_history($id_rap);
+
+                $formatted = [];
+                foreach ($history as $item) {
+                    $formatted[] = [
+                        'ma_ve' => htmlspecialchars($item['ma_ve']),
+                        'phim' => htmlspecialchars($item['tieu_de']),
+                        'check_in_time' => htmlspecialchars($item['check_in_luc']),
+                        'staff' => htmlspecialchars($item['staff_name'])
+                    ];
+                }
+
+                echo json_encode(['success' => true, 'history' => $formatted]);
+                exit;
+
             case "nv_datve":
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);
                 if (!$id_rap) { include "./view/home/403.php"; break; }
@@ -1629,7 +1768,13 @@ if(isset($_SESSION['user1'])) {
                 $late_count = 0;
                 foreach ($history as $h) {
                     $diff = strtotime($h['gio_ra']) - strtotime($h['gio_vao']);
-                    $total_hours += $diff / 3600;
+                    // Subtract break time only if working time >= 4 hours
+                    $break_seconds = 0;
+                    if ($diff >= 4 * 3600) {
+                        $break_seconds = 60 * 60; // 1 hour break
+                    }
+                    $working_seconds = max(0, $diff - $break_seconds);
+                    $total_hours += $working_seconds / 3600;
                     
                     // Simple late check: if check-in after 8:30 AM
                     $checkin_time = date('H:i', strtotime($h['gio_vao']));
@@ -1646,6 +1791,17 @@ if(isset($_SESSION['user1'])) {
                 ];
                 
                 include "./view/nhanvien/chamcong_self.php";
+                break;
+            case "nv_chamcong_face":
+                // Face recognition attendance for employees
+                // Check if user is logged in
+                if (!isset($_SESSION['user1']) || !isset($_SESSION['user1']['id'])) {
+                    http_response_code(403);
+                    echo "<h2>❌ Lỗi: Không có quyền</h2>";
+                    echo "<p>Vui lòng <a href='/webphim/Trang-admin/login.php'>đăng nhập</a> lại.</p>";
+                    exit;
+                }
+                include "./view/nhanvien/chamcong_face.php";
                 break;
             case "bangluong":
                 $id_rap = (int)($_SESSION['user1']['id_rap'] ?? 0);

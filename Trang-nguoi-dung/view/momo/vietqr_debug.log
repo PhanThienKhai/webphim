@@ -1,8 +1,0 @@
-2025-11-26 17:08:46 Order: CINEMA_1764151725_7193 | Amount: 400000 | HTTP: 404 | URL: https://api.vietqr.io/v2/generate?accountNo=1234567890&accountName=CINEPASS+THEATER&acqId=970436&amount=400000&addInfo=Ve%2Bphim%2BCinePass%2B-%2BCINEMA_1764151725_7193&format=text
-2025-11-26 17:08:46 [FALLBACK] Generating local QR
-2025-11-26 17:18:14 Order: CINEMA_1764152294_1737 | Amount: 200000 | HTTP: 404 | URL: https://api.vietqr.io/v2/generate?accountNo=1234567890&accountName=CINEPASS+THEATER&acqId=970436&amount=200000&addInfo=Ve%2Bphim%2BCinePass%2B-%2BCINEMA_1764152294_1737&format=text
-2025-11-26 17:18:14 [FALLBACK] Generating local QR
-2025-11-29 14:22:21 Order: CINEMA_1764400940_6401 | Amount: 290000 | HTTP: 404 | URL: https://api.vietqr.io/v2/generate?accountNo=1234567890&accountName=CINEPASS+THEATER&acqId=970436&amount=290000&addInfo=Ve%2Bphim%2BCinePass%2B-%2BCINEMA_1764400940_6401&format=text
-2025-11-29 14:22:21 [FALLBACK] Generating local QR
-2025-11-29 17:03:20 Order: CINEMA_1764410600_3445 | Amount: 400000 | HTTP: 404 | URL: https://api.vietqr.io/v2/generate?accountNo=1234567890&accountName=CINEPASS+THEATER&acqId=970436&amount=400000&addInfo=Ve%2Bphim%2BCinePass%2B-%2BCINEMA_1764410600_3445&format=text
-2025-11-29 17:03:20 [FALLBACK] Generating local QR

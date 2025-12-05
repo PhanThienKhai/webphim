@@ -1,0 +1,5 @@
+2025-12-03 12:24:47 - VietQR Email
+To: phanthienkhai111@gmail.com
+Status: FAILED
+Subject: ✓ Thanh toán thành công - Vé phim CinePass
+---

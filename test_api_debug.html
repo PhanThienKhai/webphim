@@ -1,0 +1,110 @@
+<!-- Test Debug Script - Thêm vào HTML để test -->
+<script>
+// Test lấy shift details
+async function testGetShift() {
+    console.log('=== TEST GET SHIFT ===');
+    
+    const shiftId = 604; // ID từ database
+    const url = `index.php?act=ql_lichlamviec_calendar&action=get_shift&id=${shiftId}`;
+    
+    console.log('URL:', url);
+    
+    try {
+        const response = await fetch(url);
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
+        
+        const contentType = response.headers.get("content-type");
+        console.log('Content-Type:', contentType);
+        
+        const text = await response.text();
+        console.log('Raw response:', text);
+        
+        try {
+            const data = JSON.parse(text);
+            console.log('Parsed JSON:', data);
+        } catch (e) {
+            console.error('Failed to parse JSON:', e);
+        }
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
+}
+
+// Test update shift
+async function testUpdateShift() {
+    console.log('=== TEST UPDATE SHIFT ===');
+    
+    const data = {
+        action: 'update_shift',
+        id: 604,
+        gio_bat_dau: '09:00',
+        gio_ket_thuc: '13:00',
+        ca_lam: 'Sáng',
+        ghi_chu: 'Test update'
+    };
+    
+    console.log('Request body:', data);
+    
+    try {
+        const response = await fetch('index.php?act=ql_lichlamviec_calendar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        console.log('Response status:', response.status);
+        const result = await response.json();
+        console.log('Response:', result);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Test delete shift
+async function testDeleteShift() {
+    console.log('=== TEST DELETE SHIFT ===');
+    
+    const data = {
+        action: 'delete_shift',
+        id: 604
+    };
+    
+    console.log('Request body:', data);
+    
+    try {
+        const response = await fetch('index.php?act=ql_lichlamviec_calendar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        console.log('Response status:', response.status);
+        const result = await response.json();
+        console.log('Response:', result);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Run tests
+console.log('Test functions loaded. Run in console:');
+console.log('testGetShift() - Test GET shift details');
+console.log('testUpdateShift() - Test update shift');
+console.log('testDeleteShift() - Test delete shift');
+</script>
+
+<!-- 
+Hướng dẫn:
+1. Mở browser console (F12)
+2. Copy & paste script này vào console
+3. Chạy:
+   - testGetShift() để test lấy dữ liệu
+   - testUpdateShift() để test update
+   - testDeleteShift() để test delete
+4. Xem kết quả trong console
+-->

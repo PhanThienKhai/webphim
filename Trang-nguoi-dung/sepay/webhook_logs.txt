@@ -1,0 +1,13 @@
+2025-12-04 15:50:24 Webhook received: {"transferAmount":400000,"referenceCode":"TEST123","transferType":"in","content":"VE1764837813","accountNumber":"0384104942","transactionDate":"2025-12-04 14:30:00","gateway":"MB","accumulated":400000}
+2025-12-04 15:50:24 Ticket ID extracted: 1764837813
+2025-12-04 15:50:24 Error: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'cinepass.ngay_chieu_phim' doesn't exist
+2025-12-04 15:51:36 Webhook received: {"transferAmount":400000,"referenceCode":"TEST123","transferType":"in","content":"VE1764837813","accountNumber":"0384104942","transactionDate":"2025-12-04 14:30:00","gateway":"MB","accumulated":400000}
+2025-12-04 15:51:36 Ticket ID extracted: 1764837813
+2025-12-04 15:51:36 Ticket not found: ID=1764837813
+2025-12-04 15:53:23 Webhook received: {"transferAmount":400000,"referenceCode":"TEST123","transferType":"in","content":"VE1764837813","accountNumber":"0384104942","transactionDate":"2025-12-04 14:30:00","gateway":"MB","accumulated":400000}
+2025-12-04 15:53:23 Ticket ID extracted: 1764837813
+2025-12-04 15:53:23 Ticket not found: ID=1764837813
+2025-12-04 15:55:29 Webhook received: {"transferAmount":1000000,"referenceCode":"TEST123","transferType":"in","content":"VE445","accountNumber":"0384104942","transactionDate":"2025-12-04 14:30:00","gateway":"MB","accumulated":1000000}
+2025-12-04 15:55:29 Ticket ID extracted: 445
+2025-12-04 15:55:29 Ticket found: ID=445, Price=1000000, UserID=17
+2025-12-04 15:55:29 Ticket already paid: ID=445

@@ -146,6 +146,12 @@ function gui_mail_ve($load_ve_tt) {
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
 
     try {
+        // Kiểm tra email tồn tại
+        if (!isset($_SESSION['user']['email']) || empty($_SESSION['user']['email'])) {
+            error_log("❌ ERROR: Email khách hàng không tồn tại trong session");
+            return false;
+        }
+
         // Server settings
         $mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_OFF;
         $mail->isSMTP();
@@ -159,6 +165,10 @@ function gui_mail_ve($load_ve_tt) {
         // Email người gửi
         $mail->setFrom('phanthienkhai2901@gmail.com', 'Galaxy Studio');
         $mail->addAddress($_SESSION['user']['email']);
+
+        // Generate QR code URL
+        $qr_data = urlencode("http://" . $_SERVER['HTTP_HOST'] . "/webphim/Trang-nguoi-dung/quete.php?id=" . $load_ve_tt['id']);
+        $qr_code_url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . "/webphim/Trang-nguoi-dung/view/qr.php?data=" . $qr_data . "&t=" . time();
 
         // Nội dung
         $mail->isHTML(true);
@@ -179,6 +189,10 @@ function gui_mail_ve($load_ve_tt) {
                              - Ngày thanh toán: ' . $load_ve_tt['ngay_tt'] . '<br>
                              - Thành tiền: ' . number_format($load_ve_tt['thanh_tien']) . ' VND<br>
                              <hr>
+                             <strong>Mã QR của vé:</strong><br>
+                             <img src="' . $qr_code_url . '" alt="QR Code" style="width: 200px; height: 200px; border: 1px solid #ddd; padding: 5px;"><br>
+                             <em>Vui lòng mang theo mã vé hoặc quét mã QR này tại quầy vé để checkin khi vào phòng chiếu!</em><br>
+                             <hr>
                               Lưu ý quan trọng:<br>
 
                                Hãy đảm bảo bạn đến sớm trước thời gian chiếu để có đủ thời gian kiểm tra vé và chọn ghế.<br>
@@ -191,8 +205,15 @@ function gui_mail_ve($load_ve_tt) {
         ';
 
         $mail->send();
+        
+        // Log thành công
+        $is_guest = isset($_SESSION['is_guest']) && $_SESSION['is_guest'] ? 'GUEST' : 'MEMBER';
+        error_log("✅ Email sent successfully to {$_SESSION['user']['email']} ({$is_guest})");
+        
+        return true;
     } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        error_log("❌ Mail Error: {$mail->ErrorInfo}");
+        return false;
     }
 }
 

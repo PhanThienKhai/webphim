@@ -9,8 +9,8 @@
   /* 🌈 Primary Colors - Gradient Magic */
   --adm-primary: #999aa1;
   --adm-primary-600: #999aa1;
-  --adm-primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --adm-primary-glow: linear-gradient(135deg, #667eea 0%, #f093fb 50%, #f5576c 100%);
+  --adm-primary-gradient: linear-gradient(135deg, #9fa6c7 0%, #766d7e 100%);
+  --adm-primary-glow: linear-gradient(135deg, #9fa5c0 0%, #6e636f 50%, #ce9ca2 100%);
   
   /* 🎯 Status Colors */
   --adm-danger: #ff6b6b;
@@ -359,7 +359,7 @@ body {
   border: none;
   cursor: pointer;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);

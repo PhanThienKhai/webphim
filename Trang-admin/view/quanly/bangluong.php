@@ -2,102 +2,85 @@
 
 <div class="content-body">
     <style>
-        .salary-card {
-            background: linear-gradient(135deg, #8793c9ff 0%, #8c799eff 100%);
+        .salary-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .salary-table thead {
+            background: linear-gradient(135deg, #a8b0d5ff 0%, #6c6474ff 100%);
             color: white;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .salary-table th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .salary-table tbody tr {
+            border-bottom: 1px solid #e5e7eb;
+            transition: background 0.2s;
+        }
+        .salary-table tbody tr:hover {
+            background: #f9fafb;
+        }
+        .salary-table td {
+            padding: 13px 12px;
+            font-size: 13px;
+        }
+        .salary-table .text-right {
+            text-align: right;
+            font-weight: 600;
+        }
+        .salary-table .text-center {
+            text-align: center;
+        }
+        .salary-table .amount {
+            color: #059669;
+            font-weight: 700;
+        }
+        .summary-row {
+            background: #f3f4f6;
+            font-weight: 700;
+        }
+        .summary-row td {
+            padding: 15px 12px;
+        }
+        .salary-card {
+            background: linear-gradient(135deg, #b3beebff 0%, #817a88ff 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
         .salary-stats {
             display: flex;
-            gap: 20px;
-            margin-top: 20px;
+            gap: 15px;
+            margin-top: 15px;
         }
         .stat-box {
             flex: 1;
             background: rgba(255,255,255,0.15);
-            padding: 20px;
-            border-radius: 8px;
+            padding: 15px;
+            border-radius: 6px;
             text-align: center;
         }
         .stat-label {
-            font-size: 13px;
+            font-size: 12px;
             opacity: 0.9;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
         .stat-value {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 700;
         }
-        .employee-detail {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-        .employee-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f3f4f6;
-            margin-bottom: 20px;
-        }
-        .employee-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1f2937;
-        }
-        .employee-total {
-            font-size: 24px;
-            font-weight: 700;
-            color: #b5cac3ff;
-        }
-        .breakdown-table {
-            width: 100%;
-            font-size: 13px;
-        }
-        .breakdown-table td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        .breakdown-table .date-col {
-            color: #6b7280;
-            font-weight: 500;
-        }
-        .breakdown-table .hours-col {
-            text-align: center;
-            color: #3b82f6;
-            font-weight: 600;
-        }
-        .breakdown-table .money-col {
-            text-align: right;
-            color: #059669;
-            font-weight: 600;
-        }
-        .summary-row {
-            background: #f9fafb;
-            font-weight: 700;
-        }
-        .summary-row td {
-            padding: 12px 10px !important;
-            border-top: 2px solid #e5e7eb;
-        }
-        .allowance-section, .deduction-section {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-        }
-        .allowance-section {
-            background: #ecfdf5;
-            border-left: 4px solid #10b981;
-        }
-        .deduction-section {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
         }
         .section-title {
             font-weight: 700;
@@ -289,88 +272,44 @@
             <?php endif; ?>
         </div>
 
-        <?php foreach ($ds_luong as $r): ?>
-            <div class="employee-detail">
-                <div class="employee-header">
-                    <div>
-                        <div class="employee-name">👤 <?= htmlspecialchars($r['ten_nv']) ?></div>
-                        <div style="font-size:13px;color:#6b7280;margin-top:5px">
-                            ID: #<?= $r['id_nv'] ?> | Đơn giá: <?= number_format($rate) ?> ₫/giờ
-                        </div>
-                    </div>
-                    <div class="employee-total">
-                        <?= number_format($r['tong_thuc_lanh']) ?> ₫
-                    </div>
-                </div>
-
-                <!-- Chi tiết từng ngày làm việc -->
-                <table class="breakdown-table">
-                    <thead style="background:#f9fafb">
-                        <tr>
-                            <th style="padding:10px">Ngày</th>
-                            <th style="padding:10px;text-align:center">Giờ vào</th>
-                            <th style="padding:10px;text-align:center">Giờ ra</th>
-                            <th style="padding:10px;text-align:center">Số giờ</th>
-                            <th style="padding:10px;text-align:right">Thành tiền</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($r['chi_tiet_ngay'] as $day): ?>
-                            <tr>
-                                <td class="date-col"><?= date('d/m/Y (l)', strtotime($day['ngay'])) ?></td>
-                                <td style="text-align:center"><?= date('H:i', strtotime($day['gio_vao'])) ?></td>
-                                <td style="text-align:center"><?= date('H:i', strtotime($day['gio_ra'])) ?></td>
-                                <td class="hours-col"><?= number_format($day['so_gio'], 2) ?>h</td>
-                                <td class="money-col"><?= number_format($day['tien']) ?> ₫</td>
-                            </tr>
-                        <?php endforeach; ?>
-                        <tr class="summary-row">
-                            <td colspan="3" style="text-align:right">💼 Tổng lương theo giờ:</td>
-                            <td class="hours-col"><?= number_format($r['so_gio'], 2) ?>h</td>
-                            <td class="money-col"><?= number_format($r['luong_co_ban']) ?> ₫</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <!-- Phụ cấp -->
-                <?php if ($r['phu_cap'] > 0): ?>
-                    <div class="allowance-section">
-                        <div class="section-title">Phụ cấp</div>
-                        <table style="width:100%;font-size:13px">
-                            <tr>
-                                <td>Phụ cấp cố định (ăn trưa, xăng xe...)</td>
-                                <td style="text-align:right;font-weight:600;color:#10b981">
-                                    + <?= number_format($r['phu_cap']) ?> ₫
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                <?php endif; ?>
-
-                <!-- Khấu trừ -->
-                <?php if ($r['khau_tru'] > 0): ?>
-                    <div class="deduction-section">
-                        <div class="section-title">Khấu trừ</div>
-                        <table style="width:100%;font-size:13px">
-                            <tr>
-                                <td>Đi muộn (<?= $r['late_count'] ?> lần × 50,000 ₫)</td>
-                                <td style="text-align:right;font-weight:600;color:#ef4444">
-                                    - <?= number_format($r['khau_tru']) ?> ₫
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                <?php endif; ?>
-
-                <!-- Tổng thực lãnh -->
-                <div class="final-total">
-                    <div style="font-size:14px;opacity:0.9;margin-bottom:8px">Tổng thực lãnh</div>
-                    <div style="font-size:32px;font-weight:700">
-                        <?= number_format($r['tong_thuc_lanh']) ?> ₫
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
+        <!-- Main Salary Table -->
+        <table class="salary-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên nhân viên</th>
+                    <th class="text-center">Số giờ công</th>
+                    <th class="text-right">Lương cơ bản</th>
+                    <th class="text-right">Phụ cấp</th>
+                    <th class="text-right">Khấu trừ</th>
+                    <th class="text-right">Tổng thực lãnh</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                $index = 1;
+                foreach ($ds_luong as $r): 
+                ?>
+                <tr>
+                    <td><?= $index++ ?></td>
+                    <td><?= htmlspecialchars($r['ten_nv']) ?></td>
+                    <td class="text-center"><?= number_format($r['so_gio'], 1) ?>h</td>
+                    <td class="text-right"><?= number_format($r['luong_co_ban']) ?> ₫</td>
+                    <td class="text-right" style="color: #10b981;">+ <?= number_format($r['phu_cap']) ?> ₫</td>
+                    <td class="text-right" style="color: #ef4444;">- <?= number_format($r['khau_tru']) ?> ₫</td>
+                    <td class="text-right amount"><?= number_format($r['tong_thuc_lanh']) ?> ₫</td>
+                </tr>
+                <?php endforeach; ?>
+                <tr class="summary-row">
+                    <td colspan="2" style="text-align:right">TỔNG CỘNG</td>
+                    <td class="text-center"><?= number_format($tong_gio_tat_ca, 1) ?>h</td>
+                    <td class="text-right"><?= number_format(array_sum(array_column($ds_luong, 'luong_co_ban'))) ?> ₫</td>
+                    <td class="text-right" style="color: #10b981;">+ <?= number_format(array_sum(array_column($ds_luong, 'phu_cap'))) ?> ₫</td>
+                    <td class="text-right" style="color: #ef4444;">- <?= number_format(array_sum(array_column($ds_luong, 'khau_tru'))) ?> ₫</td>
+                    <td class="text-right amount"><?= number_format($tong_tat_ca) ?> ₫</td>
+                </tr>
+            </tbody>
+        </table>
         
     <?php else: ?>
         <div style="text-align:center;padding:60px;color:#6b7280">
@@ -561,5 +500,3 @@
     .employee-detail { page-break-inside: avoid; }
     .receipt-buttons { display: none !important; }
 </style>
-
-<?php include __DIR__ . '/../home/footer.php'; ?>

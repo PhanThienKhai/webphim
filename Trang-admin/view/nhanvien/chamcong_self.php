@@ -392,6 +392,7 @@
                         <div style="background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%); border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center;">
                             <video id="face-video" autoplay playsinline style="width: 100%; max-width: 500px; max-height: 400px; border-radius: 10px; background: #000; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 0 auto;"></video>
                             <canvas id="face-canvas" style="display: none;"></canvas>
+                            <canvas id="face-display-canvas" style="width: 100%; max-width: 500px; border-radius: 10px; display: none; margin: 10px auto; box-shadow: 0 4px 12px rgba(0,0,0,0.15); background: #000;"></canvas>
                             <div id="face-placeholder" style="width: 100%; max-width: 500px; height: 350px; background: linear-gradient(135deg, #e0e0e0 0%, #d0d0d0 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #999; margin: 0 auto; font-size: 16px; text-align: center; flex-direction: column; gap: 10px;">
                                 <div style="font-size: 48px;"></div>
                                 <div>Camera chưa được kích hoạt</div>
@@ -1380,11 +1381,19 @@ async function takeFaceSnapshot(action) {
     showFaceStatus('Đang xử lý...', '#80a6ccff', 'face-photo-status');
     
     try {
+        // Get GPS location
+        const gpsData = await getGPSLocation();
+        
         const formData = new FormData();
         formData.append('action', action);
         formData.append('photo', photoBase64);
         formData.append('user_id', USER_ID);
         formData.append('fingerprint_' + action, JSON.stringify(currentFingerprint)); // Gửi fingerprint lên server
+        
+        // Thêm GPS data
+        formData.append('latitude', gpsData.latitude);
+        formData.append('longitude', gpsData.longitude);
+        formData.append('location_accuracy', gpsData.accuracy);
         
         const response = await fetch('/webphim/Trang-admin/model/chamcong_detector.php', {
             method: 'POST',
@@ -1395,9 +1404,9 @@ async function takeFaceSnapshot(action) {
         
         if (result.success) {
             if (action === 'checkin') {
-                showFaceStatus('✓ Chấm công VÀO thành công! Khuôn mặt đã được lưu lại.', '#28a745', 'face-photo-status');
+                showFaceStatus('✓ Chấm công VÀO thành công! Khuôn mặt đã được lưu lại.\n📍 GPS: ' + gpsData.latitude.toFixed(4) + ', ' + gpsData.longitude.toFixed(4), '#28a745', 'face-photo-status');
             } else {
-                showFaceStatus('✓ Chấm công RA thành công!', '#28a745', 'face-photo-status');
+                showFaceStatus('✓ Chấm công RA thành công!\n📍 GPS: ' + gpsData.latitude.toFixed(4) + ', ' + gpsData.longitude.toFixed(4), '#28a745', 'face-photo-status');
             }
             
             playSuccessSound();
@@ -1422,12 +1431,20 @@ async function quickFaceCheckin() {
         return;
     }
     
-    showFaceStatus('Đang chấm công vào...', '#0066cc', 'face-quick-status');
+    showFaceStatus('Đang lấy vị trí GPS...', '#0066cc', 'face-quick-status');
     
     try {
+        // Get GPS location
+        const gpsData = await getGPSLocation();
+        
+        showFaceStatus('Đang chấm công vào...', '#0066cc', 'face-quick-status');
+        
         const formData = new FormData();
         formData.append('action', 'checkin');
         formData.append('user_id', USER_ID);
+        formData.append('latitude', gpsData.latitude);
+        formData.append('longitude', gpsData.longitude);
+        formData.append('location_accuracy', gpsData.accuracy);
         
         const response = await fetch('/webphim/Trang-admin/model/chamcong_detector.php', {
             method: 'POST',
@@ -1437,7 +1454,7 @@ async function quickFaceCheckin() {
         const result = await response.json();
         
         if (result.success) {
-            showFaceStatus('Chấm công VÀO thành công!', '#28a745', 'face-quick-status');
+            showFaceStatus('✓ Chấm công VÀO thành công! (GPS: ' + gpsData.latitude.toFixed(4) + ', ' + gpsData.longitude.toFixed(4) + ')', '#28a745', 'face-quick-status');
             playSuccessSound();
             setTimeout(() => {
                 location.reload();
@@ -1458,12 +1475,20 @@ async function quickFaceCheckout() {
         return;
     }
     
-    showFaceStatus('Đang chấm công ra...', '#0066cc', 'face-quick-status');
+    showFaceStatus('Đang lấy vị trí GPS...', '#0066cc', 'face-quick-status');
     
     try {
+        // Get GPS location
+        const gpsData = await getGPSLocation();
+        
+        showFaceStatus('Đang chấm công ra...', '#0066cc', 'face-quick-status');
+        
         const formData = new FormData();
         formData.append('action', 'checkout');
         formData.append('user_id', USER_ID);
+        formData.append('latitude', gpsData.latitude);
+        formData.append('longitude', gpsData.longitude);
+        formData.append('location_accuracy', gpsData.accuracy);
         
         const response = await fetch('/webphim/Trang-admin/model/chamcong_detector.php', {
             method: 'POST',
@@ -1473,7 +1498,7 @@ async function quickFaceCheckout() {
         const result = await response.json();
         
         if (result.success) {
-            showFaceStatus('Chấm công RA thành công!', '#28a745', 'face-quick-status');
+            showFaceStatus('✓ Chấm công RA thành công! (GPS: ' + gpsData.latitude.toFixed(4) + ', ' + gpsData.longitude.toFixed(4) + ')', '#28a745', 'face-quick-status');
             playSuccessSound();
             setTimeout(() => {
                 location.reload();

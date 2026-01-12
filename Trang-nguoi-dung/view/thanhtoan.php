@@ -669,8 +669,8 @@ function initiateSepayPayment() {
     const ticket_id = <?php echo isset($_SESSION['ticket_id']) ? $_SESSION['ticket_id'] : 'Math.floor(Date.now() / 1000)'; ?>;
     
     console.log('✅ Redirecting to Sepay payment...');
-    // Redirect tới Sepay payment UI - Sử dụng relative path để tránh hard-coded domain
-    window.location.href = `../sepay/sepay_payment_ui.php?ticket_id=${ticket_id}&amount=${amount}`;
+    // Redirect tới Sepay payment UI - Dùng absolute path từ root
+    window.location.href = `/webphim/Trang-nguoi-dung/sepay/sepay_payment_ui.php?ticket_id=${ticket_id}&amount=${amount}`;
 }
 
 /**

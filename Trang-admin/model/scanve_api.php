@@ -1,8 +1,85 @@
 <?php
 /**
  * Scanve API - Xử lý kiểm tra vé & check-in
- * Hỗ trợ: QR Scanner + Manual Input
+ * Hỗ trợ: QR Scanner + Manual Input + Image QR Detection
  */
+
+// Handle image-based QR detection
+function detect_qr_from_image($image_file) {
+    // Try using PHP-QRCode or similar library if available
+    // For now, we'll send to external QR decoder service
+    
+    if (!file_exists($image_file)) {
+        return [
+            'success' => false,
+            'error' => 'File not found'
+        ];
+    }
+
+    // Method 1: Try using local QRCode library if available
+    $qr_data = try_local_qr_detection($image_file);
+    if ($qr_data) {
+        return [
+            'success' => true,
+            'qr_data' => $qr_data
+        ];
+    }
+
+    // Method 2: Use online QR detection API (free tier)
+    $qr_data = try_online_qr_detection($image_file);
+    if ($qr_data) {
+        return [
+            'success' => true,
+            'qr_data' => $qr_data
+        ];
+    }
+
+    return [
+        'success' => false,
+        'error' => 'Could not detect QR code'
+    ];
+}
+
+function try_local_qr_detection($image_file) {
+    // Try using zxing library if available
+    // Or other local QR detection methods
+    
+    // Check if we have access to any QR library
+    // For now, return null to fall back to online detection
+    return null;
+}
+
+function try_online_qr_detection($image_file) {
+    // Use free QR code detection API
+    // Example: api.qrserver.com or quickchart.io
+    
+    $file_content = file_get_contents($image_file);
+    $base64_image = base64_encode($file_content);
+    
+    // Try QR Server API
+    $url = "https://api.qrserver.com/v1/read-qr-code/";
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['url' => 'data:image/jpeg;base64,' . $base64_image]));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    $response = curl_exec($ch);
+    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($http_code === 200) {
+        $result = json_decode($response, true);
+        if (isset($result[0]['symbol'][0]['data'])) {
+            return $result[0]['symbol'][0]['data'];
+        }
+    }
+
+    return null;
+}
 
 function check_ticket_by_code($ma_ve) {
     // Tìm vé theo mã hoặc ID
@@ -75,3 +152,27 @@ function get_checkin_history($id_rap) {
     
     return pdo_query($sql, $id_rap);
 }
+
+// ===== POST HANDLER =====
+
+$action = $_POST['action'] ?? $_GET['action'] ?? null;
+
+if ($action === 'scan_qr_image' && isset($_FILES['image'])) {
+    // Handle image-based QR detection
+    $image_file = $_FILES['image']['tmp_name'];
+    
+    if ($_FILES['image']['error'] === UPLOAD_ERR_OK && is_uploaded_file($image_file)) {
+        $result = detect_qr_from_image($image_file);
+        header('Content-Type: application/json');
+        echo json_encode($result);
+    } else {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => false,
+            'error' => 'Upload error: ' . ($_FILES['image']['error'] ?? 'unknown')
+        ]);
+    }
+    exit;
+}
+
+?>

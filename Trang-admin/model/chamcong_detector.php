@@ -35,6 +35,11 @@ try {
     $photo_data = $_POST['photo'] ?? null;
     $fingerprint_data = $_POST['fingerprint_' . $action] ?? null; // fingerprint_checkin hoặc fingerprint_checkout
     
+    // Get GPS data (optional)
+    $latitude = isset($_POST['latitude']) ? (float)$_POST['latitude'] : null;
+    $longitude = isset($_POST['longitude']) ? (float)$_POST['longitude'] : null;
+    $location_accuracy = isset($_POST['location_accuracy']) ? (float)$_POST['location_accuracy'] : null;
+    
     if (!$action || !in_array($action, ['checkin', 'checkout'])) {
         throw new Exception('Action không hợp lệ (checkin/checkout)');
     }
@@ -173,20 +178,23 @@ try {
             $response['message'] = 'Bạn đã check-in hôm nay lúc ' . $record['gio_vao'];
         } else if ($record) {
             // Update existing record
-            $update_sql = "UPDATE cham_cong SET gio_vao = :gio_vao, anh_vao = :photo_path, fingerprint_vao = :fingerprint WHERE id = :id";
+            $update_sql = "UPDATE cham_cong SET gio_vao = :gio_vao, anh_vao = :photo_path, fingerprint_vao = :fingerprint, latitude = :latitude, longitude = :longitude, location_accuracy = :location_accuracy WHERE id = :id";
             $stmt = $conn->prepare($update_sql);
             $stmt->execute([
                 ':gio_vao' => $now,
                 ':photo_path' => $photo_relative_path,
                 ':fingerprint' => $fingerprint_data,
+                ':latitude' => $latitude,
+                ':longitude' => $longitude,
+                ':location_accuracy' => $location_accuracy,
                 ':id' => $record['id']
             ]);
             $response['success'] = true;
             $response['message'] = 'Check-in thành công lúc ' . $now;
         } else {
             // Create new record with correct rap_id from employee's assigned cinema
-            $insert_sql = "INSERT INTO cham_cong (id_nv, id_rap, ngay, gio_vao, anh_vao, fingerprint_vao) 
-                          VALUES (:user_id, :id_rap, :ngay, :gio_vao, :photo_path, :fingerprint)";
+            $insert_sql = "INSERT INTO cham_cong (id_nv, id_rap, ngay, gio_vao, anh_vao, fingerprint_vao, latitude, longitude, location_accuracy) 
+                          VALUES (:user_id, :id_rap, :ngay, :gio_vao, :photo_path, :fingerprint, :latitude, :longitude, :location_accuracy)";
             $stmt = $conn->prepare($insert_sql);
             
             $stmt->execute([
@@ -195,7 +203,10 @@ try {
                 ':ngay' => $today,
                 ':gio_vao' => $now,
                 ':photo_path' => $photo_relative_path,
-                ':fingerprint' => $fingerprint_data
+                ':fingerprint' => $fingerprint_data,
+                ':latitude' => $latitude,
+                ':longitude' => $longitude,
+                ':location_accuracy' => $location_accuracy
             ]);
             $response['success'] = true;
             $response['message'] = 'Check-in thành công lúc ' . $now;
@@ -206,12 +217,15 @@ try {
         }
         
         // Update check-out time
-        $update_sql = "UPDATE cham_cong SET gio_ra = :gio_ra, anh_ra = :photo_path, fingerprint_ra = :fingerprint WHERE id = :id";
+        $update_sql = "UPDATE cham_cong SET gio_ra = :gio_ra, anh_ra = :photo_path, fingerprint_ra = :fingerprint, latitude = :latitude, longitude = :longitude, location_accuracy = :location_accuracy WHERE id = :id";
         $stmt = $conn->prepare($update_sql);
         $stmt->execute([
             ':gio_ra' => $now,
             ':photo_path' => $photo_relative_path,
             ':fingerprint' => $fingerprint_data,
+            ':latitude' => $latitude,
+            ':longitude' => $longitude,
+            ':location_accuracy' => $location_accuracy,
             ':id' => $record['id']
         ]);
         $response['success'] = true;

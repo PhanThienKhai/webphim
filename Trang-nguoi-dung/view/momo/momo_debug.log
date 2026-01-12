@@ -407,3 +407,188 @@ Full session tong: {"id_phim":26,"tieu_de":"K\u1eba \u0102N H\u1ed2N","img":"anh
 2025-12-05 16:13:29 - ✅ Điểm cộng: +5 (kết quả: OK)
 2025-12-05 16:13:31 - 📧 Email gửi tới: phanthienkhai111@gmail.com
 2025-12-05 16:13:31 - ✅ Session user reload: điểm = 1006
+2025-12-06 17:26:52 - Session Debug:
+id_ngay_chieu: 1829
+id_tk: 17
+ghe_list: ["L10","L11","L12"]
+Full session tong: {"id_phim":27,"tieu_de":"NG\u01af\u1edcI V\u1ee2 CU\u1ed0I C\u00d9NG","img":"nguoivo.jpg","thoi_luong_phim":132,"ngay_chieu":"2025-12-10","id_lichchieu":1829,"thoi_gian_chieu":"20:00:00","id_gio":4781,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"600000","ten_ghe":{"ghe":["L10","L11","L12"]},"ten_doan":{"doan":[]},"ghe_string":"L10,L11,L12","combo_string":null,"gia_sau_giam":600000}
+
+2025-12-06 17:26:52 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:28:04 - Session Debug:
+id_ngay_chieu: 1641
+id_tk: 17
+ghe_list: ["D11"]
+Full session tong: {"id_phim":6,"tieu_de":"B\u00fap b\u00ea","img":"N\u0103m \u0111\u00eam kinh ho\u00e0ng.jpg","thoi_luong_phim":123,"ngay_chieu":"2025-12-08","id_lichchieu":1641,"thoi_gian_chieu":"20:00:00","id_gio":4405,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["D11"]},"ten_doan":{"doan":[]},"ghe_string":"D11","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:28:04 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:30:38 - Session Debug:
+id_ngay_chieu: 1828
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":27,"tieu_de":"NG\u01af\u1edcI V\u1ee2 CU\u1ed0I C\u00d9NG","img":"nguoivo.jpg","thoi_luong_phim":132,"ngay_chieu":"2025-12-09","id_lichchieu":1828,"thoi_gian_chieu":"18:00:00","id_gio":4778,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:30:38 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:31:50 - Session Debug:
+id_ngay_chieu: 1843
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":27,"tieu_de":"NG\u01af\u1edcI V\u1ee2 CU\u1ed0I C\u00d9NG","img":"nguoivo.jpg","thoi_luong_phim":132,"ngay_chieu":"2025-12-24","id_lichchieu":1843,"thoi_gian_chieu":"18:00:00","id_gio":4808,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:31:50 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:32:09 - Session Debug:
+id_ngay_chieu: 1844
+id_tk: 17
+ghe_list: ["L11"]
+Full session tong: {"id_phim":27,"tieu_de":"NG\u01af\u1edcI V\u1ee2 CU\u1ed0I C\u00d9NG","img":"nguoivo.jpg","thoi_luong_phim":132,"ngay_chieu":"2025-12-25","id_lichchieu":1844,"thoi_gian_chieu":"20:00:00","id_gio":4811,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"200000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":[]},"ghe_string":"L11","combo_string":null,"gia_sau_giam":200000}
+
+2025-12-06 17:32:09 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:32:32 - Session Debug:
+id_ngay_chieu: 1844
+id_tk: 17
+ghe_list: ["L11"]
+Full session tong: {"id_phim":27,"tieu_de":"NG\u01af\u1edcI V\u1ee2 CU\u1ed0I C\u00d9NG","img":"nguoivo.jpg","thoi_luong_phim":132,"ngay_chieu":"2025-12-25","id_lichchieu":1844,"thoi_gian_chieu":"20:00:00","id_gio":4811,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"200000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":[]},"ghe_string":"L11","combo_string":null,"gia_sau_giam":200000}
+
+2025-12-06 17:32:32 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:32:33 - Session Debug:
+id_ngay_chieu: 1844
+id_tk: 17
+ghe_list: ["L11"]
+Full session tong: {"id_phim":27,"tieu_de":"NG\u01af\u1edcI V\u1ee2 CU\u1ed0I C\u00d9NG","img":"nguoivo.jpg","thoi_luong_phim":132,"ngay_chieu":"2025-12-25","id_lichchieu":1844,"thoi_gian_chieu":"20:00:00","id_gio":4811,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"200000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":[]},"ghe_string":"L11","combo_string":null,"gia_sau_giam":200000}
+
+2025-12-06 17:32:33 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:32:34 - Session Debug:
+id_ngay_chieu: 1844
+id_tk: 17
+ghe_list: ["L11"]
+Full session tong: {"id_phim":27,"tieu_de":"NG\u01af\u1edcI V\u1ee2 CU\u1ed0I C\u00d9NG","img":"nguoivo.jpg","thoi_luong_phim":132,"ngay_chieu":"2025-12-25","id_lichchieu":1844,"thoi_gian_chieu":"20:00:00","id_gio":4811,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"200000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":[]},"ghe_string":"L11","combo_string":null,"gia_sau_giam":200000}
+
+2025-12-06 17:32:34 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:32:34 - Session Debug:
+id_ngay_chieu: 1844
+id_tk: 17
+ghe_list: ["L11"]
+Full session tong: {"id_phim":27,"tieu_de":"NG\u01af\u1edcI V\u1ee2 CU\u1ed0I C\u00d9NG","img":"nguoivo.jpg","thoi_luong_phim":132,"ngay_chieu":"2025-12-25","id_lichchieu":1844,"thoi_gian_chieu":"20:00:00","id_gio":4811,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"200000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":[]},"ghe_string":"L11","combo_string":null,"gia_sau_giam":200000}
+
+2025-12-06 17:32:34 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:32:53 - Session Debug:
+id_ngay_chieu: 1844
+id_tk: 17
+ghe_list: ["L11"]
+Full session tong: {"id_phim":27,"tieu_de":"NG\u01af\u1edcI V\u1ee2 CU\u1ed0I C\u00d9NG","img":"nguoivo.jpg","thoi_luong_phim":132,"ngay_chieu":"2025-12-25","id_lichchieu":1844,"thoi_gian_chieu":"20:00:00","id_gio":4811,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"200000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":[]},"ghe_string":"L11","combo_string":null,"gia_sau_giam":200000}
+
+2025-12-06 17:32:53 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:33:46 - Session Debug:
+id_ngay_chieu: 1703
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":26,"tieu_de":"K\u1eba \u0102N H\u1ed2N","img":"anhon.jpg","thoi_luong_phim":135,"ngay_chieu":"2025-12-08","id_lichchieu":1703,"thoi_gian_chieu":"20:00:00","id_gio":4529,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:33:46 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:34:54 - Session Debug:
+id_ngay_chieu: 1703
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":26,"tieu_de":"K\u1eba \u0102N H\u1ed2N","img":"anhon.jpg","thoi_luong_phim":135,"ngay_chieu":"2025-12-08","id_lichchieu":1703,"thoi_gian_chieu":"20:00:00","id_gio":4529,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:34:54 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:34:55 - Session Debug:
+id_ngay_chieu: 1703
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":26,"tieu_de":"K\u1eba \u0102N H\u1ed2N","img":"anhon.jpg","thoi_luong_phim":135,"ngay_chieu":"2025-12-08","id_lichchieu":1703,"thoi_gian_chieu":"20:00:00","id_gio":4529,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:34:55 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:34:55 - Session Debug:
+id_ngay_chieu: 1703
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":26,"tieu_de":"K\u1eba \u0102N H\u1ed2N","img":"anhon.jpg","thoi_luong_phim":135,"ngay_chieu":"2025-12-08","id_lichchieu":1703,"thoi_gian_chieu":"20:00:00","id_gio":4529,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:34:55 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:34:55 - Session Debug:
+id_ngay_chieu: 1703
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":26,"tieu_de":"K\u1eba \u0102N H\u1ed2N","img":"anhon.jpg","thoi_luong_phim":135,"ngay_chieu":"2025-12-08","id_lichchieu":1703,"thoi_gian_chieu":"20:00:00","id_gio":4529,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:34:55 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:35:17 - Session Debug:
+id_ngay_chieu: 1690
+id_tk: 17
+ghe_list: ["L11"]
+Full session tong: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-12-26","id_lichchieu":1690,"thoi_gian_chieu":"20:00:00","id_gio":4503,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"200000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":[]},"ghe_string":"L11","combo_string":null,"gia_sau_giam":200000}
+
+2025-12-06 17:35:17 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:36:37 - Session Debug:
+id_ngay_chieu: 1690
+id_tk: 17
+ghe_list: ["L11"]
+Full session tong: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-12-26","id_lichchieu":1690,"thoi_gian_chieu":"20:00:00","id_gio":4503,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"200000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":[]},"ghe_string":"L11","combo_string":null,"gia_sau_giam":200000}
+
+2025-12-06 17:36:37 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:36:57 - Session Debug:
+id_ngay_chieu: 1691
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-12-27","id_lichchieu":1691,"thoi_gian_chieu":"20:00:00","id_gio":4505,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:36:57 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:41:25 - Session Debug:
+id_ngay_chieu: 1674
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-12-10","id_lichchieu":1674,"thoi_gian_chieu":"20:00:00","id_gio":4471,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:41:25 - ❌ Lỗi: SQLSTATE[22003]: Numeric value out of range: 167 Out of range value for column 'id' at row 1
+2025-12-06 17:45:03 - Session Debug:
+id_ngay_chieu: 1674
+id_tk: 17
+ghe_list: ["L13"]
+Full session tong: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-12-10","id_lichchieu":1674,"thoi_gian_chieu":"20:00:00","id_gio":4471,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+
+2025-12-06 17:45:03 - ✅ Vé tạo thành công! Số ghế: 1, Ghế: L13
+2025-12-06 17:45:03 - DEBUG SESSION TONG: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-12-10","id_lichchieu":1674,"thoi_gian_chieu":"20:00:00","id_gio":4471,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"60000","ten_ghe":{"ghe":["L13"]},"ten_doan":{"doan":[]},"ghe_string":"L13","combo_string":null,"gia_sau_giam":60000}
+2025-12-06 17:45:03 - ℹ️ Không dùng điểm để giảm giá (diem_doi không tồn tại hoặc = 0)
+2025-12-06 17:45:03 - 💰 Tính điểm: Price=60000, Diem_tang=60 (mỗi 1000 VND = 1 điểm)
+2025-12-06 17:45:03 - ✅ Điểm cộng: +60 (kết quả: OK)
+2025-12-06 17:45:06 - 📧 Email gửi tới: phanthienkhai111@gmail.com
+2025-12-06 17:45:06 - ✅ Session user reload: điểm = 1096
+2025-12-06 17:49:55 - Session Debug:
+id_ngay_chieu: 1641
+id_tk: 17
+ghe_list: ["L10"]
+Full session tong: {"id_phim":6,"tieu_de":"B\u00fap b\u00ea","img":"N\u0103m \u0111\u00eam kinh ho\u00e0ng.jpg","thoi_luong_phim":123,"ngay_chieu":"2025-12-08","id_lichchieu":1641,"thoi_gian_chieu":"20:00:00","id_gio":4405,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"350000","ten_ghe":{"ghe":["L10"]},"ten_doan":{"doan":["Combo VIP"]},"ghe_string":"L10","combo_string":"Combo VIP","gia_sau_giam":350000}
+
+2025-12-06 17:49:55 - ✅ Vé tạo thành công! Số ghế: 1, Ghế: L10
+2025-12-06 17:49:55 - DEBUG SESSION TONG: {"id_phim":6,"tieu_de":"B\u00fap b\u00ea","img":"N\u0103m \u0111\u00eam kinh ho\u00e0ng.jpg","thoi_luong_phim":123,"ngay_chieu":"2025-12-08","id_lichchieu":1641,"thoi_gian_chieu":"20:00:00","id_gio":4405,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"350000","ten_ghe":{"ghe":["L10"]},"ten_doan":{"doan":["Combo VIP"]},"ghe_string":"L10","combo_string":"Combo VIP","gia_sau_giam":350000}
+2025-12-06 17:49:55 - ℹ️ Không dùng điểm để giảm giá (diem_doi không tồn tại hoặc = 0)
+2025-12-06 17:49:55 - 💰 Tính điểm: Price=350000, Diem_tang=350 (mỗi 1000 VND = 1 điểm)
+2025-12-06 17:49:55 - ✅ Điểm cộng: +350 (kết quả: OK)
+2025-12-06 17:49:57 - 📧 Email gửi tới: phanthienkhai111@gmail.com
+2025-12-06 17:49:57 - ✅ Session user reload: điểm = 1621
+2025-12-06 19:22:03 - Session Debug:
+id_ngay_chieu: 1674
+id_tk: 17
+ghe_list: ["L11"]
+Full session tong: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-12-10","id_lichchieu":1674,"thoi_gian_chieu":"20:00:00","id_gio":4471,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"250000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":["B\u1eafp rang b\u01a1"]},"ghe_string":"L11","combo_string":"B\u1eafp rang b\u01a1","gia_sau_giam":250000}
+
+2025-12-06 19:22:03 - ✅ Vé tạo thành công! Số ghế: 1, Ghế: L11
+2025-12-06 19:22:03 - DEBUG SESSION TONG: {"id_phim":24,"tieu_de":"CH\u00daA T\u1ec2 C\u1ee6A NH\u1eeeNG CHI\u1ebeC NH\u1eaaN - S\u1ef0 TR\u1ede V\u1ec0 C\u1ee6A NH\u00c0 VUA ","img":"la.jpg","thoi_luong_phim":125,"ngay_chieu":"2025-12-10","id_lichchieu":1674,"thoi_gian_chieu":"20:00:00","id_gio":4471,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"250000","ten_ghe":{"ghe":["L11"]},"ten_doan":{"doan":["B\u1eafp rang b\u01a1"]},"ghe_string":"L11","combo_string":"B\u1eafp rang b\u01a1","gia_sau_giam":250000}
+2025-12-06 19:22:03 - ℹ️ Không dùng điểm để giảm giá (diem_doi không tồn tại hoặc = 0)
+2025-12-06 19:22:03 - 💰 Tính điểm: Price=250000, Diem_tang=250 (mỗi 1000 VND = 1 điểm)
+2025-12-06 19:22:03 - ✅ Điểm cộng: +250 (kết quả: OK)
+2025-12-06 19:22:05 - 📧 Email gửi tới: phanthienkhai111@gmail.com
+2025-12-06 19:22:05 - ✅ Session user reload: điểm = 250
+2025-12-06 20:20:59 - Session Debug:
+id_ngay_chieu: 1705
+id_tk: 17
+ghe_list: ["L12"]
+Full session tong: {"id_phim":26,"tieu_de":"K\u1eba \u0102N H\u1ed2N","img":"anhon.jpg","thoi_luong_phim":135,"ngay_chieu":"2025-12-10","id_lichchieu":1705,"thoi_gian_chieu":"20:00:00","id_gio":4533,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"250000","ten_ghe":{"ghe":["L12"]},"ten_doan":{"doan":["B\u1eafp rang b\u01a1"]},"ghe_string":"L12","combo_string":"B\u1eafp rang b\u01a1","gia_sau_giam":200000,"ma_khuyen_mai":"COMBO50K","giam_gia":50000}
+
+2025-12-06 20:20:59 - ✅ Vé tạo thành công! Số ghế: 1, Ghế: L12
+2025-12-06 20:20:59 - DEBUG SESSION TONG: {"id_phim":26,"tieu_de":"K\u1eba \u0102N H\u1ed2N","img":"anhon.jpg","thoi_luong_phim":135,"ngay_chieu":"2025-12-10","id_lichchieu":1705,"thoi_gian_chieu":"20:00:00","id_gio":4533,"ten_phong":"P101","id_phong":1,"loai_phong":"2D","ten_rap":"Galaxy Studio Qu\u1eadn 1","id_rap":1,"dia_chi_rap":"123 Nguy\u1ec5n Hu\u1ec7, Qu\u1eadn 1, TP.HCM","sdt_rap":"028 1234 5678","gia_ghe":"250000","ten_ghe":{"ghe":["L12"]},"ten_doan":{"doan":["B\u1eafp rang b\u01a1"]},"ghe_string":"L12","combo_string":"B\u1eafp rang b\u01a1","gia_sau_giam":200000,"ma_khuyen_mai":"COMBO50K","giam_gia":50000}
+2025-12-06 20:20:59 - ℹ️ Không dùng điểm để giảm giá (diem_doi không tồn tại hoặc = 0)
+2025-12-06 20:20:59 - 💰 Tính điểm: Price=200000, Diem_tang=200 (mỗi 1000 VND = 1 điểm)
+2025-12-06 20:20:59 - ✅ Điểm cộng: +200 (kết quả: OK)
+2025-12-06 20:21:01 - 📧 Email gửi tới: phanthienkhai111@gmail.com
+2025-12-06 20:21:01 - ✅ Session user reload: điểm = 5550

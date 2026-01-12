@@ -1,4 +1,3 @@
-
 <?php
 include "view/search.php";
     extract($load_ve_tt);
@@ -6,6 +5,32 @@ include "view/search.php";
     // Lấy thông tin rạp, nếu không có thì dùng default
     $ten_rap_hienthi = !empty($ten_rap) ? $ten_rap : 'Galaxy Studio Gò Vấp';
     $dia_chi_hienthi = !empty($dia_chi_rap) ? $dia_chi_rap : 'Địa chỉ chưa cập nhật';
+    
+    // Load QR config if exists
+    $qr_host = $_SERVER['HTTP_HOST'];
+    if (file_exists(__DIR__ . '/../config/qr_config.php')) {
+        include __DIR__ . '/../config/qr_config.php';
+        if (!empty(QR_SERVER_IP)) {
+            $qr_host = QR_SERVER_IP;
+            if (QR_SERVER_PORT != 80) {
+                $qr_host .= ':' . QR_SERVER_PORT;
+            }
+        } else {
+            // Auto-detect IP
+            $ip = gethostbyname(gethostname());
+            if ($ip !== gethostname() && strpos($ip, '127.') !== 0) {
+                $qr_host = $ip;
+            }
+        }
+    } else {
+        // Fallback function to get server IP address for LAN access
+        if ($_SERVER['HTTP_HOST'] == 'localhost' || $_SERVER['HTTP_HOST'] == '127.0.0.1') {
+            $ip = gethostbyname(gethostname());
+            if ($ip !== gethostname() && strpos($ip, '127.') !== 0) {
+                $qr_host = $ip;
+            }
+        }
+    }
     ?>
     <section class="container">
         <div class="order-container">
@@ -41,20 +66,19 @@ include "view/search.php";
                     <div class="ticket__indecator indecator--pre"><div class="indecator-text pre--text">Galaxy Studio</div> </div>
                     <div class="ticket__inner">
                         <div class="ticket-secondary">
-                            <span class="ticket__item">Mã vé: <strong class="ticket__number"><?= $id ?></strong></span>
+                            <span class="ticket__item">Mã vé <strong class="ticket__number"><?= $id ?></strong></span>
                             <span class="ticket__item ticket__date"><?= $ngay_chieu ?></span>
                             <span class="ticket__item ticket__time"><?= $thoi_gian_chieu ?></span>
-                            <span class="ticket__item">🏢 Rạp: <span class="ticket__cinema"><?= $ten_rap_hienthi ?></span></span>
-                            <span class="ticket__item">📍 Địa chỉ: <span class="ticket__cinema"><?= $dia_chi_hienthi ?></span></span>
-                            <span class="ticket__item">🚪 Phòng: <strong class="ticket__number"><?= $tenphong ?></strong></span>
-                            <span class="ticket__item ticket__price">💰 Giá: <strong class="ticket__cost"><?= number_format($thanh_tien) ?> vnđ</strong></span>
+                            <span class="ticket__item">🏢 Rạp : <span class="ticket__cinema"><?= $ten_rap_hienthi ?></span></span>
+                            <span class="ticket__item">📍 Địa chỉ : <span class="ticket__cinema"><?= $dia_chi_hienthi ?></span></span>
+                            <span class="ticket__item">🚪 Phòng : <strong class="ticket__number"><?= $tenphong ?></strong></span>
+                            <span class="ticket__item ticket__price" style="margin-top: 5px">💰 Giá: <strong class="ticket__cost"><?= number_format($thanh_tien) ?> vnđ</strong></span>
                         </div>
-
                         <div class="ticket-primery" style="position: relative;">
-                            <div style="position: absolute; top: 68px; right: 41px; width: 67px; height: 68px; background: #fff; border: 1px solid #e5e7eb; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
-                                <img src="view/qr.php?data='<?php echo urlencode("http://" . ($_SERVER['HTTP_HOST'] ?? 'localhost') . "/webphim/Trang-nguoi-dung/index.php?act=quetve&id=" . $id); ?>.'" style="width: 80px; height: 80px; object-fit: contain;" />
+                            <div style="position: absolute; top: 86px; right: -1px; width: 107px; height: 107px; background: #fff; border: 2px solid #e5e7eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                <img src="view/qr.php?data=<?php echo urlencode("http://" . $qr_host . "/webphim/Trang-nguoi-dung/quete.php?id=" . $id); ?>&t=<?= time() ?>" alt="QR Code" style="width: 115px; height: 115px; object-fit: contain;" />
                             </div>
-                            <span class="ticket__item ticket__item--primery ticket__film" style="display= flex">Phim: <br><strong class="ticket__movie"><?= $tieu_de ?></strong></span>
+                            <span class="ticket__item ticket__item--primery ticket__film">Phim: <br><strong class="ticket__movie"><?= $tieu_de ?></strong></span>
                             <span class="ticket__item ticket__time">🪑 Ghế: <?= $ghe ?></span>
                             <span class="ticket__item ticket__time">🍿 Combo: <?= $combo ?></span>
                         </div>

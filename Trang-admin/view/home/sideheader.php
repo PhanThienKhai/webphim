@@ -134,3 +134,6 @@
 
             </div><!-- Side Header Inner End -->
         </div><!-- Side Header End -->
+
+<!-- Chat Modal Component -->
+<?php include __DIR__ . '/chat_modal.php'; ?>

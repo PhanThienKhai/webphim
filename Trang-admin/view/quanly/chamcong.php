@@ -21,7 +21,7 @@
         .stat-number{font-size:28px;font-weight:700;margin:8px 0}
         .stat-label{font-size:13px;color:#6b7280}
     </style>
-    <div class="page-heading"><h3>⏰ Chấm công</h3></div>
+    <div class="page-heading"><h3>Chấm công</h3></div>
     <?php if (!empty($success)): ?><div class="alert alert-success"><?= htmlspecialchars($success) ?></div><?php endif; ?>
     <?php if (!empty($error)): ?><div class="alert alert-danger"><?= htmlspecialchars($error) ?></div><?php endif; ?>
 
@@ -64,7 +64,7 @@
                     <div class="stat-label">Vắng mặt</div>
                     <div class="stat-number" style="color:#ef4444"><?= (int)$attendance_summary['absent_count'] ?></div>
                 </div>
-                <div class="stat-card" style="border-left:4px solid #8b5cf6;background:#faf5ff">
+                <div class="stat-card" style="border-left:4px solid #5a5566ff;background:#faf5ff">
                     <div class="stat-label">Tỷ lệ attendance</div>
                     <div class="stat-number" style="color:#8b5cf6"><?= number_format($attendance_summary['attendance_rate'],1) ?>%</div>
                 </div>
@@ -73,7 +73,7 @@
         
         <?php if (!empty($attendance_detail)): ?>
             <div style="margin:20px 0">
-                <h5 style="margin-bottom:12px">📊 Chi tiết so sánh lịch phân công vs thực tế:</h5>
+                <h5 style="margin-bottom:12px">Chi tiết so sánh lịch phân công vs thực tế:</h5>
                 <div class="table-responsive">
                     <table class="table table-bordered" style="font-size:13px">
                         <thead>
@@ -102,7 +102,7 @@
                                         <?php if ($ad['status'] === 'absent'): ?>
                                             <span style="color:#ef4444;font-weight:600">❌ Vắng</span>
                                         <?php elseif ($ad['status'] === 'warning'): ?>
-                                            <span style="color:#f59e0b;font-weight:600">⚠️ Chú ý</span>
+                                            <span style="color:#f59e0b;font-weight:600">Chú ý</span>
                                         <?php else: ?>
                                             <span style="color:#10b981;font-weight:600">✓ Đúng</span>
                                         <?php endif; ?>
@@ -126,7 +126,7 @@
         <div class="row">
             <div class="col-12 mb-10">
                 <div style="display:flex;gap:10px;align-items:center;padding:12px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px">
-                    <span style="font-size:24px">⚡</span>
+                    <span style="font-size:24px"></span>
                     <div style="flex:1">
                         <strong>Check-in nhanh</strong>
                         <p style="margin:4px 0 0;font-size:13px;color:#6b7280">Chấm công ngay lúc này (tự động điền giờ vào + 8h làm việc)</p>
@@ -138,7 +138,7 @@
                         <?php endforeach; ?>
                     </select>
                     <button class="button button-primary" type="submit" name="checkin_now" value="1">
-                        🕐 Check-in ngay
+                        Check-in ngay
                     </button>
                 </div>
             </div>
@@ -147,68 +147,138 @@
 
     <hr style="margin:24px 0;border:none;border-top:2px dashed #e5e7eb" />
 
-    <form method="post" action="index.php?act=chamcong" class="mb-20">
-        <h5 style="margin-bottom:12px">📝 Thêm chấm công thủ công:</h5>
-        <div class="row">
-            <div class="col-12 col-md-3 mb-10"><label>Nhân viên</label>
-                <select class="form-control" name="id_nv" id="nv_select" required>
-                    <?php foreach (($ds_nv ?? []) as $nvRow): ?>
-                        <option value="<?= (int)$nvRow['id'] ?>" <?= ((int)($nv ?? 0) === (int)$nvRow['id']) ? 'selected' : '' ?>><?= htmlspecialchars($nvRow['name']) ?></option>
-                    <?php endforeach; ?>
-                </select>
+    <!-- Attendance Form Section -->
+    <div style="background: linear-gradient(135deg, #aeb8e8ff 0%, #bba3d2ff 100%); padding: 30px; border-radius: 12px; margin-bottom: 30px; color: white;">
+        <h5 style="margin: 0 0 20px; font-size: 18px; font-weight: 700;">Thêm chấm công thủ công</h5>
+        
+        <form method="post" action="index.php?act=chamcong" style="margin-bottom: 0;">
+            <div class="row">
+                <div class="col-12 col-md-4 mb-15">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px; opacity: 0.95;">Nhân viên *</label>
+                    <select class="form-control" name="id_nv" id="nv_select" required style="background: white; color: #333;">
+                        <option value="">-- Chọn nhân viên --</option>
+                        <?php foreach (($ds_nv ?? []) as $nvRow): ?>
+                            <option value="<?= (int)$nvRow['id'] ?>" <?= ((int)($nv ?? 0) === (int)$nvRow['id']) ? 'selected' : '' ?>><?= htmlspecialchars($nvRow['name']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-12 col-md-3 mb-15">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px; opacity: 0.95;">Ngày *</label>
+                    <input id="cc_ngay" class="form-control" type="date" name="ngay" required style="background: white; color: #333;" />
+                </div>
+                <div class="col-6 col-md-2.5 mb-15">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px; opacity: 0.95;">Giờ vào *</label>
+                    <input id="cc_gio_vao" class="form-control" type="time" name="gio_vao" required style="background: white; color: #333;" />
+                </div>
+                <div class="col-6 col-md-2.5 mb-15">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px; opacity: 0.95;">Giờ ra *</label>
+                    <input id="cc_gio_ra" class="form-control" type="time" name="gio_ra" required style="background: white; color: #333;" />
+                </div>
             </div>
-            <div class="col-12 col-md-2 mb-10"><label>Ngày</label><input id="cc_ngay" class="form-control" type="date" name="ngay" required /></div>
-            <div class="col-6 col-md-2 mb-10"><label>Giờ vào</label><input id="cc_gio_vao" class="form-control" type="time" name="gio_vao" required /></div>
-            <div class="col-6 col-md-2 mb-10"><label>Giờ ra</label><input id="cc_gio_ra" class="form-control" type="time" name="gio_ra" required /></div>
-            <div class="col-12 col-md-3 mb-10"><label>Ghi chú</label><input class="form-control" type="text" name="ghi_chu" placeholder="Tùy chọn" /></div>
-            <div class="col-12"><button class="button button-primary" type="submit" name="them" value="1">➕ Thêm chấm công</button></div>
-            <div class="col-12 tool-row">
-                <span class="chip" onclick="preset('08:00','12:00')">🌅 Ca sáng 08:00–12:00</span>
-                <span class="chip" onclick="preset('13:00','17:00')">🌤️ Ca chiều 13:00–17:00</span>
-                <span class="chip" onclick="preset('08:00','17:00')">☀️ Full 08:00–17:00</span>
-                <span class="chip" onclick="preset('18:00','22:00')">🌙 Ca tối 18:00–22:00</span>
-                <span class="chip chip-primary" onclick="setToday()">📅 Hôm nay</span>
-                <span class="chip" onclick="copyLastRow()">📋 Nhân bản dòng cuối</span>
-                <span class="chip" onclick="exportCSV()">💾 Xuất CSV</span>
+            
+            <div class="row">
+                <div class="col-12 col-md-6 mb-15">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px; opacity: 0.95;">Ghi chú (Tùy chọn)</label>
+                    <input class="form-control" type="text" name="ghi_chu" placeholder="VD: Không tính OT, hỗ trợ sự kiện..." style="background: white; color: #333;" />
+                </div>
+                <div class="col-12 col-md-6 mb-15">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px; opacity: 0.95;">&nbsp;</label>
+                    <button class="button" type="submit" name="them" value="1" style="background: white; color: #667eea; font-weight: 700; width: 100%; border: none; padding: 12px;">
+                        Thêm chấm công
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 
-    <h5 style="margin:20px 0 12px">📋 Danh sách chấm công trong tháng:</h5>
+    <!-- Quick Actions -->
+    <div style="margin-bottom: 25px;">
+        <div style="margin-bottom: 12px; font-weight: 600; font-size: 14px; color: #333;">⚡ Tùy chỉnh nhanh:</div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <span class="chip" onclick="preset('08:00','12:00')" style="cursor: pointer;">🌅 08:00–12:00</span>
+            <span class="chip" onclick="preset('13:00','17:00')" style="cursor: pointer;">🌤️ 13:00–17:00</span>
+            <span class="chip" onclick="preset('08:00','17:00')" style="cursor: pointer;">☀️ 08:00–17:00</span>
+            <span class="chip" onclick="preset('18:00','22:00')" style="cursor: pointer;">🌙 18:00–22:00</span>
+            <span class="chip chip-primary" onclick="setToday()" style="cursor: pointer;">📅 Hôm nay</span>
+            <span class="chip" onclick="copyLastRow()" style="cursor: pointer;">Nhân bản cuối</span>
+            <span class="chip" onclick="exportCSV()" style="cursor: pointer;">Xuất CSV</span>
+        </div>
+    </div>
+
+    <h5 style="margin:20px 0 12px">Danh sách chấm công trong tháng:</h5>
     <div class="table-responsive">
-        <table class="table table-bordered">
-            <thead><tr><th>Ngày</th><th>Nhân viên</th><th>Giờ vào</th><th>Giờ ra</th><th>Số giờ</th><th>Ghi chú</th><th>Thao tác</th></tr></thead>
+        <table class="table table-bordered" style="font-size: 13px;">
+            <thead style="background: #f3f4f6; font-weight: 700;">
+                <tr>
+                    <th style="width: 8%;">#</th>
+                    <th style="width: 16%;">Nhân viên</th>
+                    <th style="width: 12%;">Ngày</th>
+                    <th style="width: 10%; text-align: center;">Vào</th>
+                    <th style="width: 10%; text-align: center;">Ra</th>
+                    <th style="width: 8%; text-align: center;">Số giờ</th>
+                    <th style="width: 16%; text-align: center;">📍 GPS</th>
+                    <th style="width: 20%; text-align: center;">Thao tác</th>
+                </tr>
+            </thead>
             <tbody>
-                <?php foreach (($ds_cc ?? []) as $r): 
+                <?php 
+                $index = 1;
+                foreach (($ds_cc ?? []) as $r): 
                     $gio_vao = strtotime($r['gio_vao']);
                     $gio_ra = strtotime($r['gio_ra']);
                     $hours = ($gio_ra - $gio_vao) / 3600;
                     $rowClass = '';
-                    $warning = '';
+                    $badge = '';
                     
                     if ($hours > 12) {
                         $rowClass = 'highlight-danger';
-                        $warning = '⚠️ Ca quá dài';
+                        $badge = '<span style="background: #fee2e2; color: #991b1b; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">Quá dài</span>';
                     } elseif ($hours < 1) {
                         $rowClass = 'highlight-warning';
-                        $warning = '⚠️ Ca quá ngắn';
+                        $badge = '<span style="background: #fef3c7; color: #92400e; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">Quá ngắn</span>';
+                    } else {
+                        // $badge = '<span style="background: #d1fae5; color: #065f46; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;"></span>';
                     }
                 ?>
                     <tr class="<?= $rowClass ?>">
+                        <td><?= $index++ ?></td>
+                        <td><strong><?= htmlspecialchars($r['ten_nv']) ?></strong></td>
                         <td><?= htmlspecialchars($r['ngay']) ?></td>
-                        <td><?= htmlspecialchars($r['ten_nv']) ?></td>
-                        <td><?= htmlspecialchars($r['gio_vao']) ?></td>
-                        <td><?= htmlspecialchars($r['gio_ra']) ?></td>
-                        <td><strong><?= number_format($hours, 1) ?> h</strong> <?= $warning ?></td>
-                        <td><?= htmlspecialchars($r['ghi_chu'] ?? '') ?></td>
-                        <td style="white-space:nowrap">
-                            <a class="button button-sm" href="#" onclick="prefill('<?= htmlspecialchars($r['ngay']) ?>','<?= htmlspecialchars($r['gio_vao']) ?>','<?= htmlspecialchars($r['gio_ra']) ?>');return false;">Dùng</a>
-                            <a class="button button-sm button-danger" href="index.php?act=chamcong&xoa=<?= (int)$r['id'] ?>&ym=<?= urlencode($ym) ?>&nv=<?= (int)$nv ?>" onclick="return confirm('Xóa bản ghi này?')">Xóa</a>
+                        <td style="text-align: center; font-family: monospace;"><?= htmlspecialchars($r['gio_vao']) ?></td>
+                        <td style="text-align: center; font-family: monospace;"><?= htmlspecialchars($r['gio_ra']) ?></td>
+                        <td style="text-align: center;">
+                            <strong><?= number_format($hours, 1) ?></strong>h
+                            <br><?= $badge ?>
+                        </td>
+                        <td style="text-align: center; font-size: 12px;">
+                            <?php if (!empty($r['latitude']) && !empty($r['longitude'])): ?>
+                                <span style="color: #0066cc; cursor: pointer; text-decoration: underline; display: block; margin-bottom: 4px;" 
+                                      title="Độ chính xác: ±<?= round($r['location_accuracy'] ?? 0) ?>m"
+                                      onclick="openMapLocation(<?= $r['latitude'] ?>, <?= $r['longitude'] ?>)">
+                                    📍 <?= number_format($r['latitude'], 4) ?>
+                                </span>
+                                <span style="color: #0066cc; cursor: pointer; text-decoration: underline;"
+                                      title="Độ chính xác: ±<?= round($r['location_accuracy'] ?? 0) ?>m"
+                                      onclick="openMapLocation(<?= $r['latitude'] ?>, <?= $r['longitude'] ?>)">
+                                    <?= number_format($r['longitude'], 4) ?>
+                                </span>
+                            <?php else: ?>
+                                <span style="color: #ddd;">—</span>
+                            <?php endif; ?>
+                        </td>
+                        <td style="text-align: center; white-space: nowrap;">
+                            <button class="button button-sm" type="button" onclick="prefill('<?= htmlspecialchars($r['ngay']) ?>','<?= htmlspecialchars($r['gio_vao']) ?>','<?= htmlspecialchars($r['gio_ra']) ?>'); document.querySelector('html').scrollTop = 0;" style="font-size: 11px; padding: 6px 10px;">✏️ Dùng</button>
+                            <a class="button button-sm button-danger" href="index.php?act=chamcong&xoa=<?= (int)$r['id'] ?>&ym=<?= urlencode($ym) ?>&nv=<?= (int)$nv ?>" onclick="return confirm('Xóa bản ghi này?')" style="font-size: 11px; padding: 6px 10px;">🗑️ Xóa</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
                 <?php if (empty($ds_cc)): ?>
-                    <tr><td colspan="7" style="text-align:center;color:#6b7280;padding:20px">Không có dữ liệu chấm công trong tháng này</td></tr>
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: #9ca3af; padding: 30px;">
+                            <div style="font-size: 28px; margin-bottom: 8px;">📭</div>
+                            Không có dữ liệu chấm công trong tháng này
+                        </td>
+                    </tr>
                 <?php endif; ?>
             </tbody>
         </table>
@@ -216,6 +286,11 @@
 </div>
 
 <script>
+function openMapLocation(lat, lng) {
+    const url = `https://maps.google.com/?q=${lat},${lng}&z=17`;
+    window.open(url, '_blank');
+}
+
 function preset(v,a){ document.getElementById('cc_gio_vao').value=v; document.getElementById('cc_gio_ra').value=a; }
 function setToday(){ const d=new Date(); const v=d.toISOString().slice(0,10); document.getElementById('cc_ngay').value=v; }
 function copyLastRow(){

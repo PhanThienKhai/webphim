@@ -15,22 +15,27 @@ function get_quy_tac_tich_diem($loai = 'dat_ve') {
 // ============ TÍNH ĐIỂM TỪ SỐ TIỀN ============
 function tinh_diem_tu_tien($so_tien, $loai = 'dat_ve') {
     $quy_tac = get_quy_tac_tich_diem($loai);
-    if (!$quy_tac) return 0;
     
-    // Nếu có điểm cố định, trả về điểm cố định
-    if ($quy_tac['diem_co_dinh'] > 0) {
+    // Nếu có quy tắc, kiểm tra điểm cố định
+    if ($quy_tac && $quy_tac['diem_co_dinh'] > 0) {
         return (int)$quy_tac['diem_co_dinh'];
     }
     
-    // Tính theo tỷ lệ quy đổi
-    $ti_le = (float)$quy_tac['ti_le_quy_doi'];
+    // Tỷ lệ mặc định: 1000 VNĐ = 1 điểm
+    $ti_le = 1 / 1000; // = 0.001
+    
+    // Nếu có quy tắc, sử dụng tỷ lệ từ quy tắc
+    if ($quy_tac && !empty($quy_tac['ti_le_quy_doi'])) {
+        $ti_le = (float)$quy_tac['ti_le_quy_doi'];
+    }
+    
     $diem = (int)($so_tien * $ti_le);
     
     return $diem;
 }
 
 // ============ CỘNG ĐIỂM ============
-function cong_diem($id_tk, $so_diem, $ly_do, $id_ve = null, $id_hoa_don = null) {
+function cong_diem($id_tk, $so_diem, $ly_do, $id_ve = null, $id_hoa_don = null, $apply_rank_multiplier = true) {
     if ($so_diem <= 0) return false;
     
     // Kiểm tra vai trò (không cộng điểm cho guest)
@@ -39,12 +44,13 @@ function cong_diem($id_tk, $so_diem, $ly_do, $id_ve = null, $id_hoa_don = null) 
         return false; // Chỉ cộng điểm cho khách hàng thành viên (vai_tro = 0)
     }
     
-    // Lấy hệ số hạng
-    $hang = pdo_query_one("SELECT ti_le_tich_diem FROM hang_thanh_vien WHERE ma_hang = ?", $user['hang_thanh_vien']);
-    
-    // Nhân hệ số theo hạng
-    if ($hang) {
-        $so_diem = (int)($so_diem * (float)$hang['ti_le_tich_diem']);
+    // Nhân hệ số theo hạng (nếu được yêu cầu)
+    if ($apply_rank_multiplier) {
+        $hang = pdo_query_one("SELECT ti_le_tich_diem FROM hang_thanh_vien WHERE ma_hang = ?", $user['hang_thanh_vien']);
+        
+        if ($hang) {
+            $so_diem = (int)($so_diem * (float)$hang['ti_le_tich_diem']);
+        }
     }
     
     // Cập nhật điểm trong tài khoản

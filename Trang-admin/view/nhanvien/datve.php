@@ -18,7 +18,7 @@
     margin-bottom: 30px;
 }
 .page-title-icon {
-    width: 48px;
+    width: 48px;z
     height: 48px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 12px;
@@ -511,6 +511,31 @@
     padding-top: 16px;
     border-top: 2px solid rgba(255,255,255,0.3);
 }
+
+/* Payment Method Styling */
+.payment-method-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #f9fafb;
+    transition: all 0.3s ease;
+    margin-bottom: 12px;
+}
+.payment-method-label.active {
+    border-color: #667eea;
+    background: #f0f4ff;
+    font-weight: 600;
+}
+.payment-method-label span {
+    font-weight: 600;
+}
+.payment-method-label.active span {
+    color: #667eea;
+}
 </style>
 
 <div class="content-body">
@@ -743,13 +768,18 @@
                     <div style="background: #fff; border: 2px solid #e5e7eb; border-radius: 12px; padding: 24px;">
                         <h5 style="margin: 0 0 16px; font-weight: 600;">💳 Phương thức thanh toán</h5>
                         <div class="form-group-modern">
-                            <label style="display: flex; align-items: center; gap: 8px; padding: 12px; border: 2px solid #667eea; border-radius: 8px; cursor: pointer; background: #f0f4ff;">
+                            <label class="payment-method-label active">
                                 <input type="radio" name="payment_method" value="cash" checked style="width: 20px; height: 20px;">
-                                <span style="font-weight: 600;">💵 Tiền mặt tại quầy</span>
+                                <span>💵 Tiền mặt tại quầy</span>
+                            </label>
+                            <label class="payment-method-label">
+                                <input type="radio" name="payment_method" value="sepay" style="width: 20px; height: 20px;">
+                                <span>🏦 Chuyển khoản Sepay (QR code)</span>
                             </label>
                         </div>
                         <p style="color: #6b7280; font-size: 13px; margin: 16px 0;">
-                            ℹ️ Khách hàng sẽ thanh toán trực tiếp tại quầy khi nhận vé
+                            ℹ️ Tiền mặt: Khách hàng thanh toán trực tiếp tại quầy khi nhận vé
+                            <br/>ℹ️ Sepay: Nhân viên xuất QR code cho khách thanh toán online
                         </p>
                     </div>
                 </div>
@@ -801,6 +831,9 @@
     const btnBackStep1 = document.getElementById('btn-back-step1');
     const btnBackStep2 = document.getElementById('btn-back-step2');
     const btnConfirm = document.getElementById('btn-confirm-booking');
+    
+    // Payment method radios
+    const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
     
     // Promo code elements
     const promoSelect = document.getElementById('promo-code-select');
@@ -863,6 +896,22 @@
         const activeCard = [step1Card, step2Card, step3Card][step - 1];
         activeCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+
+    // Payment method selection styling
+    paymentRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            paymentRadios.forEach(r => {
+                const label = r.closest('label');
+                if (label) {
+                    if (r.checked) {
+                        label.classList.add('active');
+                    } else {
+                        label.classList.remove('active');
+                    }
+                }
+            });
+        });
+    });
 
     // Step 1: Load phim data
     phimSelect.addEventListener('change', async () => {
@@ -1371,6 +1420,16 @@
             }
         });
 
+        let paymentMethod = 'cash'; // Default
+        try {
+            const paymentRadio = document.querySelector('input[name="payment_method"]:checked');
+            if (paymentRadio) {
+                paymentMethod = paymentRadio.value;
+            }
+        } catch (e) {
+            console.error('Error getting payment method:', e);
+        }
+
         const formData = new FormData();
         formData.append('id_phim', state.phim.id);
         formData.append('id_lc', state.lc.id);
@@ -1380,6 +1439,7 @@
         formData.append('combo_text', combos.join('; '));
         formData.append('price', calculateTotal());
         formData.append('promo_code', state.promoValid ? state.promoCode : ''); // Thêm mã khuyến mãi
+        formData.append('payment_method', paymentMethod); // Thêm phương thức thanh toán
         formData.append('datve_confirm', '1');
 
         try {
@@ -1407,7 +1467,7 @@
             
             if (data.success && data.ve_id) {
                 // Hiển thị modal với 2 tùy chọn
-                showSuccessModal(data.ve_id);
+                showSuccessModal(data.ve_id, paymentMethod);
             } else {
                 // Hiển thị lỗi cụ thể từ server
                 alert('❌ ' + (data.error || 'Có lỗi xảy ra. Vui lòng thử lại.'));
@@ -1423,7 +1483,7 @@
     });
 
     // Show success modal
-    function showSuccessModal(veId) {
+    function showSuccessModal(veId, paymentMethod) {
         const modal = document.createElement('div');
         modal.style.cssText = `
             position: fixed;
@@ -1438,75 +1498,227 @@
             z-index: 10000;
         `;
         
-        modal.innerHTML = `
-            <div style="
-                background: #fff;
-                border-radius: 16px;
-                padding: 40px;
-                max-width: 450px;
-                text-align: center;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            ">
-                <div style="font-size: 64px; margin-bottom: 20px;">✅</div>
-                <h3 style="margin: 0 0 12px; font-size: 24px; color: #1f2937;">Đặt vé thành công!</h3>
-                <p style="margin: 0 0 32px; color: #6b7280; font-size: 15px;">
-                    Vé đã được tạo với mã #${veId}
-                </p>
-                
-                <div style="display: flex; gap: 12px; justify-content: center;">
-                    <button onclick="window.location.href='index.php?act=ctve&id=${veId}'" 
+        let modalContent = '';
+        
+        if (paymentMethod === 'sepay') {
+            // QR Code Sepay
+            modalContent = `
+                <div style="
+                    background: #fff;
+                    border-radius: 16px;
+                    padding: 40px;
+                    max-width: 500px;
+                    text-align: center;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                ">
+                    <div style="font-size: 48px; margin-bottom: 20px;">🏦</div>
+                    <h3 style="margin: 0 0 12px; font-size: 24px; color: #1f2937;">Vé đã tạo - Chờ thanh toán</h3>
+                    <p style="margin: 0 0 24px; color: #6b7280; font-size: 15px;">
+                        Mã vé: <strong style="color: #667eea; font-size: 18px;">#${veId}</strong>
+                    </p>
+                    
+                    <div style="background: #f9fafb; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+                        <p style="margin: 0 0 16px; color: #6b7280; font-weight: 600;">📱 QR Code Sepay</p>
+                        <img id="sepay-qr-${veId}" src="" alt="QR Code" style="max-width: 280px; border-radius: 8px; margin: 0 auto;">
+                        <p style="margin: 16px 0 0; color: #6b7280; font-size: 13px;">Khách hàng quét để thanh toán</p>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 16px;">
+                        <button onclick="downloadQRCode(${veId})" 
+                                style="
+                                    padding: 12px 24px;
+                                    background: #667eea;
+                                    color: #fff;
+                                    border: none;
+                                    border-radius: 8px;
+                                    font-weight: 600;
+                                    font-size: 14px;
+                                    cursor: pointer;
+                                ">
+                            ⬇️ Tải QR
+                        </button>
+                        <button onclick="printQRCode(${veId})" 
+                                style="
+                                    padding: 12px 24px;
+                                    background: #fff;
+                                    color: #667eea;
+                                    border: 2px solid #667eea;
+                                    border-radius: 8px;
+                                    font-weight: 600;
+                                    font-size: 14px;
+                                    cursor: pointer;
+                                ">
+                            🖨️ In QR
+                        </button>
+                    </div>
+                    
+                    <button onclick="window.location.href='index.php?act=nv_datve'" 
                             style="
-                                padding: 14px 28px;
+                                width: 100%;
+                                padding: 12px;
                                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
                                 color: #fff;
                                 border: none;
-                                border-radius: 10px;
+                                border-radius: 8px;
                                 font-weight: 600;
-                                font-size: 15px;
                                 cursor: pointer;
-                                transition: transform 0.2s;
-                            "
-                            onmouseover="this.style.transform='translateY(-2px)'"
-                            onmouseout="this.style.transform='translateY(0)'">
-                        🎫 Xem vé
-                    </button>
-                    
-                    <button onclick="printTicket(${veId})" 
-                            style="
-                                padding: 14px 28px;
-                                background: #fff;
-                                color: #667eea;
-                                border: 2px solid #667eea;
-                                border-radius: 10px;
-                                font-weight: 600;
-                                font-size: 15px;
-                                cursor: pointer;
-                                transition: all 0.2s;
-                            "
-                            onmouseover="this.style.background='#f3f4f6'"
-                            onmouseout="this.style.background='#fff'">
-                        🖨️ In vé
+                            ">
+                        ➕ Đặt vé tiếp
                     </button>
                 </div>
-                
-                <button onclick="window.location.href='index.php?act=nv_datve'" 
-                        style="
-                            margin-top: 20px;
-                            padding: 10px 24px;
-                            background: transparent;
-                            color: #6b7280;
-                            border: none;
-                            font-size: 14px;
-                            cursor: pointer;
-                            text-decoration: underline;
-                        ">
-                    Đặt vé mới
-                </button>
-            </div>
-        `;
+            `;
+        } else {
+            // Cash - hiển thị menu như bình thường
+            modalContent = `
+                <div style="
+                    background: #fff;
+                    border-radius: 16px;
+                    padding: 40px;
+                    max-width: 450px;
+                    text-align: center;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                ">
+                    <div style="font-size: 64px; margin-bottom: 20px;">✅</div>
+                    <h3 style="margin: 0 0 12px; font-size: 24px; color: #1f2937;">Đặt vé thành công!</h3>
+                    <p style="margin: 0 0 32px; color: #6b7280; font-size: 15px;">
+                        Vé đã được tạo với mã #${veId}
+                    </p>
+                    
+                    <div style="display: flex; gap: 12px; justify-content: center;">
+                        <button onclick="window.location.href='index.php?act=ctve&id=${veId}'" 
+                                style="
+                                    padding: 14px 28px;
+                                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                    color: #fff;
+                                    border: none;
+                                    border-radius: 10px;
+                                    font-weight: 600;
+                                    font-size: 15px;
+                                    cursor: pointer;
+                                    transition: transform 0.2s;
+                                "
+                                onmouseover="this.style.transform='translateY(-2px)'"
+                                onmouseout="this.style.transform='translateY(0)'">
+                            🎫 Xem vé
+                        </button>
+                        
+                        <button onclick="printTicket(${veId})" 
+                                style="
+                                    padding: 14px 28px;
+                                    background: #fff;
+                                    color: #667eea;
+                                    border: 2px solid #667eea;
+                                    border-radius: 10px;
+                                    font-weight: 600;
+                                    font-size: 15px;
+                                    cursor: pointer;
+                                    transition: all 0.2s;
+                                "
+                                onmouseover="this.style.background='#f3f4f6'"
+                                onmouseout="this.style.background='#fff'">
+                            🖨️ In vé
+                        </button>
+                    </div>
+                    
+                    <button onclick="window.location.href='index.php?act=nv_datve'" 
+                            style="
+                                margin-top: 20px;
+                                padding: 10px 24px;
+                                background: transparent;
+                                color: #6b7280;
+                                border: none;
+                                font-size: 14px;
+                                cursor: pointer;
+                                text-decoration: underline;
+                            ">
+                        Đặt vé mới
+                    </button>
+                </div>
+            `;
+        }
+        
+        modal.innerHTML = modalContent;
         
         document.body.appendChild(modal);
+        
+        // Nếu là Sepay, generate QR code
+        if (paymentMethod === 'sepay') {
+            setTimeout(() => generateSepayQR(veId), 100);
+        }
     }
+    
+    // Generate Sepay QR Code
+    async function generateSepayQR(veId) {
+        try {
+            const response = await fetch('/webphim/Trang-nguoi-dung/sepay/generate_qr_admin.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ve_id: veId })
+            });
+            
+            const data = await response.json();
+            if (data.success && data.qr_url) {
+                const qrImg = document.getElementById(`sepay-qr-${veId}`);
+                if (qrImg) {
+                    qrImg.src = data.qr_url;
+                }
+            } else {
+                console.error('Generate QR failed:', data.error);
+            }
+        } catch (e) {
+            console.error('Lỗi generate QR:', e);
+        }
+    }
+    
+    // Download QR Code
+    window.downloadQRCode = async function(veId) {
+        const qrImg = document.getElementById(`sepay-qr-${veId}`);
+        if (!qrImg || !qrImg.src) {
+            alert('QR Code chưa sẵn sàng. Vui lòng đợi...');
+            return;
+        }
+        
+        const link = document.createElement('a');
+        link.href = qrImg.src;
+        link.download = `QR_Ve_${veId}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+    
+    // Print QR Code
+    window.printQRCode = async function(veId) {
+        const qrImg = document.getElementById(`sepay-qr-${veId}`);
+        if (!qrImg || !qrImg.src) {
+            alert('QR Code chưa sẵn sàng. Vui lòng đợi...');
+            return;
+        }
+        
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>QR Code Thanh toán Vé #${veId}</title>
+                    <style>
+                        body { text-align: center; font-family: Arial, sans-serif; padding: 20px; }
+                        h2 { margin-bottom: 20px; }
+                        img { max-width: 400px; }
+                    </style>
+                </head>
+                <body>
+                    <h2>QR Code Thanh toán - Vé #${veId}</h2>
+                    <img src="${qrImg.src}" alt="QR Code">
+                    <p>Quét mã để thanh toán vé</p>
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
+        
+        setTimeout(() => {
+            printWindow.print();
+            printWindow.close();
+        }, 500);
+    };
     
     // Print ticket function
     window.printTicket = async function(veId) {

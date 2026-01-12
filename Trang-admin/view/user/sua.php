@@ -59,6 +59,11 @@ if (is_array($loadtk)) {
                                 <label style="font-weight: 600; color: #495057; margin-bottom: 8px; display: block; font-size: 13px;">Địa Chỉ</label>
                                 <input class="form-control" type="text" value="<?= htmlspecialchars($dia_chi) ?>" name="dia_chi" style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; font-size: 13px;">
                             </div>
+                            <div class="col-12 col-md-6 mb-20">
+                                <label style="font-weight: 600; color: #495057; margin-bottom: 8px; display: block; font-size: 13px;">Phụ Cấp Cố Định (VND)</label>
+                                <input class="form-control" type="number" step="0.01" value="<?= number_format((float)($phu_cap_co_dinh ?? 0), 2, '.', '') ?>" name="phu_cap_co_dinh" style="border: 1px solid #e0e0e0; border-radius: 6px; padding: 12px; font-size: 13px;">
+                                <small style="color: #999; margin-top: 4px; display: block;">Ăn trưa, xăng xe, phụ cấp khác...</small>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -239,13 +239,11 @@ function bl_get_status_summary($id_rap) {
 
 // Lấy lịch làm việc đã phân công cho nhân viên trong tháng
 function cc_get_scheduled_work($id_nv, $id_rap, $ym){
-    $sql = "SELECT llv.*, kg.thoi_gian_bat_dau, kg.thoi_gian_ket_thuc 
-            FROM lich_lam_viec llv
-            LEFT JOIN khung_gio kg ON kg.id = llv.id_khung_gio
-            WHERE llv.id_nhan_vien = ? 
-            AND llv.id_rap = ?
-            AND DATE_FORMAT(llv.ngay_lam, '%Y-%m') = ?
-            ORDER BY llv.ngay_lam, kg.thoi_gian_bat_dau";
+    $sql = "SELECT * FROM lich_lam_viec
+            WHERE id_nhan_vien = ? 
+            AND id_rap = ?
+            AND DATE_FORMAT(ngay, '%Y-%m') = ?
+            ORDER BY ngay, gio_bat_dau";
     return pdo_query($sql, $id_nv, $id_rap, $ym);
 }
 
@@ -256,9 +254,9 @@ function cc_compare_with_schedule($id_nv, $id_rap, $ym){
     
     $result = [];
     foreach ($scheduled as $sch) {
-        $ngay = $sch['ngay_lam'];
-        $gio_vao_scheduled = $sch['thoi_gian_bat_dau'];
-        $gio_ra_scheduled = $sch['thoi_gian_ket_thuc'];
+        $ngay = $sch['ngay'];
+        $gio_vao_scheduled = $sch['gio_bat_dau'];
+        $gio_ra_scheduled = $sch['gio_ket_thuc'];
         
         // Find actual attendance for this day
         $found = null;

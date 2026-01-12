@@ -324,6 +324,8 @@
                     if (barcodes && barcodes.length > 0) {
                         const qrData = barcodes[0].rawValue;
                         console.log('✅ QR detected (BarcodeDetector):', qrData);
+                        const debugText = document.getElementById('debug-text');
+                        if (debugText) debugText.innerHTML += `<br>✅ QR Detected: ${qrData}`;
                         stopCamera();
                         checkTicket(qrData);
                         return;
@@ -369,6 +371,8 @@
                     
                     if (code && code.data) {
                         console.log('✅ QR detected (Canvas/jsQR):', code.data);
+                        const debugText = document.getElementById('debug-text');
+                        if (debugText) debugText.innerHTML += `<br>✅ QR Detected: ${code.data}`;
                         stopCamera();
                         checkTicket(code.data);
                         return;
@@ -389,14 +393,36 @@
 
         // Nếu QR code chứa URL, trích xuất ID
         let ticketCode = maVe.trim();
-        if (ticketCode.includes('?id=') || ticketCode.includes('&id=')) {
+        
+        console.log('🔍 QR Data nhận được:', ticketCode);
+        
+        // Cố gắng parse URL nếu nó là URL
+        if (ticketCode.startsWith('http://') || ticketCode.startsWith('https://')) {
             try {
-                const urlParams = new URLSearchParams(new URL(ticketCode).search);
-                const id = urlParams.get('id');
-                if (id) ticketCode = id;
+                const url = new URL(ticketCode);
+                const id = url.searchParams.get('id');
+                
+                if (id) {
+                    console.log('✅ Trích xuất ID từ URL:', id);
+                    ticketCode = id;
+                } else {
+                    // Nếu không có ?id=, thử lấy từ pathname
+                    const pathMatch = url.pathname.match(/\/(\d+)$/);
+                    if (pathMatch) {
+                        console.log('✅ Trích xuất ID từ pathname:', pathMatch[1]);
+                        ticketCode = pathMatch[1];
+                    } else {
+                        console.warn('⚠️ URL không chứa ID:', ticketCode);
+                    }
+                }
             } catch (e) {
-                console.warn('⚠️ Không parse URL được, dùng toàn bộ data:', maVe);
+                console.warn('⚠️ URL parse error, dùng toàn bộ data:', maVe, e);
             }
+        } else if (/^\d+$/.test(ticketCode)) {
+            // Nếu là số, dùng trực tiếp
+            console.log('✅ Đã nhận ID số:', ticketCode);
+        } else {
+            console.log('⚠️ Format không rõ, dùng toàn bộ:', ticketCode);
         }
 
         const statusContainer = document.getElementById('status-container');

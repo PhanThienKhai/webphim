@@ -35,8 +35,9 @@ function insert_taikhoan($email,$user,$pass,$name,$sdt,$dc){
     pdo_execute($sql);
 }
 
-function sua_tk($id,$name,$user,$pass,$email,$sdt,$dc){
-    $sql = "update taikhoan set name ='".$name."', user ='".$user."',pass ='".$pass."',email ='".$email."',phone ='".$sdt."',dia_chi ='".$dc."' where id=".$id;
+function sua_tk($id,$name,$user,$pass,$email,$sdt,$dc, $phu_cap = 0){
+    $phu_cap = (float)($phu_cap ?? 0);
+    $sql = "update taikhoan set name ='".$name."', user ='".$user."',pass ='".$pass."',email ='".$email."',phone ='".$sdt."',dia_chi ='".$dc."', phu_cap_co_dinh = ".$phu_cap." where id=".$id;
 
     pdo_execute($sql);
 }

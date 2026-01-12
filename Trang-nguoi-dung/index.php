@@ -658,8 +658,22 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                 $id_phim = $_SESSION['tong']['id_phim'] ?? 0;
                 $id_rap = $_SESSION['tong']['id_rap'] ?? 0;
                 
-                // Lấy giá cuối cùng
-                $gia_luu_db = isset($_SESSION['tong_tien']) ? (int)$_SESSION['tong_tien'] : 0;
+                // Lấy giá cuối cùng (ưu tiên lấy từ gia_sau_giam nếu có)
+                $gia_luu_db = 0;
+                if (isset($_SESSION['tong']['gia_sau_giam']) && $_SESSION['tong']['gia_sau_giam'] > 0) {
+                    $gia_luu_db = (int)$_SESSION['tong']['gia_sau_giam'];
+                } elseif (isset($_SESSION['tong_tien']) && $_SESSION['tong_tien'] > 0) {
+                    $gia_luu_db = (int)$_SESSION['tong_tien'];
+                } elseif (isset($_SESSION['tong']['gia_ghe']) && $_SESSION['tong']['gia_ghe'] > 0) {
+                    $gia_luu_db = (int)$_SESSION['tong']['gia_ghe'];
+                }
+                
+                error_log("=== DEBUG GIÁ VÉ ===");
+                error_log("SESSION tong_tien: " . ($_SESSION['tong_tien'] ?? "NOT SET"));
+                error_log("SESSION tong[gia_sau_giam]: " . ($_SESSION['tong']['gia_sau_giam'] ?? "NOT SET"));
+                error_log("SESSION tong[gia_ghe]: " . ($_SESSION['tong']['gia_ghe'] ?? "NOT SET"));
+                error_log("Gia_luu_db (dùng để tạo vé): " . $gia_luu_db);
+                error_log("===============");
                 
                 if (empty($ghe) || $id_kgc == 0 || $id_lc == 0 || $id_phim == 0) {
                     echo '<script>alert("Lỗi: Thông tin đặt vé không đầy đủ!"); window.location.href="index.php";</script>';
@@ -727,20 +741,13 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                         if ($tong_tien <= 0) {
                             error_log("KHÔNG CỘNG ĐIỂM vì tổng tiền = 0");
                         } else {
-                            // Tính điểm từ vé
-                            $diem_ve = tinh_diem_tu_tien($tong_tien, 'dat_ve');
+                            // Tính điểm từ vé: Mỗi 1000 VND = 1 điểm (giống Momo)
+                            $diem_ve = intval($tong_tien / 1000);
                             
-                            error_log("Điểm từ vé: " . $diem_ve);
+                            error_log("Điểm từ vé: " . $diem_ve . " (tỷ lệ: mỗi 1000 VND = 1 điểm)");
                             
-                            // Tính điểm từ combo (nếu có)
-                            $diem_combo = 0;
-                            if (!empty($load_ve_tt['combo'])) {
-                                // Combo được lưu dạng text: "Combo Standard x2, Combo Premium x1"
-                                // Tạm tính điểm bonus cho combo = 5% giá vé
-                                $diem_combo = (int)($tong_tien * 0.005);
-                            }
-                            
-                            $tong_diem = $diem_ve + $diem_combo;
+                            // Không cộng combo nữa, chỉ cộng từ giá vé
+                            $tong_diem = $diem_ve;
                             
                             error_log("Tổng điểm cần cộng: " . $tong_diem);
                             
@@ -751,7 +758,8 @@ if(isset($_GET['act']) && $_GET['act']!=""){
                                     $tong_diem, 
                                     "Tích điểm từ đơn hàng #" . $_SESSION['id_hd'], 
                                     $id_ve, 
-                                    $_SESSION['id_hd']
+                                    $_SESSION['id_hd'],
+                                    false  // Không nhân hệ số hạng (chỉ muốn 1000 VND = 1 điểm)
                                 );
                                 
                                 error_log("Điểm đã cộng (sau khi nhân hệ số): " . $diem_da_cong);

@@ -1076,7 +1076,10 @@ if(isset($_SESSION['user1'])) {
                 }
             }
             
-            $ve_id = ve_create_admin($id_phim, $id_rap, $id_tg, $id_lc, (int)$kh['id'], $ghe_csv, $final_price, (int)$_SESSION['user1']['id'], $combo_text);
+            // Lấy phương thức thanh toán
+            $payment_method = trim($_POST['payment_method'] ?? 'cash');
+            
+            $ve_id = ve_create_admin($id_phim, $id_rap, $id_tg, $id_lc, (int)$kh['id'], $ghe_csv, $final_price, (int)$_SESSION['user1']['id'], $combo_text, $payment_method);
             echo json_encode([
                 'success' => true, 
                 've_id' => $ve_id,
@@ -3404,6 +3407,7 @@ if(isset($_SESSION['user1'])) {
                            $email =$_POST['email'];
                            $phone =$_POST['phone'];
                            $dia_chi =$_POST['dia_chi'];
+                           $phu_cap_co_dinh = isset($_POST['phu_cap_co_dinh']) ? (float)$_POST['phu_cap_co_dinh'] : 0;
                            if($id==''||$name ==''||$email==''|| $pass==''|| $user==''||$phone==''||$dia_chi=='') {
                              $error = "vui lòng không để trống";
                              // Không cần load khung giờ chiếu trong user management
@@ -3418,13 +3422,17 @@ if(isset($_SESSION['user1'])) {
                                    include "./view/home/403.php"; break;
                                }
                            }
-                           sua_tk($id, $name, $user, $pass, $email, $phone, $dia_chi);  
+                           sua_tk($id, $name, $user, $pass, $email, $phone, $dia_chi, $phu_cap_co_dinh);  
                            $suatc = "Sửa thành công";
 
                         }
                        }
      
-                        $loadalltk = loadall_taikhoan_nv();
+                        if (in_array($_SESSION['user1']['vai_tro'], [3]) && !empty($_SESSION['user1']['id_rap'])) {
+                            $loadalltk = loadall_taikhoan_nv_by_rap((int)$_SESSION['user1']['id_rap']);
+                        } else {
+                            $loadalltk = loadall_taikhoan_nv();
+                        }
                        include "./view/user/QTvien.php";
                        break;        
             case "xoatk":

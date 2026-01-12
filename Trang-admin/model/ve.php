@@ -110,16 +110,21 @@ function ve_checkin($id_ve, $id_nv){
     pdo_execute($sql, $id_nv, $id_ve);
 }
 
-function ve_create_admin($id_phim, $id_rap, $id_tg, $id_lc, $id_kh, $ghe_csv, $price, $id_nv, $combo_text = ''){
+function ve_create_admin($id_phim, $id_rap, $id_tg, $id_lc, $id_kh, $ghe_csv, $price, $id_nv, $combo_text = '', $payment_method = 'cash'){
     $ma = substr(md5(uniqid((string)$id_kh, true)), 0, 12);
+    
+    // Nếu payment_method là sepay, trang_thai = 0 (chờ thanh toán)
+    // Nếu payment_method là cash, trang_thai = 1 (đã thanh toán)
+    $trang_thai = ($payment_method === 'sepay') ? 0 : 1;
+    
     $sql = "INSERT INTO ve(id_phim,id_rap,id_thoi_gian_chieu,id_ngay_chieu,id_tk,ghe,combo,price,id_hd,trang_thai,ngay_dat,ma_ve,tao_boi)
-            VALUES(?,?,?,?,?,?,?,?,0,1,NOW(),?,?)";
+            VALUES(?,?,?,?,?,?,?,?,0,?,NOW(),?,?)";
     
     // Sử dụng kết nối trực tiếp để lấy lastInsertId
     try {
         $conn = pdo_get_connection();
         $stmt = $conn->prepare($sql);
-        $stmt->execute([$id_phim, $id_rap, $id_tg, $id_lc, $id_kh, $ghe_csv, $combo_text, $price, $ma, $id_nv]);
+        $stmt->execute([$id_phim, $id_rap, $id_tg, $id_lc, $id_kh, $ghe_csv, $combo_text, $price, $trang_thai, $ma, $id_nv]);
         $ve_id = $conn->lastInsertId();
         return (int)$ve_id;
     } catch(PDOException $e) {

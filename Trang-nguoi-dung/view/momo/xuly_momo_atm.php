@@ -117,8 +117,8 @@ try {
     $ma_ve = 'VE' . time() . rand(1000, 9999);
     $ghe_string = implode(',', $ghe_list); // Gộp ghế: "L12,L11,L10,L9,L8,L7,L6,L5"
     
-    $sql = "INSERT INTO ve (id_tk, id_phim, id_ngay_chieu, id_thoi_gian_chieu, id_rap, ghe, price, combo, trang_thai, ma_ve, ngay_dat) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?, NOW())";
+    $sql = "INSERT INTO ve (id_tk, id_phim, id_ngay_chieu, id_thoi_gian_chieu, id_rap, ghe, price, combo, trang_thai, ma_ve, ngay_dat, id_hd) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?, NOW(), 0)";
     
     $stmt = $pdo->prepare($sql);
     

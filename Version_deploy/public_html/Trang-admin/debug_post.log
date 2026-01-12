@@ -1,0 +1,5887 @@
+POST handler started at 2025-12-01 20:26:43
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-06
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-13
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-20
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [23] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-27
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [24] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [25] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+    [26] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-31
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Chúc em làm việc tốt
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-12-01, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-02, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-03, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-04, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-05, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-06, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-08, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-09, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-10, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-11, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-12, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-13, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-15, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-16, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-17, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-18, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-19, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-20, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-22, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-23, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-24, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-25, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-26, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-27, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-29, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-30, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-31, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 27
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 27 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-01 20:28:06
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-31
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-12-01, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-02, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-03, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-04, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-05, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-08, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-09, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-10, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-11, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-12, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-15, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-16, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-17, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-18, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-19, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-22, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-23, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-24, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-25, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-26, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-29, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-30, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-31, Start=13:00, End=17:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 23
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 23 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-01 20:28:34
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-31
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=37, Date=2025-12-01, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-02, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-03, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-04, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-05, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-08, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-09, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-10, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-11, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-12, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-15, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-16, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-17, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-18, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-19, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-22, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-23, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-24, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-25, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-26, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-29, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-30, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-31, Start=17:00, End=22:00
+Successfully inserted assignment for ID=37
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 23
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 23 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-02 00:48:49
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-31
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=46, Date=2025-12-02, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-03, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-04, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-05, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-08, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-09, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-10, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-11, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-12, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-15, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-16, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-17, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-18, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-19, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-22, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-23, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-24, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-25, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-26, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-29, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-30, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-31, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 22
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 22 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-02 00:49:45
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-01
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-01
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-01
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-02
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-02
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-02
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-05
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-05
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-05
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-06
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-06
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-06
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-07
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-07
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-07
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-08
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-08
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-08
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-09
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-09
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-09
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-12
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-12
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [23] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-12
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [24] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-13
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [25] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-13
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [26] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-13
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [27] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-14
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [28] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-14
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [29] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-14
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [30] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-15
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [31] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-15
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [32] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-15
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [33] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-16
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [34] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-16
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [35] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-16
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [36] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-19
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [37] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-19
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [38] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-19
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [39] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-20
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [40] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-20
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [41] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-20
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [42] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-21
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [43] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-21
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [44] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-21
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [45] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-22
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [46] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-22
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [47] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-22
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [48] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-23
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [49] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-23
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [50] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-23
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [51] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-26
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [52] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-26
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [53] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-26
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [54] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-27
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [55] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-27
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [56] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-27
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [57] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-28
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [58] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-28
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [59] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-28
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [60] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-29
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [61] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-29
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [62] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-29
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [63] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-30
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [64] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-30
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [65] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-01-30
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=46, Date=2026-01-01, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-01, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-01, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-02, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-02, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-02, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-05, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-05, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-05, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-06, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-06, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-06, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-07, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-07, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-07, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-08, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-08, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-08, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-09, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-09, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-09, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-12, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-12, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-12, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-13, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-13, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-13, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-14, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-14, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-14, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-15, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-15, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-15, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-16, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-16, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-16, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-19, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-19, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-19, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-20, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-20, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-20, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-21, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-21, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-21, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-22, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-22, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-22, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-23, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-23, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-23, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-26, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-26, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-26, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-27, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-27, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-27, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-28, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-28, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-28, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-29, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-29, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-29, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-30, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-30, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-01-30, Start=17:00, End=22:00
+Successfully inserted assignment for ID=46
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 66
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 66 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-04 12:03:11
+POST handler started at 2025-12-04 12:04:03
+POST handler started at 2025-12-04 12:04:52
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-01
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-02
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-03
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-04
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-05
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-06
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-07
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-08
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-09
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-10
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2026-01-01, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-02, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-03, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-04, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-05, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-06, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-07, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-08, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-09, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-10, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 10
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 10 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-04 12:12:11
+POST handler started at 2025-12-04 12:12:16
+POST handler started at 2025-12-04 12:18:05
+POST handler started at 2025-12-04 12:18:22
+POST handler started at 2025-12-04 12:40:04
+POST handler started at 2025-12-04 12:40:30
+POST handler started at 2025-12-04 12:40:39
+POST handler started at 2025-12-04 12:43:35
+POST handler started at 2025-12-04 12:43:37
+POST handler started at 2025-12-04 12:44:02
+POST handler started at 2025-12-04 12:44:30
+POST handler started at 2025-12-04 12:45:48
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-12
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-13
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-14
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-15
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-16
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-19
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-20
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-21
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-22
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-23
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-26
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-27
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-28
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-29
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2026-01-30
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=34, Date=2026-01-12, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-13, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-14, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-15, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-16, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-19, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-20, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-21, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-22, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-23, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-26, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-27, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-28, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-29, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2026-01-30, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 15
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 15 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-04 13:54:48
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=47, Date=2025-12-02, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-03, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-04, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-05, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-08, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-09, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-10, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-11, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-12, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-15, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-16, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-17, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-18, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-12-19, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 14
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 14 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-04 18:48:38
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-02
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-03
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-04
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-05
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-06
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-09
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-10
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-11
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-12
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-13
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-16
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-17
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-18
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-19
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-20
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-23
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-24
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-25
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-26
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2026-02-27
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=46, Date=2026-02-02, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-03, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-04, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-05, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-06, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-09, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-10, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-11, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-12, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-13, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-16, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-17, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-18, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-19, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-20, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-23, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-24, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-25, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-26, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2026-02-27, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 20
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 20 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-04 18:49:03
+POST handler started at 2025-12-04 18:49:13
+POST handler started at 2025-12-05 17:34:11
+POST handler started at 2025-12-09 17:54:16
+POST handler started at 2025-12-09 17:54:34
+POST handler started at 2025-12-10 14:40:50
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-31
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => Làm tốt em nhé
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-12-01, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-02, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-03, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-04, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-05, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-08, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-09, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-10, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-11, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-12, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-15, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-16, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-17, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-18, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-19, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-22, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-23, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-24, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-25, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-26, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-29, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-30, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-31, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 23
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 23 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-10 14:41:38
+POST handler started at 2025-12-10 14:41:52
+POST handler started at 2025-12-10 14:42:27
+POST handler started at 2025-12-10 14:46:52
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-12-10, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-12 13:29:43
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-01
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-02
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-05
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-06
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-07
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-08
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-09
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-12
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-13
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-14
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-15
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-16
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-19
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-20
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-21
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-22
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-23
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-26
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-27
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-28
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-29
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2026-01-30
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2026-01-01, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-02, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-05, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-06, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-07, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-08, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-09, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-12, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-13, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-14, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-15, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-16, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-19, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-20, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-21, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-22, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-23, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-26, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-27, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-28, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-29, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2026-01-30, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 22
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 22 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-12 13:30:23
+POST handler started at 2025-12-13 07:49:38
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-03
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-04
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-05
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-06
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-07
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-10
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-11
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-12
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-13
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-14
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-17
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-18
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-19
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-20
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-21
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-24
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-25
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-26
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-27
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-11-28
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-03
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-04
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-05
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [23] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-06
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [24] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-07
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [25] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-10
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [26] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-11
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [27] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-12
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [28] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-13
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [29] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-14
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [30] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-17
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [31] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-18
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [32] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-19
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [33] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-20
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [34] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-21
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [35] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-24
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [36] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-25
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [37] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-26
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [38] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-27
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [39] => Array
+        (
+            [nhanvien_id] => 47
+            [ngay] => 2025-11-28
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=46, Date=2025-11-03, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-04, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-05, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-06, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-07, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-10, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-11, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-12, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-13, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-14, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-17, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-18, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-19, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-20, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-21, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-24, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-25, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-26, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-27, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-11-28, Start=09:00, End=18:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=47, Date=2025-11-03, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-04, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-05, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-06, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-07, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-10, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-11, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-12, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-13, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-14, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-17, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-18, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-19, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-20, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-21, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-24, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-25, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-26, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-27, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Processing assignment: ID=47, Date=2025-11-28, Start=09:00, End=18:00
+Successfully inserted assignment for ID=47
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 40
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 40 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-13 08:15:52
+POST handler started at 2025-12-13 08:16:14
+POST handler started at 2025-12-19 00:27:30
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-31
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-12-19, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-22, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-23, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-24, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-25, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-26, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-29, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-30, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-31, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 9
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 9 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-19 00:27:53
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-12-01, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-02, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-03, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-04, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-05, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-08, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-09, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-10, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-11, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-12, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-15, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-16, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-17, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-18, Start=09:00, End=18:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 14
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 14 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-19 00:28:04
+POST handler started at 2025-12-19 00:32:19
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 09:00
+            [gio_ket_thuc] => 18:00
+            [ca_lam] => Hành chính
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-12-01, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-02, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-03, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-04, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-05, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-08, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-09, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-10, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-11, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-12, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-15, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-16, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-17, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-18, Start=09:00, End=18:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 14
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 14 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-19 00:32:42
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-12-19, Start=17:00, End=22:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 1
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 1 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-19 00:33:39
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 30
+            [ngay] => 2025-12-31
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=30, Date=2025-12-01, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-02, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-03, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-04, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-05, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-08, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-09, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-10, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-11, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-12, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-15, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-16, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-17, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-18, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-19, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-22, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-23, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-24, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-25, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-26, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-29, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-30, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Processing assignment: ID=30, Date=2025-12-31, Start=08:00, End=12:00
+Successfully inserted assignment for ID=30
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 23
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 23 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-19 00:34:00
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 37
+            [ngay] => 2025-12-31
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=37, Date=2025-12-01, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-02, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-03, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-04, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-05, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-08, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-09, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-10, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-11, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-12, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-15, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-16, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-17, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-18, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-19, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-22, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-23, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-24, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-25, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-26, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-29, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-30, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Processing assignment: ID=37, Date=2025-12-31, Start=13:00, End=17:00
+Successfully inserted assignment for ID=37
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 23
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 23 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-19 00:34:16
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 34
+            [ngay] => 2025-12-31
+            [gio_bat_dau] => 17:00
+            [gio_ket_thuc] => 22:00
+            [ca_lam] => Tối
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=34, Date=2025-12-01, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-02, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-03, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-04, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-05, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-08, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-09, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-10, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-11, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-12, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-15, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-16, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-17, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-18, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-19, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-22, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-23, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-24, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-25, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-26, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-29, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-30, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Processing assignment: ID=34, Date=2025-12-31, Start=17:00, End=22:00
+Successfully inserted assignment for ID=34
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 23
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 23 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+
+POST handler started at 2025-12-19 01:07:50
+Assignments received: Array
+(
+    [0] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [1] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-01
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [2] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [3] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-02
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [4] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [5] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-03
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [6] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [7] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-04
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [8] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [9] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-05
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [10] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [11] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-08
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [12] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [13] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-09
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [14] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [15] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-10
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [16] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [17] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-11
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [18] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [19] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-12
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [20] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [21] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-15
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [22] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [23] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-16
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [24] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [25] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-17
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [26] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [27] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-18
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [28] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [29] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-19
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [30] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [31] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-22
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [32] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [33] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-23
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [34] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [35] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-24
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [36] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [37] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-25
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [38] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [39] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-26
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [40] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [41] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-29
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+    [42] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 08:00
+            [gio_ket_thuc] => 12:00
+            [ca_lam] => Sáng
+            [ghi_chu] => 
+        )
+
+    [43] => Array
+        (
+            [nhanvien_id] => 46
+            [ngay] => 2025-12-30
+            [gio_bat_dau] => 13:00
+            [gio_ket_thuc] => 17:00
+            [ca_lam] => Chiều
+            [ghi_chu] => 
+        )
+
+)
+
+Processing assignment: ID=46, Date=2025-12-01, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-01, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-02, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-02, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-03, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-03, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-04, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-04, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-05, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-05, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-08, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-08, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-09, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-09, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-10, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-10, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-11, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-11, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-12, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-12, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-15, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-15, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-16, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-16, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-17, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-17, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-18, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-18, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-19, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-19, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-22, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-22, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-23, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-23, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-24, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-24, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-25, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-25, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-26, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-26, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-29, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-29, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-30, Start=08:00, End=12:00
+Successfully inserted assignment for ID=46
+Processing assignment: ID=46, Date=2025-12-30, Start=13:00, End=17:00
+Successfully inserted assignment for ID=46
+Final response: Array
+(
+    [success] => 1
+    [success_count] => 44
+    [error_count] => 0
+    [message] => ✅ Tạo thành công 44 ca làm việc
+    [errors] => Array
+        (
+        )
+
+    [partial_success] => 
+)
+

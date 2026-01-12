@@ -1,0 +1,1253 @@
+/* 🎨 ADMIN CUSTOM UI OVERHAUL - MODERN & SMOOTH 
+   ================================================
+   - Gradients, animations và hiệu ứng mượt mà
+   - Responsive design và accessibility
+   - Modern color palette với CSS variables
+   ================================================ */
+
+:root {
+  /* 🌈 Primary Colors - Gradient Magic */
+  --adm-primary: #999aa1;
+  --adm-primary-600: #999aa1;
+  --adm-primary-gradient: linear-gradient(135deg, #9fa6c7 0%, #766d7e 100%);
+  --adm-primary-glow: linear-gradient(135deg, #9fa5c0 0%, #6e636f 50%, #ce9ca2 100%);
+  
+  /* 🎯 Status Colors */
+  --adm-danger: #ff6b6b;
+  --adm-danger-light: #ff8e8e;
+  --adm-danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ffa8a8 100%);
+  --adm-success: #4ecdc4;
+  --adm-success-light: #7ee8e1;
+  --adm-success-gradient: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+  --adm-warning: #ffeaa7;
+  --adm-warning-gradient: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+  --adm-info: #74b9ff;
+  --adm-info-gradient: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  
+  /* 🎨 UI Colors */
+  --adm-muted: #636e72;
+  --adm-border: #e2e8f0;
+  --adm-bg-soft: #f8fafc;
+  --adm-sidebar: #2d3748;
+  --adm-sidebar-2: #1a202c;
+  --adm-text: #2d3748;
+  --adm-text-light: #718096;
+  
+  /* ✨ Effects */
+  --adm-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+  --adm-shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
+  --adm-shadow-glow: 0 0 30px rgba(102, 126, 234, 0.3);
+  --adm-radius: 16px;
+  --adm-radius-sm: 12px;
+  --adm-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 🚫 DISABLE ALL HOVER TRANSFORM EFFECTS - Tắt tất cả hiệu ứng "nhảy" khi hover */
+*:hover {
+  transform: none !important; /* Tắt TẤT CẢ transform khi hover */
+}
+
+/* 📏 GLOBAL SCALE - Làm tổng thể trang web nhỏ lại */
+html {
+  font-size: 14px !important; /* Giảm từ 16px xuống 14px */
+  zoom: 0.95; /* Thu nhỏ tổng thể 95% */
+}
+
+body {
+  font-size: 0.9rem !important; /* Giảm font size body */
+  line-height: 1.5;
+}
+
+/* 🎨 HEADER STYLING - Làm đẹp header */
+.header-area,
+.main-header {
+  background: var(--adm-primary-gradient) !important;
+  box-shadow: var(--adm-shadow-lg) !important;
+  border: none !important;
+  padding: 0.8rem 1.5rem !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.header-area .header-wrapper {
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo/Brand styling */
+.header-area .brand-logo,
+.header-area .logo {
+  font-weight: 700 !important;
+  font-size: 1.4rem !important;
+  color: white !important;
+  text-decoration: none !important;
+  letter-spacing: -0.02em;
+}
+
+.header-area .brand-logo:hover,
+.header-area .logo:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Header buttons và icons */
+.header-area .header-right,
+.header-area .user-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-area .btn,
+.header-area .button {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: var(--adm-radius-sm) !important;
+  font-weight: 500 !important;
+  transition: var(--adm-transition) !important;
+  backdrop-filter: blur(10px);
+}
+
+.header-area .btn:hover,
+.header-area .button:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* User dropdown */
+.header-area .dropdown-toggle {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border-radius: 50px !important;
+  padding: 0.4rem 1rem !important;
+}
+
+.header-area .dropdown-toggle:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Header icons */
+.header-area i,
+.header-area .zmdi {
+  color: white !important;
+  font-size: 1.1rem;
+}
+
+/* Mobile header adjustments */
+@media (max-width: 768px) {
+  .header-area,
+  .main-header {
+    padding: 0.6rem 1rem !important;
+  }
+  
+  .header-area .brand-logo,
+  .header-area .logo {
+    font-size: 1.2rem !important;
+  }
+}
+
+/* Thu nhỏ các thành phần chính */
+.sidebar {
+  transform: scale(0.95);
+  transform-origin: top left;
+}
+
+.main-content {
+  font-size: 0.9em;
+}
+
+/* Thu nhỏ table và card */
+.table {
+  font-size: 0.85rem;
+}
+
+.card {
+  font-size: 0.9rem;
+}
+
+/* Cho phép transform cần thiết cho animations và modals (không phải hover) */
+.modal.fade .modal-dialog,
+.alert.fade,
+.dropdown-menu {
+  transform: initial !important;
+}
+
+/* Duy trì background và shadow effects cho table hover */
+.table tbody tr:hover {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 🎯 PAGE HEADINGS - Gradient text với glow effect */
+.content-body .page-heading h3 {
+  font-weight: 800 !important;
+  font-size: 2rem !important;
+  letter-spacing: -0.5px !important;
+  margin: 0 0 1.5rem 0 !important;
+  background: linear-gradient(135deg, #000000 0%, #e2e8f0 100%) !important;
+  -webkit-background-clip: text !important;
+  /* -webkit-text-fill-color: transparent !important; */
+  background-clip: text !important;
+  text-shadow: 0 4px 20px rgba(255, 255, 255, 0.5) !important;
+  animation: glow 2s ease-in-out infinite alternate !important;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  to {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* 💎 CARDS - Glass morphism effect với shadow đẹp mắt */
+.content-body .card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--adm-radius);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: var(--adm-transition);
+  overflow: hidden;
+  position: relative;
+}
+
+.content-body .card::before {
+  content: '';
+  position: absolute;
+    top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+.content-body .card:hover {
+  /* transform: translateY(-2px); - TẮT ĐỂ KHÔNG NHẢY */
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.content-body .card-header {
+  background: var(--adm-primary-gradient);
+  border: none;
+  border-radius: var(--adm-radius) var(--adm-radius) 0 0;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 1.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.content-body .card-header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(116, 113, 113, 0.2), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.content-body .card-body {
+  position: relative;
+  padding-top: 16px;
+
+}
+
+.content-body .add-edit-product-form,
+.content-body .news-item,
+.content-body .top-report {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--adm-border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: var(--adm-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-body .add-edit-product-form:hover,
+.content-body .news-item:hover,
+.content-body .top-report:hover {
+  /* Tắt transform để không bị nhảy */
+  /* transform: translateY(-1px); */
+  box-shadow: var(--adm-shadow-lg);
+}
+
+/* Form layout helpers */
+.adm-form .card { border-radius: 14px; }
+.adm-form .card .section-title {
+  font-size: 16px; font-weight:700; color:#111827; margin-bottom:12px;
+}
+.adm-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 1199px){ .adm-form .form-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 575px){ .adm-form .form-grid { grid-template-columns: 1fr; } }
+.adm-form .field label { display:block; font-weight:600; color:#4b5563; margin-bottom:6px; }
+.adm-form .field .form-control { height:46px; border-radius:10px; }
+.adm-form .actions { border-top: 1px dashed var(--adm-border); margin-top: 12px; padding-top: 16px; }
+.adm-form .hint { font-size:12px; color:#6b7280; display:block; margin-top:6px; }
+
+/* Enhanced Forms with smooth interactions */
+.content-body form label {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.content-body .form-control,
+.content-body select.form-control,
+.content-body textarea.form-control,
+.content-body .form-select {
+  border: 2px solid var(--adm-border);
+  border-radius: 12px !important;
+  padding: 12px 16px;
+  height: 48px;
+  font-size: 14px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.content-body textarea.form-control { 
+  min-height: 120px; 
+  height: auto; 
+  resize: vertical;
+}
+
+.content-body .form-control:focus,
+.content-body .form-select:focus {
+  outline: none;
+  border-color: var(--adm-primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background: #ffffff;
+  /* transform: translateY(-1px); - TẮT ĐỂ KHÔNG NHẢY */
+}
+
+/* Inputs layout helpers */
+.mb-10{ margin-bottom:10px !important; }
+.mb-12{ margin-bottom:12px !important; }
+.mb-15{ margin-bottom:15px !important; }
+.mb-20{ margin-bottom:20px !important; }
+
+/* 🚀 BUTTONS - Gradient với hiệu ứng nổi bật */
+.btn, .button { 
+  border-radius: var(--adm-radius-sm); 
+  font-weight: 700; 
+  transition: var(--adm-transition);
+  padding: 14px 28px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  /* overflow: hidden; */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn:before, .button:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  transition: all 0.6s ease;
+  transform: translate(-50%, -50%);
+}
+
+.btn:hover:before, .button:hover:before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-primary, .button.button-primary {
+  background: var(--adm-primary-gradient);
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover, .button.button-primary:hover {
+  /* transform: translateY(-2px); - TẮT ĐỂ KHÔNG NHẢY */
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+  color: #fff;
+}
+
+.btn-danger, .button.button-danger { 
+  background: var(--adm-danger-gradient); 
+  color: #fff; 
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+.btn-danger:hover, .button.button-danger:hover {
+  /* transform: translateY(-2px); - TẮT ĐỂ KHÔNG NHẢY */
+  box-shadow: 0 15px 35px rgba(255, 107, 107, 0.6);
+  color: #fff;
+}
+
+.btn-success, .button.button-success { 
+  background: var(--adm-success-gradient); 
+  color: #fff; 
+  box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+}
+
+.btn-success:hover, .button.button-success:hover {
+  /* transform: translateY(-2px); - TẮT ĐỂ KHÔNG NHẢY */
+  box-shadow: 0 15px 35px rgba(78, 205, 196, 0.6);
+  color: #fff;
+}
+
+.btn-warning, .button.button-warning {
+  background: var(--adm-warning-gradient);
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(253, 203, 110, 0.4);
+}
+
+.btn-warning:hover, .button.button-warning:hover {
+  /* transform: translateY(-2px); - TẮT ĐỂ KHÔNG NHẢY */
+  box-shadow: 0 15px 35px rgba(253, 203, 110, 0.6);
+  color: #fff;
+}
+
+.btn-outline-primary, .button.button-outline { 
+  background: rgba(255, 255, 255, 0.9); 
+  color: var(--adm-primary); 
+  border: 2px solid var(--adm-primary);
+  backdrop-filter: blur(10px);
+}
+
+.btn-outline-primary:hover, .button.button-outline:hover { 
+  background: var(--adm-primary-gradient); 
+  color: #fff;
+  border-color: transparent;
+}
+
+/* Enhanced Tables */
+.table { 
+  border-color: var(--adm-border); 
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--adm-shadow);
+  background: white;
+}
+
+.table thead th {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  color: #1f2937;
+  border-bottom: 2px solid var(--adm-border);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px;
+}
+
+.table tbody tr { 
+  transition: all 0.2s ease;
+}
+
+.table tbody tr:hover { 
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  /* transform: scale(1.01); - ĐÃ TẮT để không "nhảy" */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table tbody td {
+  padding: 14px 16px;
+  border-color: var(--adm-border);
+}
+
+/* Enhanced Alerts */
+.alert {
+  border-radius: 12px;
+  border: none;
+  padding: 16px 20px;
+  font-weight: 500;
+  box-shadow: var(--adm-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.alert:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: currentColor;
+}
+
+.alert-success {
+  background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+  color: #065f46;
+  border-left: 4px solid var(--adm-success);
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, #fef2f2 0%, #fef7f7 100%);
+  color: #991b1b;
+  border-left: 4px solid var(--adm-danger);
+}
+
+.alert-warning {
+  background: linear-gradient(135deg, #fffbeb 0%, #fefce8 100%);
+  color: #92400e;
+  border-left: 4px solid var(--adm-warning);
+}
+
+.alert-info {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+  color: #1e40af;
+  border-left: 4px solid var(--adm-info);
+}
+
+/* Enhanced Sidebar */
+.side-header {
+  background: linear-gradient(180deg, var(--adm-sidebar) 0%, var(--adm-sidebar-2) 100%);
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+      height: 1500px;
+}
+
+.side-header-menu ul li a {
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+  margin: 4px 12px;
+  padding: 12px 16px;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.side-header-menu ul li a:hover,
+.side-header-menu ul li a.is-active {
+  background: linear-gradient(135deg, rgba(176, 176, 186, 0.2) 0%, rgba(198, 156, 240, 0.2) 100%);
+  color: white;
+  /* transform: translateX(2px); - TẮT LUÔN ĐỂ KHÔNG NHẢY */
+  box-shadow: 0 4px 15px rgba(179, 184, 209, 0.3);
+}
+
+.side-header-menu ul li a i {
+  margin-right: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+/* .side-header-menu ul li a:hover i,
+.side-header-menu ul li a.is-active i {
+  transform: scale(1.1); - TẮT LUÔN ĐỂ KHÔNG NHẢY 
+} */
+
+/* 🏠 MAIN LAYOUT - Content Body với background gradient đẹp mắt */
+.content-body {
+  background: linear-gradient(135deg, #c8cad5 0%, #bf9de0 100%) !important;
+  background-attachment: fixed !important;
+  min-height: 100vh !important;
+  padding: 24px !important;
+  position: relative !important;
+}
+
+.content-body::before {
+  content: '' !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: 
+    radial-gradient(600px circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(800px circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+.content-body > * {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Page Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.animate-slide-right {
+  animation: slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading States */
+.btn.loading, .button.loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.btn.loading:after, .button.loading:after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  color: white;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content-body {
+    padding: 16px;
+  }
+  
+  .card-body {
+    padding: 16px;
+  }
+  
+  .btn, .button {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+  
+  .table thead th,
+  .table tbody td {
+    padding: 12px 8px;
+    font-size: 13px;
+  }
+}
+
+/* Focus and accessibility improvements */
+.btn:focus,
+.button:focus,
+.form-control:focus {
+  outline: 2px solid var(--adm-primary);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--adm-bg-soft);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--adm-primary) 0%, var(--adm-primary-600) 100%);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--adm-primary-600) 0%, #5b21b6 100%);
+}
+
+/* 🎨 MODERN ADMIN STYLING COMPLETE */
+
+/* ===============================
+   🎬 MODERN LOGIN PAGE DESIGN
+   =============================== */
+
+/* 🎨 Login Page Layout */
+.login-page {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+/* 🌌 Animated Background */
+.login-wrapper {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.login-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 113%;
+    height: 119%;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, #272c44 0%, #764ba2 100%);
+    animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(30deg); }
+}
+
+/* 🎬 Cinema Lights Animation */
+.cinema-lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.cinema-lights .light {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: lightMove 15s linear infinite;
+}
+
+.cinema-lights .light:nth-child(1) {
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.cinema-lights .light:nth-child(2) {
+    top: 20%;
+    right: 10%;
+    animation-delay: -3s;
+}
+
+.cinema-lights .light:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: -6s;
+}
+
+.cinema-lights .light:nth-child(4) {
+    bottom: 10%;
+    right: 20%;
+    animation-delay: -9s;
+}
+
+@keyframes lightMove {
+    0% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+    50% { transform: translateY(-20px) rotate(180deg); opacity: 0.6; }
+    100% { transform: translateY(0px) rotate(360deg); opacity: 0.3; }
+}
+
+/* 🎞️ Film Strip Decoration */
+.film-strip {
+    position: absolute;
+    top: 0;
+    right: -50px;
+    width: 100px;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.05) 0px,
+            rgba(255, 255, 255, 0.05) 20px,
+            rgba(255, 255, 255, 0.02) 20px,
+            rgba(255, 255, 255, 0.02) 40px
+        );
+    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    border-right: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.film-hole {
+    position: absolute;
+    width: 20px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.film-hole:nth-child(1) { top: 10%; }
+.film-hole:nth-child(2) { top: 30%; }
+.film-hole:nth-child(3) { top: 50%; }
+.film-hole:nth-child(4) { top: 70%; }
+
+/* 💎 Modern Login Card */
+.login-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -126px;
+    margin-right: -198px;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 
+        0 25px 45px rgba(0, 0, 0, 0.1),
+        0 10px 20px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 40px;
+    position: relative;
+    overflow: visible;
+    animation: cardEntrance 0.8s ease-out;
+    margin: auto;
+    width: 100%;
+}
+
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #667eea, #764ba2, #667eea);
+    border-radius: 24px;
+    z-index: -1;
+    animation: borderGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes cardEntrance {
+    0% {
+        transform: translateY(30px) scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes borderGlow {
+    0% { opacity: 0.5; }
+    100% { opacity: 0.8; }
+}
+
+/* 🎭 Brand Header */
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.brand-logo {
+    margin-bottom: 20px;
+}
+
+.logo-circle {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+    position: relative;
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+.logo-circle i {
+    font-size: 36px;
+    color: white;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+.brand-logo h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 5px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.brand-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    font-weight: 400;
+}
+
+.login-title h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 5px 0;
+}
+
+.login-title p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* ⚠️ Modern Error Alert */
+.alert-error {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+    font-weight: 500;
+}
+
+.alert-error i {
+    font-size: 18px;
+}
+
+/* 📝 Modern Form Styling */
+.login-form {
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 18px;
+    font-size: 18px;
+    color: #999;
+    z-index: 2;
+    transition: var(--adm-transition);
+}
+
+.form-input {
+    width: 100%;
+    height: 60px;
+    border: 2px solid #e1e5e9;
+    border-radius: 16px;
+    padding: 18px 50px 18px 50px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: var(--adm-primary);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.1);
+}
+
+.form-input:focus + .input-line {
+    transform: scaleX(1);
+}
+
+.input-wrapper.focused .input-icon {
+    color: var(--adm-primary);
+}
+
+.input-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: var(--adm-transition);
+    border-radius: 0 0 16px 16px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 18px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    z-index: 2;
+    transition: var(--adm-transition);
+}
+
+.password-toggle:hover {
+    color: var(--adm-primary);
+}
+
+/* 🚀 Modern Login Button */
+.btn-login {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 16px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-login:hover {
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.btn-login.loading .btn-text {
+    opacity: 0;
+}
+
+.btn-login.loading .btn-loading {
+    opacity: 1;
+}
+
+.btn-text, .btn-loading {
+    transition: opacity 0.3s ease;
+}
+
+.btn-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.btn-login::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.btn-login:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* 🔗 Login Options */
+.login-options {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.forgot-password a {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: var(--adm-transition);
+}
+
+.forgot-password a:hover {
+    color: var(--adm-primary);
+}
+
+/* 👣 Login Footer */
+.login-footer {
+    text-align: center;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    margin-top: 25px;
+}
+
+.footer-links {
+    margin-bottom: 10px;
+}
+
+.footer-links span,
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 13px;
+    margin: 0 5px;
+}
+
+.footer-links a:hover {
+    color: var(--adm-primary);
+}
+
+.version-info small {
+    color: #999;
+    font-size: 12px;
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 768px) {
+    .login-container {
+        max-width: 90%;
+        padding: 10px;
+    }
+    
+    .login-card {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+    
+    .logo-circle {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .logo-circle i {
+        font-size: 24px;
+    }
+    
+    .brand-logo h1 {
+        font-size: 24px;
+    }
+    
+    .login-title h2 {
+        font-size: 20px;
+    }
+    
+    .form-input,
+    .btn-login {
+        height: 50px;
+        font-size: 14px;
+    }
+    
+    .film-strip {
+        display: none;
+    }
+}
+
+/* 🎭 Modal Body Override - Thêm margin-top */
+.modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1rem;
+    margin-top: 22px;
+}
+
+/* 📏 Modal Size Override - Làm modal nhỏ lại */
+.modal-dialog {
+    max-width: 800px !important; /* Giảm từ 900px xuống 800px */
+    margin: 1.75rem auto;
+}
+
+.modal-lg {
+    max-width: 900px !important; /* Large modal nhỏ lại từ 1140px */
+}
+
+.modal-xl {
+    max-width: 1000px !important; /* Extra large modal nhỏ lại từ 1140px */
+}
+
+/* 📱 Responsive Modal */
+@media (max-width: 576px) {
+    .modal-dialog {
+        max-width: 95% !important;
+        margin: 1rem;
+    }
+}
